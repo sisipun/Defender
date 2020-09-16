@@ -1,0 +1,14 @@
+package io.cucumber.base.model.simple;
+
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Circle;
+
+import io.cucumber.base.model.base.StaticActor;
+import io.cucumber.base.model.bound.CircleBound;
+
+public class SimpleCircle extends StaticActor<Circle> {
+
+    public SimpleCircle(float x, float y, float size, TextureRegion region) {
+        super(new CircleBound(x, y, size / 2), region);
+    }
+}

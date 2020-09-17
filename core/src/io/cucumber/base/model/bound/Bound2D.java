@@ -2,7 +2,7 @@ package io.cucumber.base.model.bound;
 
 import com.badlogic.gdx.math.Shape2D;
 
-import io.cucumber.base.utils.helper.AlignHelper;
+import io.cucumber.base.helper.AlignHelper;
 
 public abstract class Bound2D<T extends Shape2D> {
 

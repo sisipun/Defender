@@ -1,4 +1,4 @@
-package io.cucumber.base.utils.helper;
+package io.cucumber.base.helper;
 
 import io.cucumber.base.model.bound.HorizontalAlign;
 import io.cucumber.base.model.bound.VerticalAlign;

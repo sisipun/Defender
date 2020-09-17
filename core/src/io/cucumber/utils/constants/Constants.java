@@ -1,4 +1,4 @@
-package io.cucumber.base.utils.constants;
+package io.cucumber.utils.constants;
 
 public class Constants {
 

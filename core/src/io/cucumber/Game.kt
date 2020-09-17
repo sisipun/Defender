@@ -4,22 +4,31 @@ import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.viewport.StretchViewport
+import io.cucumber.base.model.bound.RectangleBound
 import io.cucumber.base.model.simple.SimpleRectangle
-import io.cucumber.base.utils.constants.Constants.SCREEN_HEIGHT
-import io.cucumber.base.utils.constants.Constants.SCREEN_WIDTH
+import io.cucumber.utils.constants.Constants.SCREEN_HEIGHT
+import io.cucumber.utils.constants.Constants.SCREEN_WIDTH
 import io.cucumber.manager.LevelManager
+import io.cucumber.model.Menu
+import io.cucumber.model.MenuItem
 
 class Game : Game() {
 
     lateinit var stage: Stage
-    lateinit var hero: SimpleRectangle
+    lateinit var hero: Menu
 
     override fun create() {
         val screenViewport = StretchViewport(SCREEN_WIDTH, SCREEN_HEIGHT)
         stage = Stage(screenViewport)
         LevelManager.loadLevels()
-        hero = SimpleRectangle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 50f, 50f, LevelManager.get().hero)
+        val assets = LevelManager.get()
+        hero = Menu(
+                RectangleBound(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 16, SCREEN_WIDTH, SCREEN_HEIGHT / 8),
+                assets.menuBackground,
+                Array.with(MenuItem(assets.hero), MenuItem(assets.enemy), MenuItem(assets.hero), MenuItem(assets.hero), MenuItem(assets.enemy))
+        )
         stage.addActor(hero)
     }
 
@@ -32,7 +41,7 @@ class Game : Game() {
     }
 
     override fun dispose() {
-        hero.remove()
+        LevelManager.removeLevels()
         stage.dispose()
     }
 }

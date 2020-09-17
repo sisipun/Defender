@@ -1,4 +1,4 @@
-package io.cucumber.base.utils.helper;
+package io.cucumber.base.helper;
 
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 

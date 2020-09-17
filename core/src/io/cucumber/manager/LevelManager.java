@@ -12,7 +12,7 @@ public class LevelManager {
 
     public static void loadLevels() {
         atlas = new TextureAtlas(Gdx.files.internal("atlas/game.atlas"));
-        levelAssets = new LevelAssets(atlas, "hero");
+        levelAssets = new LevelAssets(atlas, "hero", "enemy", "menu_background");
     }
 
     public static void removeLevels() {

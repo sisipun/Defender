@@ -2,22 +2,29 @@ package io.cucumber.base.model.bound;
 
 import com.badlogic.gdx.math.Circle;
 
-public class CircleBound extends io.cucumber.base.model.bound.Bound2D<Circle> {
+import io.cucumber.base.helper.AlignHelper;
+
+public class CircleBound extends Bound2D<Circle> {
 
     public CircleBound(float x, float y, float radius) {
-        super(new Circle(x, y, radius));
+        super(new Circle(AlignHelper.computeX(x, radius, HorizontalAlign.CENTER),
+                AlignHelper.computeY(y, radius, VerticalAlign.CENTER), radius));
     }
 
     public CircleBound(float x, float y, float radius, HorizontalAlign align) {
-        super(new Circle(x, y, radius), align);
+        super(new Circle(AlignHelper.computeX(x, radius, align),
+                AlignHelper.computeY(y, radius, VerticalAlign.CENTER), radius));
     }
 
     public CircleBound(float x, float y, float radius, VerticalAlign align) {
-        super(new Circle(x, y, radius), align);
+        super(new Circle(AlignHelper.computeX(x, radius, HorizontalAlign.CENTER),
+                AlignHelper.computeY(y, radius, align), radius));
     }
 
-    public CircleBound(float x, float y, float radius, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
-        super(new Circle(x, y, radius), horizontalAlign, verticalAlign);
+    public CircleBound(float x, float y, float radius, HorizontalAlign horizontalAlign,
+                       VerticalAlign verticalAlign) {
+        super(new Circle(AlignHelper.computeX(x, radius, horizontalAlign),
+                AlignHelper.computeY(y, radius, verticalAlign), radius));
     }
 
     @Override

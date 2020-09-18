@@ -3,7 +3,6 @@ package io.cucumber
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop
@@ -44,14 +43,15 @@ class Game : Game() {
                 val payload = Payload()
                 val item: MenuItem = (actor as Menu).getItem(x, y) ?: return payload
                 val actor = SimpleRectangle(item.x, item.y, item.width, item.height, item.region)
+                stage.addActor(actor)
                 payload.dragActor = actor
-                Gdx.app.log("drag", "start")
                 return payload
             }
 
             override fun dragStop(event: InputEvent?, x: Float, y: Float, pointer: Int, payload: Payload?, target: DragAndDrop.Target?) {
-                payload?.dragActor?.remove()
-                Gdx.app.log("drag", "end")
+                if (menu.isContains(x, y)) {
+                    payload?.dragActor?.remove()
+                }
             }
         })
     }

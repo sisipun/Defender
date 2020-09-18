@@ -2,22 +2,29 @@ package io.cucumber.base.model.bound;
 
 import com.badlogic.gdx.math.Rectangle;
 
-public class RectangleBound extends io.cucumber.base.model.bound.Bound2D<Rectangle> {
+import io.cucumber.base.helper.AlignHelper;
+
+public class RectangleBound extends Bound2D<Rectangle> {
 
     public RectangleBound(float x, float y, float width, float height) {
-        super(new Rectangle(x, y, width, height));
+        super(new Rectangle(AlignHelper.computeX(x, width, HorizontalAlign.CENTER),
+                AlignHelper.computeY(y, height, VerticalAlign.CENTER), width, height));
     }
 
     public RectangleBound(float x, float y, float width, float height, HorizontalAlign align) {
-        super(new Rectangle(x, y, width, height), align);
+        super(new Rectangle(AlignHelper.computeX(x, width, align),
+                AlignHelper.computeY(y, height, VerticalAlign.CENTER), width, height));
     }
 
     public RectangleBound(float x, float y, float width, float height, VerticalAlign align) {
-        super(new Rectangle(x, y, width, height), align);
+        super(new Rectangle(AlignHelper.computeX(x, width, HorizontalAlign.CENTER),
+                AlignHelper.computeY(y, height, align), width, height));
     }
 
-    public RectangleBound(float x, float y, float width, float height, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
-        super(new Rectangle(x, y, width, height), horizontalAlign, verticalAlign);
+    public RectangleBound(float x, float y, float width, float height,
+                          HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
+        super(new Rectangle(AlignHelper.computeX(x, width, horizontalAlign),
+                AlignHelper.computeY(y, height, verticalAlign), width, height));
     }
 
     @Override

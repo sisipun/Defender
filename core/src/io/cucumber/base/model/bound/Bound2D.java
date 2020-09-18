@@ -65,4 +65,5 @@ public abstract class Bound2D<T extends Shape2D> {
 
     protected abstract T getBound();
 
+    public abstract boolean contains(float x, float y);
 }

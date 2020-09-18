@@ -1,16 +1,13 @@
 package io.cucumber.model;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 
-public class MenuItem {
+import io.cucumber.base.model.base.Actor;
+import io.cucumber.base.model.bound.RectangleBound;
 
-    private TextureRegion region;
-
-    public MenuItem(TextureRegion region) {
-        this.region = region;
-    }
-
-    public TextureRegion getRegion() {
-        return region;
+public class MenuItem extends Actor<Rectangle> {
+    public MenuItem(RectangleBound bound, TextureRegion region) {
+        super(bound, region);
     }
 }

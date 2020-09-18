@@ -12,6 +12,14 @@ public class RectangleBound extends io.cucumber.base.model.bound.Bound2D<Rectang
         super(new Rectangle(x, y, width, height), align);
     }
 
+    public RectangleBound(float x, float y, float width, float height, VerticalAlign align) {
+        super(new Rectangle(x, y, width, height), align);
+    }
+
+    public RectangleBound(float x, float y, float width, float height, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
+        super(new Rectangle(x, y, width, height), horizontalAlign, verticalAlign);
+    }
+
     @Override
     public float getX() {
         return bound.x;
@@ -60,5 +68,10 @@ public class RectangleBound extends io.cucumber.base.model.bound.Bound2D<Rectang
     @Override
     protected Rectangle getBound() {
         return bound;
+    }
+
+    @Override
+    public boolean contains(float x, float y) {
+        return bound.contains(x, y);
     }
 }

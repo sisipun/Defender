@@ -8,6 +8,18 @@ public class CircleBound extends io.cucumber.base.model.bound.Bound2D<Circle> {
         super(new Circle(x, y, radius));
     }
 
+    public CircleBound(float x, float y, float radius, HorizontalAlign align) {
+        super(new Circle(x, y, radius), align);
+    }
+
+    public CircleBound(float x, float y, float radius, VerticalAlign align) {
+        super(new Circle(x, y, radius), align);
+    }
+
+    public CircleBound(float x, float y, float radius, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
+        super(new Circle(x, y, radius), horizontalAlign, verticalAlign);
+    }
+
     @Override
     public float getX() {
         return bound.x;
@@ -56,5 +68,10 @@ public class CircleBound extends io.cucumber.base.model.bound.Bound2D<Circle> {
     @Override
     protected Circle getBound() {
         return bound;
+    }
+
+    @Override
+    public boolean contains(float x, float y) {
+        return bound.contains(x, y);
     }
 }

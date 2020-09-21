@@ -4,23 +4,30 @@ size: 1024,256
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-enemy
+block
   rotate: false
   xy: 2, 2
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
-hero
+enemy
   rotate: false
   xy: 229, 2
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
-menu_background
+hero
   rotate: false
   xy: 456, 2
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: -1
+menu_background
+  rotate: false
+  xy: 683, 2
   size: 225, 225
   orig: 225, 225
   offset: 0, 0

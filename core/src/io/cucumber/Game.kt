@@ -14,13 +14,15 @@ import io.cucumber.base.model.simple.SimpleRectangle
 import io.cucumber.manager.LevelManager
 import io.cucumber.model.Menu
 import io.cucumber.model.MenuItem
-import io.cucumber.utils.constants.Constants.SCREEN_HEIGHT
-import io.cucumber.utils.constants.Constants.SCREEN_WIDTH
+import io.cucumber.utils.constants.Constants.*
+import io.cucumber.utils.generator.GameMap
+import io.cucumber.utils.generator.MapGenerator
 
 class Game : Game() {
 
     lateinit var stage: Stage
     lateinit var menu: Menu
+    lateinit var map: GameMap
 
     override fun create() {
         val screenViewport = StretchViewport(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -29,6 +31,17 @@ class Game : Game() {
 
         LevelManager.loadLevels()
         val assets = LevelManager.get()
+
+        val generator = MapGenerator()
+        map = generator.generate((SCREEN_WIDTH / BLOCK_SIZE).toInt(), ((SCREEN_HEIGHT - SCREEN_HEIGHT / 8) / BLOCK_SIZE).toInt(), 50)
+
+        map.map.forEachIndexed { i, row ->
+            row.forEachIndexed { j, block ->
+                if (block == 1) {
+                    stage.addActor(SimpleRectangle(i * BLOCK_SIZE, j * BLOCK_SIZE + SCREEN_HEIGHT / 8, BLOCK_SIZE, BLOCK_SIZE, assets.block))
+                }
+            }
+        }
 
         menu = Menu(
                 RectangleBound(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 16, SCREEN_WIDTH, SCREEN_HEIGHT / 8),

@@ -4,9 +4,9 @@ import java.util.Random;
 
 public class MapGenerator {
 
-    public Map generate(int width, int height, int coverage) {
-        if (width <= 0 || height <=0 || coverage < 0 || coverage > 100) {
-            return new Map(new int[0][0], 0, 0);
+    public GameMap generate(int width, int height, int coverage) {
+        if (width <= 0 || height <= 0 || coverage < 0 || coverage > 100) {
+            return new GameMap(new int[0][0], 0, 0, 0, 0);
         }
 
         Random random = new Random();
@@ -20,7 +20,7 @@ public class MapGenerator {
 
         map[currentPositionX][currentPositionY] = 1;
 
-        int stepCount = width * height * (coverage / 100);
+        int stepCount = (int) (width * height * (coverage / 100.0));
 
         for (int i = 1; i < stepCount;) {
             int direction = random.nextInt(4);
@@ -40,7 +40,7 @@ public class MapGenerator {
             }
         }
 
-        return new Map(map, startPositionX, startPositionY);
+        return new GameMap(map, startPositionX, startPositionY, currentPositionX, currentPositionY);
     }
 
 }

@@ -33,7 +33,7 @@ class Game : Game() {
         val assets = LevelManager.get()
 
         val generator = MapGenerator()
-        map = generator.generate((SCREEN_WIDTH / BLOCK_SIZE).toInt(), ((SCREEN_HEIGHT - SCREEN_HEIGHT / 8) / BLOCK_SIZE).toInt(), 50)
+        map = generator.generate((SCREEN_WIDTH / BLOCK_SIZE).toInt(), ((SCREEN_HEIGHT - SCREEN_HEIGHT / 8) / BLOCK_SIZE).toInt())
 
         map.map.forEachIndexed { i, row ->
             row.forEachIndexed { j, block ->

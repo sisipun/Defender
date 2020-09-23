@@ -44,25 +44,25 @@ public abstract class Actor<T extends Shape2D> extends com.badlogic.gdx.scenes.s
     @Override
     public void setX(float x) {
         bound.setX(x);
-        super.setX(x);
+        super.setX(bound.getX());
     }
 
     @Override
     public void setY(float y) {
         bound.setY(y);
-        super.setY(y);
+        super.setY(bound.getY());
     }
 
     @Override
     public void setWidth(float width) {
         bound.setWidth(width);
-        super.setWidth(width);
+        super.setWidth(bound.getWidth());
     }
 
     @Override
     public void setHeight(float height) {
         bound.setHeight(height);
-        super.setHeight(height);
+        super.setHeight(bound.getHeight() );
     }
 
     @Override

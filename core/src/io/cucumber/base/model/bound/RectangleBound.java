@@ -8,23 +8,23 @@ public class RectangleBound extends Bound2D<Rectangle> {
 
     public RectangleBound(float x, float y, float width, float height) {
         super(new Rectangle(AlignHelper.computeX(x, width, HorizontalAlign.CENTER),
-                AlignHelper.computeY(y, height, VerticalAlign.CENTER), width, height));
+                AlignHelper.computeY(y, height, VerticalAlign.CENTER), width, height), HorizontalAlign.CENTER, VerticalAlign.CENTER);
     }
 
     public RectangleBound(float x, float y, float width, float height, HorizontalAlign align) {
         super(new Rectangle(AlignHelper.computeX(x, width, align),
-                AlignHelper.computeY(y, height, VerticalAlign.CENTER), width, height));
+                AlignHelper.computeY(y, height, VerticalAlign.CENTER), width, height), align, VerticalAlign.CENTER);
     }
 
     public RectangleBound(float x, float y, float width, float height, VerticalAlign align) {
         super(new Rectangle(AlignHelper.computeX(x, width, HorizontalAlign.CENTER),
-                AlignHelper.computeY(y, height, align), width, height));
+                AlignHelper.computeY(y, height, align), width, height), HorizontalAlign.CENTER, align);
     }
 
     public RectangleBound(float x, float y, float width, float height,
                           HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
         super(new Rectangle(AlignHelper.computeX(x, width, horizontalAlign),
-                AlignHelper.computeY(y, height, verticalAlign), width, height));
+                AlignHelper.computeY(y, height, verticalAlign), width, height), horizontalAlign, verticalAlign);
     }
 
     @Override
@@ -49,12 +49,12 @@ public class RectangleBound extends Bound2D<Rectangle> {
 
     @Override
     public void setX(float x) {
-        bound.x = x;
+        bound.x = AlignHelper.computeX(x, bound.width, horizontalAlign);
     }
 
     @Override
     public void setY(float y) {
-        bound.y = y;
+        bound.y = AlignHelper.computeY(y, bound.height, verticalAlign);
     }
 
     @Override

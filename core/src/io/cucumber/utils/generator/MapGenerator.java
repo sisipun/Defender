@@ -23,28 +23,26 @@ public class MapGenerator {
         int currentPositionX = startPositionX;
         int currentPositionY = startPositionY;
 
-        map[currentPositionX][currentPositionY] = GameMap.Direction.DOWN;
-
         while (currentPositionY - 1 > 0) {
             int direction = random.nextInt(2);
             if (direction == 0) {
                 int size = random.nextInt(currentPositionX);
                 for (int i = 0; i < size; i++) {
-                    currentPositionX--;
                     map[currentPositionX][currentPositionY] = GameMap.Direction.LEFT;
+                    currentPositionX--;
                 }
             } else if (direction == 1) {
                 int size = random.nextInt(width - currentPositionX);
                 for (int i = 0; i < size; i++) {
-                    currentPositionX++;
                     map[currentPositionX][currentPositionY] = GameMap.Direction.RIGHT;
+                    currentPositionX++;
                 }
             }
 
-            currentPositionY--;
             map[currentPositionX][currentPositionY] = GameMap.Direction.DOWN;
             currentPositionY--;
             map[currentPositionX][currentPositionY] = GameMap.Direction.DOWN;
+            currentPositionY--;
         }
 
         return new GameMap(map, startPositionX, startPositionY, currentPositionX, currentPositionY);

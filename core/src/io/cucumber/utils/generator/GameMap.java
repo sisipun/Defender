@@ -2,13 +2,13 @@ package io.cucumber.utils.generator;
 
 public class GameMap {
 
-    private final int[][] map;
+    private final Direction[][] map;
     private final int startPositionX;
     private final int startPositionY;
     private final int endPositionX;
     private final int endPositionY;
 
-    public GameMap(int[][] map, int startPositionX, int startPositionY, int endPositionX, int endPositionY) {
+    public GameMap(Direction[][] map, int startPositionX, int startPositionY, int endPositionX, int endPositionY) {
         this.map = map;
         this.startPositionX = startPositionX;
         this.startPositionY = startPositionY;
@@ -16,7 +16,7 @@ public class GameMap {
         this.endPositionY = endPositionY;
     }
 
-    public int[][] getMap() {
+    public Direction[][] getMap() {
         return map;
     }
 
@@ -34,5 +34,13 @@ public class GameMap {
 
     public int getEndPositionY() {
         return endPositionY;
+    }
+
+    public enum Direction {
+        NONE,
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT;
     }
 }

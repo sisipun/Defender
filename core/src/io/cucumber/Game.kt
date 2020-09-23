@@ -37,7 +37,7 @@ class Game : Game() {
 
         map.map.forEachIndexed { i, row ->
             row.forEachIndexed { j, block ->
-                if (block == 1) {
+                if (block != GameMap.Direction.NONE) {
                     stage.addActor(SimpleRectangle(i * BLOCK_SIZE, j * BLOCK_SIZE + SCREEN_HEIGHT / 8, BLOCK_SIZE, BLOCK_SIZE, assets.block))
                 }
             }
@@ -55,7 +55,7 @@ class Game : Game() {
             override fun dragStart(event: InputEvent, x: Float, y: Float, pointer: Int): Payload {
                 val payload = Payload()
                 val item: MenuItem = (actor as Menu).getItem(x, y) ?: return payload
-                val actor = SimpleRectangle(item.x, item.y, item.width, item.height, item.region)
+                val actor = SimpleRectangle(item.x, item.y, BLOCK_SIZE, BLOCK_SIZE, item.region)
                 stage.addActor(actor)
                 payload.dragActor = actor
                 return payload

@@ -13,12 +13,12 @@ import com.badlogic.gdx.utils.viewport.StretchViewport
 import io.cucumber.base.model.bound.RectangleBound
 import io.cucumber.base.model.simple.SimpleRectangle
 import io.cucumber.manager.LevelManager
-import io.cucumber.model.Menu
-import io.cucumber.model.MenuItem
+import io.cucumber.model.map.Direction
+import io.cucumber.model.menu.Menu
+import io.cucumber.model.menu.MenuItem
 import io.cucumber.utils.constants.Constants.*
-import io.cucumber.utils.generator.GameMap
+import io.cucumber.model.map.GameMap
 import io.cucumber.utils.generator.MapGenerator
-import java.lang.String
 
 class Game : Game() {
 
@@ -38,9 +38,9 @@ class Game : Game() {
         val generator = MapGenerator()
         map = generator.generate((SCREEN_WIDTH / BLOCK_SIZE).toInt(), ((SCREEN_HEIGHT - SCREEN_HEIGHT / 8) / BLOCK_SIZE).toInt())
 
-        map.map.forEachIndexed { i, row ->
+        map.value.forEachIndexed { i, row ->
             row.forEachIndexed { j, block ->
-                if (block != GameMap.Direction.NONE) {
+                if (block != Direction.NONE) {
                     stage.addActor(SimpleRectangle(i * BLOCK_SIZE, j * BLOCK_SIZE + SCREEN_HEIGHT / 8, BLOCK_SIZE, BLOCK_SIZE, assets.block))
                 }
             }
@@ -78,18 +78,22 @@ class Game : Game() {
 
         Timer.schedule(object : Timer.Task() {
             override fun run() {
-                when (map.map[enemyX][enemyY]) {
-                    GameMap.Direction.DOWN -> {
+                when (map.value[enemyX][enemyY]) {
+                    Direction.DOWN -> {
                         enemyY--
                     }
-                    GameMap.Direction.LEFT -> {
+                    Direction.LEFT -> {
                         enemyX--
                     }
-                    GameMap.Direction.RIGHT -> {
+                    Direction.RIGHT -> {
                         enemyX++
                     }
-                    GameMap.Direction.UP -> {
+                    Direction.UP -> {
                         enemyY++
+                    }
+                    Direction.NONE -> {
+                        enemyX = map.startPositionX
+                        enemyY = map.startPositionY
                     }
                 }
 

@@ -1,4 +1,4 @@
-package io.cucumber.model;
+package io.cucumber.model.asset;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 

@@ -1,4 +1,4 @@
-package io.cucumber.model;
+package io.cucumber.model.menu;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

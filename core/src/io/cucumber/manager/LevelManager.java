@@ -3,7 +3,7 @@ package io.cucumber.manager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
-import io.cucumber.model.LevelAssets;
+import io.cucumber.model.asset.LevelAssets;
 
 public class LevelManager {
 

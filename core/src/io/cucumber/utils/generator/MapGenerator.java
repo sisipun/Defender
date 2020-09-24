@@ -2,18 +2,21 @@ package io.cucumber.utils.generator;
 
 import java.util.Random;
 
+import io.cucumber.model.map.Direction;
+import io.cucumber.model.map.GameMap;
+
 public class MapGenerator {
 
     public GameMap generate(int width, int height) {
         if (width <= 0 || height <= 0) {
-            return new GameMap(new GameMap.Direction[0][0], 0, 0, 0, 0);
+            return new GameMap(new Direction[0][0], 0, 0, 0, 0);
         }
 
         Random random = new Random();
-        GameMap.Direction[][] map = new GameMap.Direction[width][height];
+        Direction[][] map = new Direction[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                map[i][j] = GameMap.Direction.NONE;
+                map[i][j] = Direction.NONE;
             }
         }
 
@@ -28,20 +31,20 @@ public class MapGenerator {
             if (direction == 0) {
                 int size = random.nextInt(currentPositionX);
                 for (int i = 0; i < size; i++) {
-                    map[currentPositionX][currentPositionY] = GameMap.Direction.LEFT;
+                    map[currentPositionX][currentPositionY] = Direction.LEFT;
                     currentPositionX--;
                 }
             } else if (direction == 1) {
                 int size = random.nextInt(width - currentPositionX);
                 for (int i = 0; i < size; i++) {
-                    map[currentPositionX][currentPositionY] = GameMap.Direction.RIGHT;
+                    map[currentPositionX][currentPositionY] = Direction.RIGHT;
                     currentPositionX++;
                 }
             }
 
-            map[currentPositionX][currentPositionY] = GameMap.Direction.DOWN;
+            map[currentPositionX][currentPositionY] = Direction.DOWN;
             currentPositionY--;
-            map[currentPositionX][currentPositionY] = GameMap.Direction.DOWN;
+            map[currentPositionX][currentPositionY] = Direction.DOWN;
             currentPositionY--;
         }
 

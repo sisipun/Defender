@@ -10,6 +10,6 @@ import io.cucumber.base.model.bound.CircleBound;
 public class AnimatedCircle extends AnimationActor<Circle> {
 
     public AnimatedCircle(float x, float y, float size, Animation<TextureRegion> animation) {
-        super(new CircleBound(x, y, size / 2), 0f, 0f, animation, (byte) 0);
+        super(new CircleBound(x, y, size / 2), 0f, 0f, animation);
     }
 }

@@ -1,4 +1,4 @@
-package io.cucumber.base.model.bound;
+package io.cucumber.base.helper;
 
 public enum VerticalAlign {
     CENTER,

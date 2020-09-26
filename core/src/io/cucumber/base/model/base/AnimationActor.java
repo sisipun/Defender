@@ -14,16 +14,23 @@ public abstract class AnimationActor<T extends Shape2D> extends DynamicActor<T> 
     private float stateTime;
 
     public AnimationActor(Bound2D<T> bound, float horizontalVelocity,
-                          float verticalVelocity, Animation<TextureRegion> animation, byte orientation) {
-        super(bound, horizontalVelocity, verticalVelocity, animation.getKeyFrame(0), orientation);
+                          float verticalVelocity, Animation<TextureRegion> animation, boolean flipX, boolean flipY) {
+        super(bound, horizontalVelocity, verticalVelocity, animation.getKeyFrame(0), flipX, flipY);
+        this.animation = animation;
+        this.stateTime = 0f;
+    }
+
+    public AnimationActor(Bound2D<T> bound, float horizontalVelocity,
+                          float verticalVelocity, Animation<TextureRegion> animation) {
+        super(bound, horizontalVelocity, verticalVelocity, animation.getKeyFrame(0));
         this.animation = animation;
         this.stateTime = 0f;
     }
 
     public void init(Bound2D<T> bound, float horizontalVelocity,
-                     float verticalVelocity, Animation<TextureRegion> animation, byte orientation) {
+                     float verticalVelocity, Animation<TextureRegion> animation, boolean flipX, boolean flipY) {
         super.init(bound, horizontalVelocity, verticalVelocity, animation.getKeyFrame(0),
-                orientation);
+                flipX, flipY);
         this.animation = animation;
         this.stateTime = 0f;
     }

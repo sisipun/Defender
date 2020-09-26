@@ -2,29 +2,10 @@ package io.cucumber.base.model.bound;
 
 import com.badlogic.gdx.math.Circle;
 
-import io.cucumber.base.helper.AlignHelper;
-
 public class CircleBound extends Bound2D<Circle> {
 
     public CircleBound(float x, float y, float radius) {
-        super(new Circle(AlignHelper.computeX(x, radius, HorizontalAlign.CENTER),
-                AlignHelper.computeY(y, radius, VerticalAlign.CENTER), radius), HorizontalAlign.CENTER, VerticalAlign.CENTER);
-    }
-
-    public CircleBound(float x, float y, float radius, HorizontalAlign align) {
-        super(new Circle(AlignHelper.computeX(x, radius, align),
-                AlignHelper.computeY(y, radius, VerticalAlign.CENTER), radius), align, VerticalAlign.CENTER);
-    }
-
-    public CircleBound(float x, float y, float radius, VerticalAlign align) {
-        super(new Circle(AlignHelper.computeX(x, radius, HorizontalAlign.CENTER),
-                AlignHelper.computeY(y, radius, align), radius), HorizontalAlign.CENTER, align);
-    }
-
-    public CircleBound(float x, float y, float radius, HorizontalAlign horizontalAlign,
-                       VerticalAlign verticalAlign) {
-        super(new Circle(AlignHelper.computeX(x, radius, horizontalAlign),
-                AlignHelper.computeY(y, radius, verticalAlign), radius), horizontalAlign, verticalAlign);
+        super(new Circle(x, y, radius));
     }
 
     @Override
@@ -49,12 +30,12 @@ public class CircleBound extends Bound2D<Circle> {
 
     @Override
     public void setX(float x) {
-        bound.x = AlignHelper.computeX(x, bound.radius, horizontalAlign);
+        bound.x = x;
     }
 
     @Override
     public void setY(float y) {
-        bound.y = AlignHelper.computeY(y, bound.radius, verticalAlign);
+        bound.y = y;
     }
 
     @Override

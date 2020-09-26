@@ -10,6 +10,6 @@ import io.cucumber.base.model.bound.RectangleBound;
 public class AnimatedRectangle extends AnimationActor<Rectangle> {
 
     public AnimatedRectangle(float x, float y, float size, Animation<TextureRegion> animation) {
-        super(new RectangleBound(x, y, size, size), 0f, 0f, animation, (byte) 0);
+        super(new RectangleBound(x, y, size, size), 0f, 0f, animation);
     }
 }

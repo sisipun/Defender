@@ -1,8 +1,5 @@
 package io.cucumber.base.helper;
 
-import io.cucumber.base.model.bound.HorizontalAlign;
-import io.cucumber.base.model.bound.VerticalAlign;
-
 public class AlignHelper {
 
     public static float computeX(float x, float width, HorizontalAlign align) {

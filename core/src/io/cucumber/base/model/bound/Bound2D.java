@@ -6,14 +6,8 @@ public abstract class Bound2D<T extends Shape2D> {
 
     protected final T bound;
 
-    protected final HorizontalAlign horizontalAlign;
-
-    protected final VerticalAlign verticalAlign;
-
-    public Bound2D(T bound, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
+    public Bound2D(T bound) {
         this.bound = bound;
-        this.horizontalAlign = horizontalAlign;
-        this.verticalAlign = verticalAlign;
     }
 
     public abstract float getX();

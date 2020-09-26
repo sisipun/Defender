@@ -6,9 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 import io.cucumber.base.model.base.StaticActor;
-import io.cucumber.base.model.bound.HorizontalAlign;
 import io.cucumber.base.model.bound.RectangleBound;
-import io.cucumber.base.model.bound.VerticalAlign;
 
 public class Menu extends StaticActor<Rectangle> {
 
@@ -19,7 +17,7 @@ public class Menu extends StaticActor<Rectangle> {
         this.items = new Array<>();
         for (int i = 0; i < items.size; i++) {
             this.items.add(new MenuItem(new RectangleBound(getX() + i * 3 * bound.getHeight() / 2, getY(),
-                    bound.getHeight(), bound.getHeight(), HorizontalAlign.LEFT, VerticalAlign.TOP), items.get(i)));
+                    bound.getHeight(), bound.getHeight()), items.get(i)));
         }
     }
 

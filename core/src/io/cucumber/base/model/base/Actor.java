@@ -13,16 +13,30 @@ public abstract class Actor<T extends Shape2D> extends com.badlogic.gdx.scenes.s
 
     private Bound2D<T> bound;
 
+    private boolean flipX;
+
+    private boolean flipY;
+
+    public Actor(Bound2D<T> bound, TextureRegion region, boolean flipX, boolean flipY) {
+        init(bound, region, flipX, flipY);
+    }
+
     public Actor(Bound2D<T> bound, TextureRegion region) {
         init(bound, region);
     }
 
-    public Actor<T> init(Bound2D<T> bound, TextureRegion region) {
+    public Actor<T> init(Bound2D<T> bound, TextureRegion region, boolean flipX, boolean flipY) {
         this.bound = bound;
         this.region = region;
+        this.flipX = flipX;
+        this.flipY = flipY;
         setBounds(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
         setOrigin(getWidth()/ 2, getHeight() / 2);
         return this;
+    }
+
+    public Actor<T> init(Bound2D<T> bound, TextureRegion region) {
+        return init(bound, region, false, false);
     }
 
     public boolean isCollides(Actor<T> actor) {
@@ -41,16 +55,34 @@ public abstract class Actor<T extends Shape2D> extends com.badlogic.gdx.scenes.s
         this.region = region;
     }
 
+    public Bound2D<T> getBound() {
+        return bound;
+    }
+
     @Override
     public void setX(float x) {
         bound.setX(x);
-        super.setX(bound.getX());
+        super.setX(x);
     }
 
     @Override
     public void setY(float y) {
         bound.setY(y);
-        super.setY(bound.getY());
+        super.setY(y);
+    }
+
+    @Override
+    public void setPosition(float x, float y) {
+        bound.setX(x);
+        bound.setY(y);
+        super.setPosition(x, y);
+    }
+
+    @Override
+    public void setPosition(float x, float y, int alignment) {
+        bound.setX(x);
+        bound.setY(y);
+        super.setPosition(x, y, alignment);
     }
 
     @Override
@@ -69,16 +101,22 @@ public abstract class Actor<T extends Shape2D> extends com.badlogic.gdx.scenes.s
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.draw(
-                region,
+                region.getTexture(),
                 getX(),
                 getY(),
                 getOriginX(),
                 getOriginY(),
                 getWidth(),
                 getHeight(),
-                1F,
-                1F,
-                getRotation()
+                getScaleX(),
+                getScaleY(),
+                getRotation(),
+                region.getRegionX(),
+                region.getRegionY(),
+                region.getRegionWidth(),
+                region.getRegionHeight(),
+                flipX,
+                flipY
         );
     }
 

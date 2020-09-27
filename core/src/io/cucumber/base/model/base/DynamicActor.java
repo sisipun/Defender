@@ -22,14 +22,14 @@ public abstract class DynamicActor<T extends Shape2D> extends Actor<T> {
         this.velocity = new Vector2(horizontalVelocity, verticalVelocity);
     }
 
-    public DynamicActor init(Bound2D<T> bound, float horizontalVelocity, float verticalVelocity,
+    public DynamicActor<T> init(Bound2D<T> bound, float horizontalVelocity, float verticalVelocity,
                              TextureRegion region, boolean flipX, boolean flipY) {
         super.init(bound, region, flipX, flipY);
         this.velocity = new Vector2(horizontalVelocity, verticalVelocity);
         return this;
     }
 
-    public DynamicActor init(Bound2D<T> bound, float horizontalVelocity, float verticalVelocity,
+    public DynamicActor<T> init(Bound2D<T> bound, float horizontalVelocity, float verticalVelocity,
                              TextureRegion region) {
         super.init(bound, region);
         this.velocity = new Vector2(horizontalVelocity, verticalVelocity);

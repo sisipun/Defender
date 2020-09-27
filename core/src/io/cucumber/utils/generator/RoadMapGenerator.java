@@ -2,21 +2,20 @@ package io.cucumber.utils.generator;
 
 import java.util.Random;
 
-import io.cucumber.model.map.Direction;
-import io.cucumber.model.map.GameMap;
+import io.cucumber.model.road.RoadType;
 
-public class MapGenerator {
+public class RoadMapGenerator {
 
-    public GameMap generate(int width, int height) {
+    public RoadMap generate(int width, int height) {
         if (width <= 0 || height <= 0) {
-            return new GameMap(new Direction[0][0], 0, 0, 0, 0);
+            return new RoadMap(new RoadType[0][0], 0, 0, 0, 0);
         }
 
         Random random = new Random();
-        Direction[][] map = new Direction[width][height];
+        RoadType[][] map = new RoadType[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                map[i][j] = Direction.NONE;
+                map[i][j] = RoadType.NONE;
             }
         }
 
@@ -31,24 +30,26 @@ public class MapGenerator {
             if (direction == 0) {
                 int size = random.nextInt(currentPositionX);
                 for (int i = 0; i < size; i++) {
-                    map[currentPositionX][currentPositionY] = Direction.LEFT;
+                    map[currentPositionX][currentPositionY] = RoadType.LEFT;
                     currentPositionX--;
                 }
             } else if (direction == 1) {
                 int size = random.nextInt(width - currentPositionX);
                 for (int i = 0; i < size; i++) {
-                    map[currentPositionX][currentPositionY] = Direction.RIGHT;
+                    map[currentPositionX][currentPositionY] = RoadType.RIGHT;
                     currentPositionX++;
                 }
             }
 
-            map[currentPositionX][currentPositionY] = Direction.DOWN;
+            map[currentPositionX][currentPositionY] = RoadType.DOWN;
             currentPositionY--;
-            map[currentPositionX][currentPositionY] = Direction.DOWN;
+            map[currentPositionX][currentPositionY] = RoadType.DOWN;
             currentPositionY--;
         }
 
-        return new GameMap(map, startPositionX, startPositionY, currentPositionX, currentPositionY);
+        map[currentPositionX][currentPositionY] = RoadType.END;
+
+        return new RoadMap(map, startPositionX, startPositionY, currentPositionX, currentPositionY);
     }
 
 }

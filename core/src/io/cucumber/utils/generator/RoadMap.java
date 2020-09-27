@@ -1,14 +1,16 @@
-package io.cucumber.model.map;
+package io.cucumber.utils.generator;
 
-public class GameMap {
+import io.cucumber.model.road.RoadType;
 
-    private final Direction[][] value;
+public class RoadMap {
+
+    private final RoadType[][] value;
     private final int startPositionX;
     private final int startPositionY;
     private final int endPositionX;
     private final int endPositionY;
 
-    public GameMap(Direction[][] value, int startPositionX, int startPositionY, int endPositionX, int endPositionY) {
+    public RoadMap(RoadType[][] value, int startPositionX, int startPositionY, int endPositionX, int endPositionY) {
         this.value = value;
         this.startPositionX = startPositionX;
         this.startPositionY = startPositionY;
@@ -16,7 +18,7 @@ public class GameMap {
         this.endPositionY = endPositionY;
     }
 
-    public Direction[][] getValue() {
+    public RoadType[][] getValue() {
         return value;
     }
 

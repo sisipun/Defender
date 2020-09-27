@@ -27,12 +27,13 @@ public abstract class AnimationActor<T extends Shape2D> extends DynamicActor<T> 
         this.stateTime = 0f;
     }
 
-    public void init(Bound2D<T> bound, float horizontalVelocity,
+    public AnimationActor<T> init(Bound2D<T> bound, float horizontalVelocity,
                      float verticalVelocity, Animation<TextureRegion> animation, boolean flipX, boolean flipY) {
         super.init(bound, horizontalVelocity, verticalVelocity, animation.getKeyFrame(0),
                 flipX, flipY);
         this.animation = animation;
         this.stateTime = 0f;
+        return this;
     }
 
     @Override

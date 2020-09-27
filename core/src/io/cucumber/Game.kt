@@ -8,30 +8,31 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.Timer
 import com.badlogic.gdx.utils.viewport.StretchViewport
 import io.cucumber.base.helper.AlignHelper
 import io.cucumber.base.helper.HorizontalAlign
 import io.cucumber.base.model.bound.RectangleBound
-import io.cucumber.base.model.simple.SimpleCircle
-import io.cucumber.base.model.simple.SimpleRectangle
 import io.cucumber.manager.LevelManager
+import io.cucumber.model.asset.LevelAssets
 import io.cucumber.model.character.Defender
 import io.cucumber.model.character.Enemy
-import io.cucumber.model.map.Direction
+import io.cucumber.model.road.RoadType
 import io.cucumber.model.menu.Menu
 import io.cucumber.model.menu.MenuItem
+import io.cucumber.model.road.RoadBlock
 import io.cucumber.utils.constants.Constants.*
-import io.cucumber.model.map.GameMap
-import io.cucumber.utils.generator.MapGenerator
+import io.cucumber.utils.generator.RoadMap
+import io.cucumber.utils.generator.RoadMapGenerator
 
 class Game : Game() {
 
     lateinit var stage: Stage
+    lateinit var assets: LevelAssets
     lateinit var menu: Menu
-    lateinit var map: GameMap
+    lateinit var roadMap: RoadMap
     lateinit var enemy: Enemy
     lateinit var defenders: Array<Defender>
+    lateinit var road: Array<RoadBlock>
 
     override fun create() {
         val screenViewport = StretchViewport(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -39,22 +40,26 @@ class Game : Game() {
         Gdx.input.inputProcessor = stage
 
         LevelManager.loadLevels()
-        val assets = LevelManager.get()
+        assets = LevelManager.get()
 
-        val generator = MapGenerator()
-        map = generator.generate((SCREEN_WIDTH / BLOCK_SIZE).toInt(), ((SCREEN_HEIGHT - SCREEN_HEIGHT / 8) / BLOCK_SIZE).toInt())
+        road = Array()
 
-        map.value.forEachIndexed { i, row ->
-            row.forEachIndexed { j, block ->
-                if (block != Direction.NONE) {
-                    stage.addActor(SimpleRectangle(i * BLOCK_SIZE, j * BLOCK_SIZE + SCREEN_HEIGHT / 8, BLOCK_SIZE, BLOCK_SIZE, assets.block))
+        val generator = RoadMapGenerator()
+        roadMap = generator.generate((SCREEN_WIDTH / BLOCK_SIZE).toInt(), ((SCREEN_HEIGHT - SCREEN_HEIGHT / 8) / BLOCK_SIZE).toInt())
+
+        roadMap.value.forEachIndexed { i, row ->
+            row.forEachIndexed { j, roadType ->
+                if (roadType != RoadType.NONE) {
+                    val block = RoadBlock(i * BLOCK_SIZE, j * BLOCK_SIZE + SCREEN_HEIGHT / 8,
+                            BLOCK_SIZE, assets.block, BLOCK_SIZE / 16f, assets.menuBackground, roadType)
+                    road.add(block)
+                    stage.addActor(block)
                 }
             }
         }
 
-        var enemyX = map.startPositionX
-        var enemyY = map.startPositionY
-        enemy = Enemy(enemyX * BLOCK_SIZE, enemyY * BLOCK_SIZE + SCREEN_HEIGHT / 8, ENEMY_SIZE, assets.enemy, ENEMY_HEALTH)
+        enemy = Enemy(roadMap.startPositionX * BLOCK_SIZE, roadMap.startPositionY * BLOCK_SIZE + SCREEN_HEIGHT / 8, ENEMY_SIZE,
+                ENEMY_VELOCITY, ENEMY_VELOCITY, assets.enemy, ENEMY_HEALTH)
         stage.addActor(enemy)
 
         menu = Menu(
@@ -71,7 +76,7 @@ class Game : Game() {
             override fun dragStart(event: InputEvent, x: Float, y: Float, pointer: Int): Payload {
                 val payload = Payload()
                 val item: MenuItem = (actor as Menu).getItem(x, y) ?: return payload
-                val actor = Defender(x, y, DEFENDER_SIZE, DEFENDER_COLLIDER_SIZE, item.region, DEFENDER_POWER)
+                val actor = Defender(x, y, DEFENDER_SIZE, item.region, DEFENDER_COLLIDER_SIZE, assets.menuBackground, DEFENDER_POWER)
                 stage.addActor(actor)
                 payload.dragActor = actor
                 return payload
@@ -96,49 +101,6 @@ class Game : Game() {
                 }
             }
         })
-
-        Timer.schedule(object : Timer.Task() {
-            override fun run() {
-                when (map.value[enemyX][enemyY]) {
-                    Direction.DOWN -> {
-                        enemyY--
-                    }
-                    Direction.LEFT -> {
-                        enemyX--
-                    }
-                    Direction.RIGHT -> {
-                        enemyX++
-                    }
-                    Direction.UP -> {
-                        enemyY++
-                    }
-                    Direction.NONE -> {
-                        enemyX = map.startPositionX
-                        enemyY = map.startPositionY
-                    }
-                }
-
-                if (enemyX == map.endPositionX && enemyY == map.endPositionY) {
-                    enemyX = map.startPositionX
-                    enemyY = map.startPositionY
-                }
-
-                defenders.forEach {
-                    if (it.isCollidesZone(enemy)) {
-                        enemy.hit(it.power)
-                    }
-                }
-
-                if (enemy.isDead) {
-                    enemyX = map.startPositionX
-                    enemyY = map.startPositionY
-                    enemy.init(enemyX * BLOCK_SIZE, enemyY * BLOCK_SIZE + SCREEN_HEIGHT / 8, ENEMY_SIZE, assets.enemy, ENEMY_HEALTH)
-                }
-
-                enemy.x = enemyX * BLOCK_SIZE
-                enemy.y = enemyY * BLOCK_SIZE + SCREEN_HEIGHT / 8
-            }
-        }, .5f, .5f)
     }
 
     override fun render() {
@@ -147,6 +109,23 @@ class Game : Game() {
 
         stage.act()
         stage.draw()
+
+        defenders.forEach {
+            if (it.isCollidesZone(enemy)) {
+                enemy.hit(it.power)
+            }
+        }
+
+        road.forEach {
+            if (it.isCollidesZone(enemy)) {
+                enemy.changeDirection(it.type)
+            }
+        }
+
+        if (enemy.isDead) {
+            enemy.init(roadMap.startPositionX * BLOCK_SIZE, roadMap.startPositionY * BLOCK_SIZE + SCREEN_HEIGHT / 8,
+                    ENEMY_SIZE, ENEMY_VELOCITY, ENEMY_VELOCITY, assets.enemy, ENEMY_HEALTH)
+        }
     }
 
     override fun dispose() {

@@ -11,14 +11,14 @@ block
   orig: 225, 225
   offset: 0, 0
   index: -1
-enemy
+defender
   rotate: false
   xy: 229, 2
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
-hero
+enemy
   rotate: false
   xy: 456, 2
   size: 225, 225

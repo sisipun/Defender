@@ -10,18 +10,18 @@ import io.cucumber.model.road.RoadType;
 
 public class Enemy extends DynamicActor<Rectangle> {
 
-    private int health;
+    private float health;
     private Vector2 initialVelocity;
 
     public Enemy(float x, float y, float size, float horizontalVelocity, float verticalVelocity,
-                 TextureRegion region, int health) {
+                 TextureRegion region, float health) {
         super(new RectangleBound(x, y, size, size), horizontalVelocity, verticalVelocity, region);
         this.health = health;
         this.initialVelocity = new Vector2(horizontalVelocity, verticalVelocity);
     }
 
     public Enemy init(float x, float y, float size, float horizontalVelocity, float verticalVelocity,
-                                    TextureRegion region, int health) {
+                                    TextureRegion region, float health) {
         super.init(new RectangleBound(x, y, size, size), horizontalVelocity, verticalVelocity, region);
         this.health = health;
         this.initialVelocity = new Vector2(horizontalVelocity, verticalVelocity);
@@ -53,7 +53,7 @@ public class Enemy extends DynamicActor<Rectangle> {
         }
     }
 
-    public void hit(int power) {
+    public void hit(float power) {
         health -= power;
     }
 

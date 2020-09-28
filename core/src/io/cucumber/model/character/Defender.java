@@ -69,7 +69,7 @@ public class Defender extends StaticActor<Rectangle> {
         super.setPosition(x, y, alignment);
     }
 
-    public int getPower() {
+    public float getPower() {
         return power;
     }
 }

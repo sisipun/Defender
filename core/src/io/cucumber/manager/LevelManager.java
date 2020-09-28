@@ -7,22 +7,33 @@ import io.cucumber.model.asset.LevelAssets;
 
 public class LevelManager {
 
-    private static TextureAtlas atlas;
-    private static LevelAssets levelAssets;
+    private TextureAtlas atlas;
+    private Level level;
 
-    public static void loadLevels() {
+    public Level loadLevel() {
+        if (level != null) {
+            return level;
+        }
         atlas = new TextureAtlas(Gdx.files.internal("atlas/game.atlas"));
-        levelAssets = new LevelAssets(atlas, "hero", "enemy", "block", "menu_background");
+        level = new Level(new LevelAssets(atlas, "defender", "enemy", "block", "menu_background"));
+        return level;
     }
 
-    public static void removeLevels() {
+    public void removeLevel() {
+        level = null;
         atlas.dispose();
     }
 
-    public static LevelAssets get() {
-        return levelAssets;
-    }
+    public static class Level {
 
-    private LevelManager() {
+        private final LevelAssets levelAssets;
+
+        public Level(LevelAssets levelAssets) {
+            this.levelAssets = levelAssets;
+        }
+
+        public LevelAssets getAssets() {
+            return levelAssets;
+        }
     }
 }

@@ -17,7 +17,7 @@ public class Constants {
     //Enemy
     public static final float ENEMY_SIZE = 50;
     public static final float ENEMY_VELOCITY = 100;
-    public static final int ENEMY_HEALTH = 10;
+    public static final float ENEMY_HEALTH = 10;
 
     private Constants() {
     }

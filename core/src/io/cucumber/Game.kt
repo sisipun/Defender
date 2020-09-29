@@ -90,13 +90,16 @@ class Game : Game() {
             }
 
             override fun dragStop(event: InputEvent?, x: Float, y: Float, pointer: Int, payload: Payload?, target: DragAndDrop.Target?) {
-                if (menu.isContains(x, y)) {
-                    payload?.dragActor?.remove()
-                } else {
-                    payload?.let {
-                        val defender = it.dragActor as Defender
-                        it.dragActor.x = AlignHelper.computeX(it.dragActor.x, it.dragActor.width, HorizontalAlign.LEFT)
-                        it.dragActor.y = y
+                if (payload != null && payload.dragActor != null) {
+                    val defender = payload.dragActor as Defender
+                    defender.x = AlignHelper.computeX(x, defender.width, HorizontalAlign.RIGHT)
+                    defender.y = y
+                    if (menu.isCollides(defender) ||
+                            enemy.isCollides(defender) ||
+                            road.any { it.isCollides(defender) } ||
+                            defenders.any { it.isCollides(defender) }) {
+                        defender.remove()
+                    } else {
                         defenders.add(defender)
                     }
                 }

@@ -13,7 +13,6 @@ import io.cucumber.base.helper.AlignHelper
 import io.cucumber.base.helper.HorizontalAlign
 import io.cucumber.base.model.bound.RectangleBound
 import io.cucumber.manager.LevelManager
-import io.cucumber.model.asset.LevelAssets
 import io.cucumber.model.character.Defender
 import io.cucumber.model.character.Enemy
 import io.cucumber.model.road.RoadType
@@ -46,21 +45,39 @@ class Game : Game() {
         road = Array()
 
         val generator = RoadMapGenerator()
-        roadMap = generator.generate((SCREEN_WIDTH / BLOCK_SIZE).toInt(), ((SCREEN_HEIGHT - SCREEN_HEIGHT / 8) / BLOCK_SIZE).toInt())
+        roadMap = generator.generate(
+                (SCREEN_WIDTH / BLOCK_SIZE).toInt(),
+                ((SCREEN_HEIGHT - SCREEN_HEIGHT / 8) / BLOCK_SIZE).toInt()
+        )
 
         roadMap.value.forEachIndexed { i, row ->
             row.forEachIndexed { j, roadType ->
                 if (roadType != RoadType.NONE) {
-                    val block = RoadBlock(i * BLOCK_SIZE, j * BLOCK_SIZE + SCREEN_HEIGHT / 8,
-                            BLOCK_SIZE, level.assets.block, BLOCK_SIZE / 16f, level.assets.menuBackground, roadType)
+                    val block = RoadBlock(
+                            i * BLOCK_SIZE,
+                            j * BLOCK_SIZE + SCREEN_HEIGHT / 8,
+                            BLOCK_SIZE,
+                            level.assets.block,
+                            roadType,
+                            BLOCK_ZONE_SIZE,
+                            BLOCK_ZONE_ALPHA,
+                            level.assets.menuBackground
+                    )
                     road.add(block)
                     stage.addActor(block)
                 }
             }
         }
 
-        enemy = Enemy(roadMap.startPositionX * BLOCK_SIZE, roadMap.startPositionY * BLOCK_SIZE + SCREEN_HEIGHT / 8, ENEMY_SIZE,
-                ENEMY_VELOCITY, ENEMY_VELOCITY, level.assets.enemy, ENEMY_HEALTH)
+        enemy = Enemy(
+                roadMap.startPositionX * BLOCK_SIZE,
+                roadMap.startPositionY * BLOCK_SIZE + SCREEN_HEIGHT / 8,
+                ENEMY_SIZE,
+                ENEMY_VELOCITY,
+                ENEMY_VELOCITY,
+                level.assets.enemy,
+                ENEMY_HEALTH
+        )
         stage.addActor(enemy)
 
         menu = Menu(
@@ -77,7 +94,16 @@ class Game : Game() {
             override fun dragStart(event: InputEvent, x: Float, y: Float, pointer: Int): Payload {
                 val payload = Payload()
                 val item: MenuItem = (actor as Menu).getItem(x, y) ?: return payload
-                val actor = Defender(x, y, DEFENDER_SIZE, item.region, DEFENDER_COLLIDER_SIZE, level.assets.menuBackground, DEFENDER_POWER)
+                val actor = Defender(
+                        x,
+                        y,
+                        DEFENDER_SIZE,
+                        item.region,
+                        DEFENDER_POWER,
+                        DEFENDER_ZONE_SIZE,
+                        DEFENDER_ZONE_ALPHA,
+                        level.assets.menuBackground
+                )
                 stage.addActor(actor)
                 payload.dragActor = actor
                 return payload
@@ -127,8 +153,15 @@ class Game : Game() {
         }
 
         if (enemy.isDead) {
-            enemy.init(roadMap.startPositionX * BLOCK_SIZE, roadMap.startPositionY * BLOCK_SIZE + SCREEN_HEIGHT / 8,
-                    ENEMY_SIZE, ENEMY_VELOCITY, ENEMY_VELOCITY, level.assets.enemy, ENEMY_HEALTH)
+            enemy.init(
+                    roadMap.startPositionX * BLOCK_SIZE,
+                    roadMap.startPositionY * BLOCK_SIZE + SCREEN_HEIGHT / 8,
+                    ENEMY_SIZE,
+                    ENEMY_VELOCITY,
+                    ENEMY_VELOCITY,
+                    level.assets.enemy,
+                    ENEMY_HEALTH
+            )
         }
     }
 

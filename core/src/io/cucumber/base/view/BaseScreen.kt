@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ScreenAdapter
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.scenes.scene2d.Actor
-import com.badlogic.gdx.utils.Array
 import io.cucumber.Game
 
 
@@ -22,7 +21,7 @@ abstract class BaseScreen(
     }
 
     override fun render(delta: Float) {
-        Gdx.gl.glClearColor(1f, 1f, 1f, 1f)
+        Gdx.gl.glClearColor(0f, 0f, 0f, 0f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         game.stage.act(delta)
@@ -35,12 +34,6 @@ abstract class BaseScreen(
 
     protected fun addActor(actor: Actor) {
         game.stage.addActor(actor)
-    }
-
-    protected fun addActors(actors: Array<Actor>) {
-        for (actor in actors) {
-            addActor(actor)
-        }
     }
 
     protected fun setScreen(screen: BaseScreen) {

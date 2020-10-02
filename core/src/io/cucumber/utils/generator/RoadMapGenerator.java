@@ -2,13 +2,14 @@ package io.cucumber.utils.generator;
 
 import java.util.Random;
 
+import io.cucumber.model.road.RoadMap;
 import io.cucumber.model.road.RoadType;
 
 public class RoadMapGenerator {
 
-    public RoadMap generate(int width, int height) {
+    public io.cucumber.model.road.RoadMap generate(int width, int height) {
         if (width <= 0 || height <= 0) {
-            return new RoadMap(new RoadType[0][0], 0, 0, 0, 0);
+            return new io.cucumber.model.road.RoadMap(new RoadType[0][0], 0, 0, 0, 0);
         }
 
         Random random = new Random();

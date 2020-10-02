@@ -1,6 +1,4 @@
-package io.cucumber.utils.generator;
-
-import io.cucumber.model.road.RoadType;
+package io.cucumber.model.road;
 
 public class RoadMap {
 

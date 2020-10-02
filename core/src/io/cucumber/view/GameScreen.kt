@@ -17,7 +17,7 @@ import io.cucumber.model.menu.MenuItem
 import io.cucumber.model.road.RoadBlock
 import io.cucumber.model.road.RoadType
 import io.cucumber.utils.constants.Constants.*
-import io.cucumber.utils.generator.RoadMap
+import io.cucumber.model.road.RoadMap
 import io.cucumber.utils.generator.RoadMapGenerator
 
 class GameScreen(

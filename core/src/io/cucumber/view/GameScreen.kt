@@ -5,19 +5,18 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop
 import com.badlogic.gdx.utils.Array
 import io.cucumber.Game
-import io.cucumber.base.helper.AlignHelper
-import io.cucumber.base.helper.HorizontalAlign
 import io.cucumber.base.model.bound.RectangleBound
 import io.cucumber.base.view.BaseScreen
 import io.cucumber.manager.LevelManager
 import io.cucumber.model.character.Defender
 import io.cucumber.model.character.Enemy
+import io.cucumber.model.character.GameZone
 import io.cucumber.model.menu.Menu
 import io.cucumber.model.menu.MenuItem
 import io.cucumber.model.road.RoadBlock
+import io.cucumber.model.road.RoadMap
 import io.cucumber.model.road.RoadType
 import io.cucumber.utils.constants.Constants.*
-import io.cucumber.model.road.RoadMap
 import io.cucumber.utils.generator.RoadMapGenerator
 
 class GameScreen(
@@ -30,6 +29,13 @@ class GameScreen(
     private val defenders: Array<Defender> = Array()
 
     private lateinit var roadMap: RoadMap
+    private val gameZone: GameZone = GameZone(
+            0f,
+            SCREEN_HEIGHT / 8,
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT - SCREEN_HEIGHT / 8,
+            level.assets.background
+    )
     private val enemy: Enemy = Enemy(
             0f,
             0f,
@@ -68,30 +74,45 @@ class GameScreen(
 
             override fun dragStop(event: InputEvent?, x: Float, y: Float, pointer: Int,
                                   payload: DragAndDrop.Payload?, target: DragAndDrop.Target?) {
-                if (payload == null || payload.dragActor == null) {
-                    return
-                }
-
-                val defender = payload.dragActor as Defender
-                defender.x = AlignHelper.computeX(x, defender.width, HorizontalAlign.RIGHT)
-                defender.y = y
-                if (menu.isCollides(defender) ||
-                        enemy.isCollides(defender) ||
-                        road.any { it.isCollides(defender) } ||
-                        defenders.any { it.isCollides(defender) }) {
-                    defender.remove()
-                } else {
-                    defenders.add(defender)
-                }
+                val defender = payload?.dragActor as Defender? ?: return
+                defender.remove()
             }
         })
+        dragAndDrop.addTarget(object : DragAndDrop.Target(gameZone) {
+            override fun drag(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float, y: Float, pointer: Int): Boolean {
+                val defender = payload?.dragActor as Defender? ?: return false
+
+                return !menu.isCollides(defender) &&
+                        !enemy.isCollides(defender) &&
+                        !road.any { it.isCollides(defender) } &&
+                        !defenders.any { it.isCollides(defender) }
+            }
+
+            override fun drop(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float, y: Float, pointer: Int) {
+                val defenderItem = payload?.dragActor as Defender? ?: return
+                val defender = Defender(defenderItem)
+                defenders.add(defender)
+                addActor(defender)
+            }
+        })
+
 
         init()
     }
 
-    fun init() {
+    fun init(): GameScreen {
         enemy.remove()
         menu.remove()
+        gameZone.remove()
+
+        gameZone.init(
+                0f,
+                SCREEN_HEIGHT / 8,
+                SCREEN_WIDTH,
+                SCREEN_HEIGHT - SCREEN_HEIGHT / 8,
+                level.assets.background
+        )
+        addActor(gameZone)
 
         roadMap = roadMapGenerator.generate(
                 (SCREEN_WIDTH / BLOCK_SIZE).toInt(),
@@ -126,11 +147,16 @@ class GameScreen(
                 level.assets.enemy,
                 ENEMY_HEALTH
         )
+        addActor(enemy)
+
         menu.init(
                 RectangleBound(0f, 0f, SCREEN_WIDTH, SCREEN_HEIGHT / 8),
                 level.assets.menuBackground,
                 Array.with(level.assets.defender)
         )
+        addActor(menu)
+
+        return this
     }
 
     override fun stateCheck() {
@@ -157,8 +183,5 @@ class GameScreen(
                     ENEMY_HEALTH
             )
         }
-
-        addActor(enemy)
-        addActor(menu)
     }
 }

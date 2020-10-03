@@ -21,13 +21,14 @@ public class Menu extends StaticActor<Rectangle> {
         }
     }
 
-    public void init(RectangleBound bound, TextureRegion region, Array<TextureRegion> items) {
+    public Menu init(RectangleBound bound, TextureRegion region, Array<TextureRegion> items) {
         super.init(bound, region);
         this.items.clear();
         for (int i = 0; i < items.size; i++) {
             this.items.add(new MenuItem(new RectangleBound(getX() + i * 3 * bound.getHeight() / 2, getY(),
                     bound.getHeight(), bound.getHeight()), items.get(i)));
         }
+        return this;
     }
 
     @Override

@@ -60,4 +60,8 @@ public class Zone extends StaticActor<Rectangle> {
                 alignment
         );
     }
+
+    public float getAlpha() {
+        return alpha;
+    }
 }

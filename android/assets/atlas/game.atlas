@@ -1,33 +1,40 @@
 
 game.png
-size: 1024,256
+size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+background
+  rotate: false
+  xy: 2, 456
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
 block
   rotate: false
-  xy: 2, 2
+  xy: 2, 229
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 defender
   rotate: false
-  xy: 229, 2
+  xy: 516, 743
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 enemy
   rotate: false
-  xy: 456, 2
+  xy: 2, 2
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 menu_background
   rotate: false
-  xy: 683, 2
+  xy: 229, 229
   size: 225, 225
   orig: 225, 225
   offset: 0, 0

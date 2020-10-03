@@ -19,6 +19,12 @@ public class Defender extends StaticActor<Rectangle> {
         this.power = power;
     }
 
+    public Defender(Defender defender) {
+        super(new RectangleBound(defender.getX(), defender.getY(), defender.getWidth(), defender.getHeight()), defender.getRegion());
+        this.zone = new Zone(this, defender.zone.getWidth(), defender.zone.getAlpha(), defender.zone.getRegion());
+        this.power = defender.power;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         zone.draw(batch, parentAlpha);

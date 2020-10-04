@@ -65,7 +65,7 @@ class GameScreen(
                         DEFENDER_POWER,
                         DEFENDER_ZONE_SIZE,
                         DEFENDER_ZONE_ALPHA,
-                        level.assets.menuBackground
+                        level.assets.zone
                 )
                 payload.dragActor = actor
                 addActor(actor)
@@ -160,10 +160,18 @@ class GameScreen(
     }
 
     override fun stateCheck() {
-        defenders.forEach {
+        val hited = defenders.any {
             if (it.isCollidesZone(enemy)) {
                 enemy.hit(it.power * Gdx.graphics.deltaTime)
+                return@any true
             }
+
+            return@any false
+        }
+        if (hited) {
+            enemy.region = level.assets.menuBackground
+        } else {
+            enemy.region = level.assets.enemy
         }
 
         road.forEach {

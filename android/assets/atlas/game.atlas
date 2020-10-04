@@ -6,36 +6,43 @@ filter: Nearest,Nearest
 repeat: none
 background
   rotate: false
-  xy: 2, 456
+  xy: 2, 484
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 block
   rotate: false
-  xy: 2, 229
+  xy: 516, 771
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 defender
   rotate: false
-  xy: 516, 743
+  xy: 516, 544
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 enemy
   rotate: false
-  xy: 2, 2
+  xy: 743, 771
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 menu_background
   rotate: false
-  xy: 229, 229
+  xy: 743, 544
   size: 225, 225
   orig: 225, 225
+  offset: 0, 0
+  index: -1
+zone
+  rotate: false
+  xy: 2, 2
+  size: 479, 480
+  orig: 479, 480
   offset: 0, 0
   index: -1

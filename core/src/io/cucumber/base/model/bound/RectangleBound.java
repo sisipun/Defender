@@ -50,11 +50,11 @@ public class RectangleBound extends Bound2D<Rectangle> {
 
     @Override
     public boolean overlaps(Bound2D<Rectangle> otherBound) {
-        return bound.overlaps(otherBound.getBound());
+        return bound.overlaps(otherBound.getValue());
     }
 
     @Override
-    protected Rectangle getBound() {
+    public Rectangle getValue() {
         return bound;
     }
 

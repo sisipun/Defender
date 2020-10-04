@@ -15,7 +15,8 @@ public class LevelManager {
             return level;
         }
         atlas = new TextureAtlas(Gdx.files.internal("atlas/game.atlas"));
-        level = new Level(new LevelAssets(atlas, "defender", "enemy", "block", "background", "menu_background"));
+        level = new Level(new LevelAssets(atlas, "defender", "enemy", "block", "zone", "background",
+                "menu_background"));
         return level;
     }
 

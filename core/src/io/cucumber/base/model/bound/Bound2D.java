@@ -28,7 +28,7 @@ public abstract class Bound2D<T extends Shape2D> {
 
     public abstract boolean overlaps(Bound2D<T> otherBound);
 
-    protected abstract T getBound();
+    public abstract T getValue();
 
     public abstract boolean contains(float x, float y);
 }

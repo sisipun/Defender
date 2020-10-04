@@ -5,17 +5,17 @@ import com.badlogic.gdx.math.Circle;
 public class CircleBound extends Bound2D<Circle> {
 
     public CircleBound(float x, float y, float radius) {
-        super(new Circle(x, y, radius));
+        super(new Circle(x + radius, y + radius, radius));
     }
 
     @Override
     public float getX() {
-        return bound.x;
+        return bound.x - bound.radius;
     }
 
     @Override
     public float getY() {
-        return bound.y;
+        return bound.y - bound.radius;
     }
 
     @Override
@@ -30,12 +30,12 @@ public class CircleBound extends Bound2D<Circle> {
 
     @Override
     public void setX(float x) {
-        bound.x = x;
+        bound.x = x + bound.radius;
     }
 
     @Override
     public void setY(float y) {
-        bound.y = y;
+        bound.y = y + bound.radius;
     }
 
     @Override
@@ -50,11 +50,11 @@ public class CircleBound extends Bound2D<Circle> {
 
     @Override
     public boolean overlaps(Bound2D<Circle> otherBound) {
-        return bound.overlaps(otherBound.getBound());
+        return bound.overlaps(otherBound.getValue());
     }
 
     @Override
-    protected Circle getBound() {
+    public Circle getValue() {
         return bound;
     }
 

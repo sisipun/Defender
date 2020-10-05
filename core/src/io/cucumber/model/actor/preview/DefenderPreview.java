@@ -1,4 +1,4 @@
-package io.cucumber.model.road;
+package io.cucumber.model.actor.preview;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -6,27 +6,24 @@ import com.badlogic.gdx.math.Rectangle;
 
 import io.cucumber.base.model.base.StaticActor;
 import io.cucumber.base.model.bound.RectangleBound;
-import io.cucumber.model.character.Enemy;
-import io.cucumber.model.character.Zone;
 
-public class RoadBlock extends StaticActor<Rectangle> {
+public class DefenderPreview extends StaticActor<Rectangle> {
 
-    private RoadType roadType;
-    private Zone zone;
+    private DefenderZonePreview zone;
+    private float power;
 
-    public RoadBlock(float x, float y, float size, TextureRegion region, RoadType roadType,
-                     float zoneSize, float zoneAlpha, TextureRegion zoneRegion) {
+    public DefenderPreview(float x, float y, float size, TextureRegion region, float power, float zoneSize,
+                    float zoneAlpha, TextureRegion zoneRegion) {
         super(new RectangleBound(x, y, size, size), region);
-        this.roadType = roadType;
-        this.zone = new Zone(this, zoneSize, zoneAlpha, zoneRegion);
+        this.power = power;
+        this.zone = new DefenderZonePreview(this, zoneSize, zoneAlpha, zoneRegion);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
         zone.draw(batch, parentAlpha);
+        super.draw(batch, parentAlpha);
     }
-
     @Override
     public void setX(float x) {
         zone.setX(x);
@@ -51,11 +48,20 @@ public class RoadBlock extends StaticActor<Rectangle> {
         super.setPosition(x, y, alignment);
     }
 
-    public boolean isCollidesZone(Enemy enemy) {
-        return zone.isCollides(enemy);
+
+    public TextureRegion getZoneRegion() {
+        return zone.getRegion();
     }
 
-    public RoadType getType() {
-        return roadType;
+    public float getZoneAlpha() {
+        return zone.getAlpha();
+    }
+
+    public float getZoneSize() {
+        return zone.getSize();
+    }
+
+    public float getPower() {
+        return power;
     }
 }

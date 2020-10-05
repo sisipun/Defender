@@ -1,4 +1,4 @@
-package io.cucumber.model.character;
+package io.cucumber.model.actor;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import io.cucumber.base.model.base.DynamicActor;
 import io.cucumber.base.model.bound.RectangleBound;
-import io.cucumber.model.road.RoadType;
+import io.cucumber.model.actor.road.RoadType;
 
 public class Enemy extends DynamicActor<Rectangle> {
 

@@ -1,4 +1,4 @@
-package io.cucumber.model.road;
+package io.cucumber.model.actor.road;
 
 public class RoadMap {
 

@@ -1,28 +1,28 @@
-package io.cucumber.model.character;
+package io.cucumber.model.actor.preview;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Intersector;
 
-import io.cucumber.base.model.base.Actor;
 import io.cucumber.base.model.base.StaticActor;
 import io.cucumber.base.model.bound.CircleBound;
 
-public class Zone extends StaticActor<Circle> {
+public class DefenderZonePreview extends StaticActor<Circle> {
 
-    private Actor actor;
+    private DefenderPreview defender;
     private float alpha;
+    private float size;
 
-    public Zone(Actor actor, float size, float alpha, TextureRegion region) {
+    public DefenderZonePreview(DefenderPreview defender, float size, float alpha, TextureRegion region) {
         super(new CircleBound(
-                actor.getX() + actor.getWidth() / 2f - size / 2f,
-                actor.getY() + actor.getHeight() / 2f - size / 2f,
+                defender.getX() + defender.getWidth() / 2f - size / 2f,
+                defender.getY() + defender.getHeight() / 2f - size / 2f,
                 size / 2
         ), region);
-        this.actor = actor;
+        this.defender = defender;
         this.alpha = alpha;
+        this.size = size;
     }
 
     @Override
@@ -36,27 +36,27 @@ public class Zone extends StaticActor<Circle> {
 
     @Override
     public void setX(float x) {
-        super.setX(x + actor.getWidth() / 2f - getWidth() / 2f);
+        super.setX(x + defender.getWidth() / 2f - getWidth() / 2f);
     }
 
     @Override
     public void setY(float y) {
-        super.setY(y + actor.getHeight() / 2f - getHeight() / 2f);
+        super.setY(y + defender.getHeight() / 2f - getHeight() / 2f);
     }
 
     @Override
     public void setPosition(float x, float y) {
         super.setPosition(
-                x + actor.getWidth() / 2f - getWidth() / 2f,
-                y + actor.getHeight() / 2f - getHeight() / 2f
+                x + defender.getWidth() / 2f - getWidth() / 2f,
+                y + defender.getHeight() / 2f - getHeight() / 2f
         );
     }
 
     @Override
     public void setPosition(float x, float y, int alignment) {
         super.setPosition(
-                x + actor.getWidth() / 2f - getWidth() / 2f,
-                y + actor.getHeight() / 2f - getHeight() / 2f,
+                x + defender.getWidth() / 2f - getWidth() / 2f,
+                y + defender.getHeight() / 2f - getHeight() / 2f,
                 alignment
         );
     }
@@ -65,7 +65,7 @@ public class Zone extends StaticActor<Circle> {
         return alpha;
     }
 
-    public boolean isCollides(Enemy enemy) {
-        return Intersector.overlaps(getBound().getValue(), enemy.getBound().getValue());
+    public float getSize() {
+        return size;
     }
 }

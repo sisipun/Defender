@@ -1,4 +1,4 @@
-package io.cucumber.model.character;
+package io.cucumber.model.actor.road;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -6,33 +6,25 @@ import com.badlogic.gdx.math.Rectangle;
 
 import io.cucumber.base.model.base.StaticActor;
 import io.cucumber.base.model.bound.RectangleBound;
+import io.cucumber.model.actor.Enemy;
+import io.cucumber.model.actor.Zone;
 
-public class Defender extends StaticActor<Rectangle> {
+public class RoadBlock extends StaticActor<Rectangle> {
 
+    private RoadType roadType;
     private Zone zone;
-    private float power;
 
-    public Defender(float x, float y, float size, TextureRegion region, float power, float zoneSize,
-                    float zoneAlpha, TextureRegion zoneRegion) {
+    public RoadBlock(float x, float y, float size, TextureRegion region, RoadType roadType,
+                     float zoneSize, float zoneAlpha, TextureRegion zoneRegion) {
         super(new RectangleBound(x, y, size, size), region);
+        this.roadType = roadType;
         this.zone = new Zone(this, zoneSize, zoneAlpha, zoneRegion);
-        this.power = power;
-    }
-
-    public Defender(Defender defender) {
-        super(new RectangleBound(defender.getX(), defender.getY(), defender.getWidth(), defender.getHeight()), defender.getRegion());
-        this.zone = new Zone(this, defender.zone.getWidth(), defender.zone.getAlpha(), defender.zone.getRegion());
-        this.power = defender.power;
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        zone.draw(batch, parentAlpha);
         super.draw(batch, parentAlpha);
-    }
-
-    public boolean isCollidesZone(Enemy enemy) {
-        return zone.isCollides(enemy);
+        zone.draw(batch, parentAlpha);
     }
 
     @Override
@@ -59,7 +51,11 @@ public class Defender extends StaticActor<Rectangle> {
         super.setPosition(x, y, alignment);
     }
 
-    public float getPower() {
-        return power;
+    public boolean isCollidesZone(Enemy enemy) {
+        return zone.isCollides(enemy);
+    }
+
+    public RoadType getType() {
+        return roadType;
     }
 }

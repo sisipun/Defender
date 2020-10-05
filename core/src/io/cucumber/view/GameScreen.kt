@@ -8,14 +8,15 @@ import io.cucumber.Game
 import io.cucumber.base.model.bound.RectangleBound
 import io.cucumber.base.view.BaseScreen
 import io.cucumber.manager.LevelManager
-import io.cucumber.model.character.Defender
-import io.cucumber.model.character.Enemy
-import io.cucumber.model.character.GameZone
-import io.cucumber.model.menu.Menu
-import io.cucumber.model.menu.MenuItem
-import io.cucumber.model.road.RoadBlock
-import io.cucumber.model.road.RoadMap
-import io.cucumber.model.road.RoadType
+import io.cucumber.model.actor.Defender
+import io.cucumber.model.actor.preview.DefenderPreview
+import io.cucumber.model.actor.Enemy
+import io.cucumber.model.actor.GameZone
+import io.cucumber.model.actor.menu.Menu
+import io.cucumber.model.actor.menu.MenuItem
+import io.cucumber.model.actor.road.RoadBlock
+import io.cucumber.model.actor.road.RoadMap
+import io.cucumber.model.actor.road.RoadType
 import io.cucumber.utils.constants.Constants.*
 import io.cucumber.utils.generator.RoadMapGenerator
 
@@ -57,7 +58,7 @@ class GameScreen(
             override fun dragStart(event: InputEvent, x: Float, y: Float, pointer: Int): DragAndDrop.Payload {
                 val payload = DragAndDrop.Payload()
                 val item: MenuItem = (actor as Menu).getItem(x, y) ?: return payload
-                val actor = Defender(
+                val actor = DefenderPreview(
                         x,
                         y,
                         DEFENDER_SIZE,
@@ -74,13 +75,13 @@ class GameScreen(
 
             override fun dragStop(event: InputEvent?, x: Float, y: Float, pointer: Int,
                                   payload: DragAndDrop.Payload?, target: DragAndDrop.Target?) {
-                val defender = payload?.dragActor as Defender? ?: return
+                val defender = payload?.dragActor as DefenderPreview? ?: return
                 defender.remove()
             }
         })
         dragAndDrop.addTarget(object : DragAndDrop.Target(gameZone) {
             override fun drag(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float, y: Float, pointer: Int): Boolean {
-                val defender = payload?.dragActor as Defender? ?: return false
+                val defender = payload?.dragActor as DefenderPreview? ?: return false
 
                 return !menu.isCollides(defender) &&
                         !enemy.isCollides(defender) &&
@@ -89,8 +90,8 @@ class GameScreen(
             }
 
             override fun drop(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float, y: Float, pointer: Int) {
-                val defenderItem = payload?.dragActor as Defender? ?: return
-                val defender = Defender(defenderItem)
+                val defenderPreview = payload?.dragActor as DefenderPreview? ?: return
+                val defender = Defender(defenderPreview)
                 defenders.add(defender)
                 addActor(defender)
             }
@@ -130,7 +131,7 @@ class GameScreen(
                             roadType,
                             BLOCK_ZONE_SIZE,
                             BLOCK_ZONE_ALPHA,
-                            level.assets.menuBackground
+                            level.assets.zone
                     )
                     road.add(block)
                     addActor(block)
@@ -160,18 +161,11 @@ class GameScreen(
     }
 
     override fun stateCheck() {
-        val hited = defenders.any {
+        defenders.forEach {
             if (it.isCollidesZone(enemy)) {
                 enemy.hit(it.power * Gdx.graphics.deltaTime)
-                return@any true
             }
 
-            return@any false
-        }
-        if (hited) {
-            enemy.region = level.assets.menuBackground
-        } else {
-            enemy.region = level.assets.enemy
         }
 
         road.forEach {

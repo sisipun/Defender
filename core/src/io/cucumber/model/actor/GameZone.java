@@ -1,4 +1,4 @@
-package io.cucumber.model.character;
+package io.cucumber.model.actor;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;

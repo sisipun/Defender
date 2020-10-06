@@ -11,12 +11,18 @@ public class DefenderPreview extends StaticActor<Rectangle> {
 
     private DefenderZonePreview zone;
     private float power;
+    private TextureRegion availableRegion;
+    private TextureRegion unavailableRegion;
+    private boolean available;
 
-    public DefenderPreview(float x, float y, float size, TextureRegion region, float power, float zoneSize,
-                    float zoneAlpha, TextureRegion zoneRegion) {
-        super(new RectangleBound(x, y, size, size), region);
+    public DefenderPreview(float x, float y, float size, TextureRegion availableRegion,
+                           TextureRegion unavailableRegion, float power, float zoneSize,
+                           float zoneAlpha, TextureRegion zoneRegion) {
+        super(new RectangleBound(x, y, size, size), availableRegion);
         this.power = power;
         this.zone = new DefenderZonePreview(this, zoneSize, zoneAlpha, zoneRegion);
+        this.availableRegion = availableRegion;
+        this.unavailableRegion = unavailableRegion;
     }
 
     @Override
@@ -63,5 +69,18 @@ public class DefenderPreview extends StaticActor<Rectangle> {
 
     public float getPower() {
         return power;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+        if (available) {
+            setRegion(availableRegion);
+        } else {
+            setRegion(unavailableRegion);
+        }
     }
 }

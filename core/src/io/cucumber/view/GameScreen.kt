@@ -9,11 +9,11 @@ import io.cucumber.base.model.bound.RectangleBound
 import io.cucumber.base.view.BaseScreen
 import io.cucumber.manager.LevelManager
 import io.cucumber.model.actor.Defender
-import io.cucumber.model.actor.preview.DefenderPreview
 import io.cucumber.model.actor.Enemy
 import io.cucumber.model.actor.GameZone
 import io.cucumber.model.actor.menu.Menu
 import io.cucumber.model.actor.menu.MenuItem
+import io.cucumber.model.actor.preview.DefenderPreview
 import io.cucumber.model.actor.road.RoadBlock
 import io.cucumber.model.actor.road.RoadMap
 import io.cucumber.model.actor.road.RoadType
@@ -63,6 +63,7 @@ class GameScreen(
                         y,
                         DEFENDER_SIZE,
                         item.region,
+                        level.assets.enemy,
                         DEFENDER_POWER,
                         DEFENDER_ZONE_SIZE,
                         DEFENDER_ZONE_ALPHA,
@@ -83,13 +84,25 @@ class GameScreen(
             override fun drag(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float, y: Float, pointer: Int): Boolean {
                 val defender = payload?.dragActor as DefenderPreview? ?: return false
 
-                return !menu.isCollides(defender) &&
+                Gdx.app.log("Drag", "start")
+
+                val available = !menu.isCollides(defender) &&
                         !enemy.isCollides(defender) &&
                         !road.any { it.isCollides(defender) } &&
                         !defenders.any { it.isCollides(defender) }
+
+                if (available != defender.isAvailable) {
+                    Gdx.app.log("Change", String.format("%b", available))
+                    defender.isAvailable = available
+                }
+
+                Gdx.app.log("Drag", String.format("%b", available))
+                return available
             }
 
             override fun drop(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float, y: Float, pointer: Int) {
+                Gdx.app.log("Drop", "Drop")
+
                 val defenderPreview = payload?.dragActor as DefenderPreview? ?: return
                 val defender = Defender(defenderPreview)
                 defenders.add(defender)

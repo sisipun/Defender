@@ -26,17 +26,9 @@ class GameScreen(
 ) : BaseScreen(game) {
 
     private val roadMapGenerator: RoadMapGenerator = RoadMapGenerator()
-    private val road: Array<RoadBlock> = Array()
     private val defenders: Array<Defender> = Array()
 
     private lateinit var roadMap: RoadMap
-    private val gameZone: GameZone = GameZone(
-            0f,
-            SCREEN_HEIGHT / 8,
-            SCREEN_WIDTH,
-            SCREEN_HEIGHT - SCREEN_HEIGHT / 8,
-            level.assets.background
-    )
     private val enemy: Enemy = Enemy(
             0f,
             0f,
@@ -45,6 +37,14 @@ class GameScreen(
             ENEMY_VELOCITY,
             level.assets.enemy,
             ENEMY_HEALTH
+    )
+    private val gameZone: GameZone = GameZone(
+            0f,
+            SCREEN_HEIGHT / 8,
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT - SCREEN_HEIGHT / 8,
+            level.assets.background,
+            Array()
     )
     private val menu: Menu = Menu(
             RectangleBound(0f, 0f, SCREEN_WIDTH, SCREEN_HEIGHT / 8),
@@ -88,7 +88,7 @@ class GameScreen(
 
                 val available = !menu.isCollides(defender) &&
                         !enemy.isCollides(defender) &&
-                        !road.any { it.isCollides(defender) } &&
+                        !gameZone.isCollidesRoad(defender) &&
                         !defenders.any { it.isCollides(defender) }
 
                 if (available != defender.isAvailable) {
@@ -119,20 +119,12 @@ class GameScreen(
         menu.remove()
         gameZone.remove()
 
-        gameZone.init(
-                0f,
-                SCREEN_HEIGHT / 8,
-                SCREEN_WIDTH,
-                SCREEN_HEIGHT - SCREEN_HEIGHT / 8,
-                level.assets.background
-        )
-        addActor(gameZone)
-
         roadMap = roadMapGenerator.generate(
                 (SCREEN_WIDTH / BLOCK_SIZE).toInt(),
                 ((SCREEN_HEIGHT - SCREEN_HEIGHT / 8) / BLOCK_SIZE).toInt()
         )
 
+        val road = Array<RoadBlock>()
         roadMap.value.forEachIndexed { i, row ->
             row.forEachIndexed { j, roadType ->
                 if (roadType != RoadType.NONE) {
@@ -147,10 +139,19 @@ class GameScreen(
                             level.assets.zone
                     )
                     road.add(block)
-                    addActor(block)
                 }
             }
         }
+
+        gameZone.init(
+                0f,
+                SCREEN_HEIGHT / 8,
+                SCREEN_WIDTH,
+                SCREEN_HEIGHT - SCREEN_HEIGHT / 8,
+                level.assets.background,
+                road
+        )
+        addActor(gameZone)
 
         enemy.init(
                 roadMap.startPositionX * BLOCK_SIZE,
@@ -178,14 +179,9 @@ class GameScreen(
             if (it.isCollidesZone(enemy)) {
                 enemy.hit(it.power * Gdx.graphics.deltaTime)
             }
-
         }
 
-        road.forEach {
-            if (it.isCollidesZone(enemy)) {
-                enemy.changeDirection(it.type)
-            }
-        }
+        gameZone.changeDirection(enemy)
 
         if (enemy.isDead) {
             enemy.init(

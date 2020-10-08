@@ -2,39 +2,43 @@ package io.cucumber.manager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Array;
 
-import io.cucumber.model.asset.LevelAssets;
+import io.cucumber.model.level.Assets;
+import io.cucumber.model.level.LevelData;
+import io.cucumber.model.level.DefenderSample;
+
+import static io.cucumber.utils.constants.Constants.DEFENDER_POWER;
+import static io.cucumber.utils.constants.Constants.DEFENDER_SIZE;
+import static io.cucumber.utils.constants.Constants.DEFENDER_ZONE_ALPHA;
+import static io.cucumber.utils.constants.Constants.DEFENDER_ZONE_SIZE;
 
 public class LevelManager {
 
     private TextureAtlas atlas;
-    private Level level;
+    private LevelData levelData;
 
-    public Level loadLevel() {
-        if (level != null) {
-            return level;
+    public LevelData loadLevel() {
+        if (levelData != null) {
+            return levelData;
         }
         atlas = new TextureAtlas(Gdx.files.internal("atlas/game.atlas"));
-        level = new Level(new LevelAssets(atlas, "defender", "enemy", "block", "zone", "background",
-                "menu_background"));
-        return level;
+        Assets assets = new Assets(atlas, "defender", "enemy", "block", "zone", "background", "menu_background");
+        DefenderSample defender = new DefenderSample(
+                DEFENDER_SIZE,
+                DEFENDER_POWER,
+                DEFENDER_ZONE_SIZE,
+                DEFENDER_ZONE_ALPHA,
+                assets.getDefender(),
+                assets.getEnemy(),
+                assets.getZone()
+        );
+        levelData = new LevelData(assets, Array.with(defender));
+        return levelData;
     }
 
     public void removeLevel() {
-        level = null;
+        levelData = null;
         atlas.dispose();
-    }
-
-    public static class Level {
-
-        private final LevelAssets levelAssets;
-
-        public Level(LevelAssets levelAssets) {
-            this.levelAssets = levelAssets;
-        }
-
-        public LevelAssets getAssets() {
-            return levelAssets;
-        }
     }
 }

@@ -1,8 +1,8 @@
-package io.cucumber.model.asset;
+package io.cucumber.model.level;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
-public class LevelAssets {
+public class Assets {
 
     private final TextureAtlas.AtlasRegion defender;
     private final TextureAtlas.AtlasRegion enemy;
@@ -11,8 +11,8 @@ public class LevelAssets {
     private final TextureAtlas.AtlasRegion background;
     private final TextureAtlas.AtlasRegion menuBackground;
 
-    public LevelAssets(TextureAtlas atlas, String defender, String enemy, String block, String zone,
-                       String background, String menuBackground) {
+    public Assets(TextureAtlas atlas, String defender, String enemy, String block, String zone,
+                  String background, String menuBackground) {
         this.defender = atlas.findRegion(defender);
         this.enemy = atlas.findRegion(enemy);
         this.block = atlas.findRegion(block);

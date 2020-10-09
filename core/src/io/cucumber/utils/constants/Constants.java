@@ -9,18 +9,20 @@ public class Constants {
     // Map
     public static final float BLOCK_SIZE = 50;
     public static final float BLOCK_ZONE_SIZE = 3;
-    public static final float BLOCK_ZONE_ALPHA = 0.5f;
 
     // Defender
     public static final float DEFENDER_SIZE = 50;
     public static final float DEFENDER_ZONE_SIZE = 200;
-    public static final float DEFENDER_ZONE_ALPHA = 0.5f;
     public static final float DEFENDER_POWER = 1;
 
-    //Enemy
+    // Enemy
     public static final float ENEMY_SIZE = 50;
     public static final float ENEMY_VELOCITY = 100;
     public static final float ENEMY_HEALTH = 10;
+
+    // Zone
+    public static final float ZONE_ALPHA = 0.5f;
+
 
     private Constants() {
     }

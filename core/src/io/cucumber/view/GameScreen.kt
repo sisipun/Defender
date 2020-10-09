@@ -16,13 +16,13 @@ import io.cucumber.model.actor.preview.DefenderPreview
 import io.cucumber.model.actor.road.RoadBlock
 import io.cucumber.model.actor.road.RoadMap
 import io.cucumber.model.actor.road.RoadType
-import io.cucumber.model.level.LevelData
+import io.cucumber.model.level.Level
 import io.cucumber.utils.constants.Constants.*
 import io.cucumber.utils.generator.RoadMapGenerator
 
 class GameScreen(
         game: Game,
-        private val levelData: LevelData
+        private val level: Level
 ) : BaseScreen(game) {
 
     private val roadMapGenerator: RoadMapGenerator = RoadMapGenerator()
@@ -35,7 +35,7 @@ class GameScreen(
             ENEMY_SIZE,
             ENEMY_VELOCITY,
             ENEMY_VELOCITY,
-            levelData.assets.enemy,
+            level.assets.enemy,
             ENEMY_HEALTH
     )
     private val gameZone: GameZone = GameZone(
@@ -43,13 +43,13 @@ class GameScreen(
             SCREEN_HEIGHT / 8,
             SCREEN_WIDTH,
             SCREEN_HEIGHT - SCREEN_HEIGHT / 8,
-            levelData.assets.background,
+            level.assets.background,
             Array()
     )
     private val menu: Menu = Menu(
             RectangleBound(0f, 0f, SCREEN_WIDTH, SCREEN_HEIGHT / 8),
-            levelData.assets.menuBackground,
-            levelData.defenderSamples
+            level.assets.menuBackground,
+            level.defenderTypes
     )
 
     init {
@@ -61,7 +61,8 @@ class GameScreen(
                 val actor = DefenderPreview(
                         x,
                         y,
-                        item.defenderSample
+                        item.defenderData,
+                        level.assets.zone
                 )
                 payload.dragActor = actor
                 addActor(actor)
@@ -120,11 +121,10 @@ class GameScreen(
                             i * BLOCK_SIZE,
                             j * BLOCK_SIZE + SCREEN_HEIGHT / 8,
                             BLOCK_SIZE,
-                            levelData.assets.block,
                             roadType,
+                            level.assets.block,
                             BLOCK_ZONE_SIZE,
-                            BLOCK_ZONE_ALPHA,
-                            levelData.assets.zone
+                            level.assets.zone
                     )
                     road.add(block)
                 }
@@ -136,7 +136,7 @@ class GameScreen(
                 SCREEN_HEIGHT / 8,
                 SCREEN_WIDTH,
                 SCREEN_HEIGHT - SCREEN_HEIGHT / 8,
-                levelData.assets.background,
+                level.assets.background,
                 road
         )
         addActor(gameZone)
@@ -147,15 +147,15 @@ class GameScreen(
                 ENEMY_SIZE,
                 ENEMY_VELOCITY,
                 ENEMY_VELOCITY,
-                levelData.assets.enemy,
+                level.assets.enemy,
                 ENEMY_HEALTH
         )
         addActor(enemy)
 
         menu.init(
                 RectangleBound(0f, 0f, SCREEN_WIDTH, SCREEN_HEIGHT / 8),
-                levelData.assets.menuBackground,
-                levelData.defenderSamples
+                level.assets.menuBackground,
+                level.defenderTypes
         )
         addActor(menu)
 
@@ -178,7 +178,7 @@ class GameScreen(
                     ENEMY_SIZE,
                     ENEMY_VELOCITY,
                     ENEMY_VELOCITY,
-                    levelData.assets.enemy,
+                    level.assets.enemy,
                     ENEMY_HEALTH
             )
         }

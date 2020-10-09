@@ -8,20 +8,20 @@ import com.badlogic.gdx.math.Circle;
 import io.cucumber.base.model.base.StaticActor;
 import io.cucumber.base.model.bound.CircleBound;
 
+import static io.cucumber.utils.constants.Constants.ZONE_ALPHA;
+
 public class DefenderZonePreview extends StaticActor<Circle> {
 
     private DefenderPreview defender;
-    private float alpha;
     private float size;
 
-    public DefenderZonePreview(DefenderPreview defender, float size, float alpha, TextureRegion region) {
+    public DefenderZonePreview(DefenderPreview defender, float size, TextureRegion region) {
         super(new CircleBound(
                 defender.getX() + defender.getWidth() / 2f - size / 2f,
                 defender.getY() + defender.getHeight() / 2f - size / 2f,
                 size / 2
         ), region);
         this.defender = defender;
-        this.alpha = alpha;
         this.size = size;
     }
 
@@ -29,7 +29,7 @@ public class DefenderZonePreview extends StaticActor<Circle> {
     public void draw(Batch batch, float parentAlpha) {
         Color color = batch.getColor();
         float currentAlpha = color.a;
-        batch.setColor(color.r, color.g, color.b, alpha);
+        batch.setColor(color.r, color.g, color.b, ZONE_ALPHA);
         super.draw(batch, parentAlpha);
         batch.setColor(color.r, color.g, color.b, currentAlpha);
     }
@@ -59,10 +59,6 @@ public class DefenderZonePreview extends StaticActor<Circle> {
                 y + defender.getHeight() / 2f - getHeight() / 2f,
                 alignment
         );
-    }
-
-    public float getAlpha() {
-        return alpha;
     }
 
     public float getSize() {

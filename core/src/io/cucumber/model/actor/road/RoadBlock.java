@@ -14,17 +14,16 @@ public class RoadBlock extends StaticActor<Rectangle> {
     private RoadType roadType;
     private Zone zone;
 
-    public RoadBlock(float x, float y, float size, TextureRegion region, RoadType roadType,
-                     float zoneSize, float zoneAlpha, TextureRegion zoneRegion) {
+    public RoadBlock(float x, float y, float size, RoadType type, TextureRegion region,
+                     float zoneSize, TextureRegion zoneRegion) {
         super(new RectangleBound(x, y, size, size), region);
-        this.roadType = roadType;
-        this.zone = new Zone(this, zoneSize, zoneAlpha, zoneRegion);
+        this.roadType = type;
+        this.zone = new Zone(this, zoneSize, zoneRegion);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        zone.draw(batch, parentAlpha);
     }
 
     @Override

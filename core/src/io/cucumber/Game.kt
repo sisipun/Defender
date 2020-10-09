@@ -20,7 +20,7 @@ class Game : Game() {
         Gdx.input.inputProcessor = stage
 
         levelManager = LevelManager()
-        setScreen(GameScreen(this, levelManager.loadLevel()))
+        setScreen(GameScreen(this, levelManager.init()))
     }
 
     override fun dispose() {

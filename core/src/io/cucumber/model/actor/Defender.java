@@ -13,8 +13,9 @@ public class Defender extends StaticActor<Rectangle> {
     private float power;
 
     public Defender(DefenderPreview preview) {
-        super(new RectangleBound(preview.getX(), preview.getY(), preview.getWidth(), preview.getHeight()), preview.getRegion());
-        this.zone = new Zone(this, preview.getZoneSize(), preview.getZoneAlpha(), preview.getZoneRegion());
+        super(new RectangleBound(preview.getX(), preview.getY(), preview.getWidth(),
+                preview.getHeight()), preview.getRegion());
+        this.zone = new Zone(this, preview.getZoneSize(), preview.getZoneRegion());
         this.power = preview.getPower();
     }
 

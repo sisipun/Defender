@@ -7,27 +7,29 @@ import com.badlogic.gdx.utils.Array;
 
 import io.cucumber.base.model.base.StaticActor;
 import io.cucumber.base.model.bound.RectangleBound;
-import io.cucumber.model.level.DefenderSample;
+import io.cucumber.model.level.DefenderData;
 
 public class Menu extends StaticActor<Rectangle> {
 
     private Array<MenuItem> items;
 
-    public Menu(RectangleBound bound, TextureRegion region, Array<DefenderSample> items) {
+    public Menu(RectangleBound bound, TextureRegion region, Array<DefenderData> items) {
         super(bound, region);
         this.items = new Array<>();
         for (int i = 0; i < items.size; i++) {
-            this.items.add(new MenuItem(new RectangleBound(getX() + i * 3 * bound.getHeight() / 2, getY(),
-                    bound.getHeight(), bound.getHeight()), items.get(i)));
+            MenuItem item = new MenuItem(new RectangleBound(getX() + i * 3 * bound.getHeight() / 2,
+                    getY(), bound.getHeight(), bound.getHeight()), items.get(i));
+            this.items.add(item);
         }
     }
 
-    public Menu init(RectangleBound bound, TextureRegion region, Array<DefenderSample> items) {
+    public Menu init(RectangleBound bound, TextureRegion region, Array<DefenderData> items) {
         super.init(bound, region);
         this.items.clear();
         for (int i = 0; i < items.size; i++) {
-            this.items.add(new MenuItem(new RectangleBound(getX() + i * 3 * bound.getHeight() / 2, getY(),
-                    bound.getHeight(), bound.getHeight()), items.get(i)));
+            MenuItem item = new MenuItem(new RectangleBound(getX() + i * 3 * bound.getHeight() / 2,
+                    getY(), bound.getHeight(), bound.getHeight()), items.get(i));
+            this.items.add(item);
         }
         return this;
     }

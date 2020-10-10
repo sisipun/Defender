@@ -7,22 +7,24 @@ import com.badlogic.gdx.utils.Array;
 
 import io.cucumber.base.model.base.StaticActor;
 import io.cucumber.base.model.bound.RectangleBound;
-import io.cucumber.model.actor.preview.DefenderPreview;
 import io.cucumber.model.actor.road.RoadBlock;
 
 public class GameZone extends StaticActor<Rectangle> {
 
     private Array<RoadBlock> road;
+    private float health;
 
-    public GameZone(float x, float y, float width, float height, TextureRegion region,
+    public GameZone(float x, float y, float width, float height, float health, TextureRegion region,
                     Array<RoadBlock> road) {
         super(new RectangleBound(x, y, width, height), region);
+        this.health = health;
         this.road = new Array<>(road);
     }
 
-    public GameZone init(float x, float y, float width, float height, TextureRegion region,
-                         Array<RoadBlock> road) {
+    public GameZone init(float x, float y, float width, float height, float health,
+                         TextureRegion region, Array<RoadBlock> road) {
         super.init(new RectangleBound(x, y, width, height), region);
+        this.health = health;
         this.road.clear();
         this.road.addAll(road);
         return this;
@@ -36,21 +38,15 @@ public class GameZone extends StaticActor<Rectangle> {
         }
     }
 
-    public void changeDirection(Enemy enemy) {
-        for (RoadBlock roadBlock : road) {
-            if (roadBlock.isCollidesZone(enemy)) {
-                enemy.changeDirection(roadBlock.getType());
-            }
-        }
+    public Array<RoadBlock> getRoad() {
+        return road;
     }
 
-    public boolean isCollidesRoad(DefenderPreview defender) {
-        for (RoadBlock roadBlock : road) {
-            if (roadBlock.isCollides(defender)) {
-                return true;
-            }
-        }
+    public void hit(float power) {
+        health -= power;
+    }
 
-        return false;
+    public boolean isGameOver() {
+        return health <= 0;
     }
 }

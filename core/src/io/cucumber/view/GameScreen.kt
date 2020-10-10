@@ -35,14 +35,16 @@ class GameScreen(
             ENEMY_SIZE,
             ENEMY_VELOCITY,
             ENEMY_VELOCITY,
-            level.assets.enemy,
-            ENEMY_HEALTH
+            ENEMY_POWER,
+            ENEMY_HEALTH,
+            level.assets.enemy
     )
     private val gameZone: GameZone = GameZone(
             0f,
             SCREEN_HEIGHT / 8,
             SCREEN_WIDTH,
             SCREEN_HEIGHT - SCREEN_HEIGHT / 8,
+            GAME_ZONE_HEALTH,
             level.assets.background,
             Array()
     )
@@ -81,7 +83,7 @@ class GameScreen(
 
                 val available = !menu.isCollides(defender) &&
                         !enemy.isCollides(defender) &&
-                        !gameZone.isCollidesRoad(defender) &&
+                        !gameZone.road.any { it.isCollides(defender) } &&
                         !defenders.any { it.isCollides(defender) }
 
                 if (available != defender.isAvailable) {
@@ -136,6 +138,7 @@ class GameScreen(
                 SCREEN_HEIGHT / 8,
                 SCREEN_WIDTH,
                 SCREEN_HEIGHT - SCREEN_HEIGHT / 8,
+                GAME_ZONE_HEALTH,
                 level.assets.background,
                 road
         )
@@ -147,8 +150,9 @@ class GameScreen(
                 ENEMY_SIZE,
                 ENEMY_VELOCITY,
                 ENEMY_VELOCITY,
-                level.assets.enemy,
-                ENEMY_HEALTH
+                ENEMY_POWER,
+                ENEMY_HEALTH,
+                level.assets.enemy
         )
         addActor(enemy)
 
@@ -169,7 +173,11 @@ class GameScreen(
             }
         }
 
-        gameZone.changeDirection(enemy)
+        gameZone.road.forEach {
+            if (it.isCollidesZone(enemy)) {
+                enemy.changeDirection(it.type)
+            }
+        }
 
         if (enemy.isDead) {
             enemy.init(
@@ -178,8 +186,23 @@ class GameScreen(
                     ENEMY_SIZE,
                     ENEMY_VELOCITY,
                     ENEMY_VELOCITY,
-                    level.assets.enemy,
-                    ENEMY_HEALTH
+                    ENEMY_POWER,
+                    ENEMY_HEALTH,
+                    level.assets.enemy
+            )
+        }
+
+        if (enemy.isFinished) {
+            gameZone.hit(enemy.power)
+            enemy.init(
+                    roadMap.startPositionX * BLOCK_SIZE,
+                    roadMap.startPositionY * BLOCK_SIZE + SCREEN_HEIGHT / 8,
+                    ENEMY_SIZE,
+                    ENEMY_VELOCITY,
+                    ENEMY_VELOCITY,
+                    ENEMY_POWER,
+                    ENEMY_HEALTH,
+                    level.assets.enemy
             )
         }
     }

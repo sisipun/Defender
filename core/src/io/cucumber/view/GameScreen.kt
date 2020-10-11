@@ -109,6 +109,7 @@ class GameScreen(
         enemy.remove()
         menu.remove()
         gameZone.remove()
+        defenders.forEach { it.remove() }
 
         roadMap = roadMapGenerator.generate(
                 (SCREEN_WIDTH / BLOCK_SIZE).toInt(),
@@ -204,6 +205,10 @@ class GameScreen(
                     ENEMY_HEALTH,
                     level.assets.enemy
             )
+        }
+
+        if (gameZone.isGameOver) {
+            init()
         }
     }
 }

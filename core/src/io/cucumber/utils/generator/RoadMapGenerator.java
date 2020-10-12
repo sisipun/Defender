@@ -9,7 +9,7 @@ public class RoadMapGenerator {
 
     public RoadMap generate(int width, int height) {
         if (width <= 0 || height <= 0) {
-            return new RoadMap(new RoadType[0][0], 0, 0, 0, 0);
+            return new RoadMap(new RoadType[0][0], 0, 0);
         }
 
         Random random = new Random();
@@ -50,7 +50,7 @@ public class RoadMapGenerator {
 
         map[currentPositionX][currentPositionY] = RoadType.END;
 
-        return new RoadMap(map, startPositionX, startPositionY, currentPositionX, currentPositionY);
+        return new RoadMap(map, startPositionX, startPositionY);
     }
 
 }

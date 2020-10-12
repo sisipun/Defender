@@ -12,7 +12,7 @@ public class Enemy extends DynamicActor<Rectangle> {
 
     private float power;
     private float health;
-    private boolean finished;
+    private boolean passed;
     private Vector2 initialVelocity;
 
     public Enemy(float x, float y, float size, float horizontalVelocity, float verticalVelocity,
@@ -20,7 +20,7 @@ public class Enemy extends DynamicActor<Rectangle> {
         super(new RectangleBound(x, y, size, size), horizontalVelocity, verticalVelocity, region);
         this.power = power;
         this.health = health;
-        this.finished = false;
+        this.passed = false;
         this.initialVelocity = new Vector2(horizontalVelocity, verticalVelocity);
     }
 
@@ -29,14 +29,14 @@ public class Enemy extends DynamicActor<Rectangle> {
         super.init(new RectangleBound(x, y, size, size), horizontalVelocity, verticalVelocity, region);
         this.power = power;
         this.health = health;
-        this.finished = false;
+        this.passed = false;
         this.initialVelocity = new Vector2(horizontalVelocity, verticalVelocity);
         return this;
     }
 
     @Override
     public void act(float delta) {
-        if (finished) {
+        if (passed) {
             return;
         }
 
@@ -46,6 +46,10 @@ public class Enemy extends DynamicActor<Rectangle> {
     }
 
     public void changeDirection(RoadType roadType) {
+        if (passed) {
+            return;
+        }
+
         if (RoadType.NONE.equals(roadType)) {
             health = 0;
         } else if (RoadType.UP.equals(roadType)) {
@@ -61,14 +65,15 @@ public class Enemy extends DynamicActor<Rectangle> {
             velocity.y = 0;
             velocity.x = initialVelocity.x;
         } else if (RoadType.END.equals(roadType)) {
-            finished = true;
+            passed = true;
         }
     }
 
     public void hit(float power) {
-        if (finished) {
+        if (passed) {
             return;
         }
+
         health -= power;
     }
 
@@ -76,8 +81,8 @@ public class Enemy extends DynamicActor<Rectangle> {
         return health <= 0;
     }
 
-    public boolean isFinished() {
-        return finished;
+    public boolean isPassed() {
+        return passed;
     }
 
     public float getPower() {

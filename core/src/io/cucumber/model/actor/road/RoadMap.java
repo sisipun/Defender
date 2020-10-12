@@ -5,15 +5,11 @@ public class RoadMap {
     private final RoadType[][] value;
     private final int startPositionX;
     private final int startPositionY;
-    private final int endPositionX;
-    private final int endPositionY;
 
-    public RoadMap(RoadType[][] value, int startPositionX, int startPositionY, int endPositionX, int endPositionY) {
+    public RoadMap(RoadType[][] value, int startPositionX, int startPositionY) {
         this.value = value;
         this.startPositionX = startPositionX;
         this.startPositionY = startPositionY;
-        this.endPositionX = endPositionX;
-        this.endPositionY = endPositionY;
     }
 
     public RoadType[][] getValue() {
@@ -28,11 +24,4 @@ public class RoadMap {
         return startPositionY;
     }
 
-    public int getEndPositionX() {
-        return endPositionX;
-    }
-
-    public int getEndPositionY() {
-        return endPositionY;
-    }
 }

@@ -9,13 +9,13 @@ import io.cucumber.base.model.bound.RectangleBound
 import io.cucumber.base.view.BaseScreen
 import io.cucumber.model.actor.Defender
 import io.cucumber.model.actor.Enemy
-import io.cucumber.model.actor.GameZone
-import io.cucumber.model.actor.menu.Menu
-import io.cucumber.model.actor.menu.MenuItem
 import io.cucumber.model.actor.preview.DefenderPreview
 import io.cucumber.model.actor.road.RoadBlock
 import io.cucumber.model.actor.road.RoadMap
 import io.cucumber.model.actor.road.RoadType
+import io.cucumber.model.actor.ui.Background
+import io.cucumber.model.actor.ui.Menu
+import io.cucumber.model.actor.ui.MenuItem
 import io.cucumber.model.level.Level
 import io.cucumber.utils.constants.Constants.*
 import io.cucumber.utils.generator.RoadMapGenerator
@@ -24,6 +24,8 @@ class GameScreen(
         game: Game,
         private val level: Level
 ) : BaseScreen(game) {
+
+    private var health: Float = GAME_HEALTH
 
     private val roadMapGenerator: RoadMapGenerator = RoadMapGenerator()
     private val defenders: Array<Defender> = Array()
@@ -39,12 +41,11 @@ class GameScreen(
             ENEMY_HEALTH,
             level.assets.enemy
     )
-    private val gameZone: GameZone = GameZone(
+    private val background: Background = Background(
             0f,
             SCREEN_HEIGHT / 8,
             SCREEN_WIDTH,
             SCREEN_HEIGHT - SCREEN_HEIGHT / 8,
-            GAME_ZONE_HEALTH,
             level.assets.background,
             Array()
     )
@@ -77,13 +78,13 @@ class GameScreen(
                 defender.remove()
             }
         })
-        dragAndDrop.addTarget(object : DragAndDrop.Target(gameZone) {
+        dragAndDrop.addTarget(object : DragAndDrop.Target(background) {
             override fun drag(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float, y: Float, pointer: Int): Boolean {
                 val defender = payload?.dragActor as DefenderPreview? ?: return false
 
                 val available = !menu.isCollides(defender) &&
                         !enemy.isCollides(defender) &&
-                        !gameZone.road.any { it.isCollides(defender) } &&
+                        !background.road.any { it.isCollides(defender) } &&
                         !defenders.any { it.isCollides(defender) }
 
                 if (available != defender.isAvailable) {
@@ -108,8 +109,10 @@ class GameScreen(
     fun init(): GameScreen {
         enemy.remove()
         menu.remove()
-        gameZone.remove()
+        background.remove()
         defenders.forEach { it.remove() }
+
+        health = GAME_HEALTH
 
         roadMap = roadMapGenerator.generate(
                 (SCREEN_WIDTH / BLOCK_SIZE).toInt(),
@@ -134,16 +137,15 @@ class GameScreen(
             }
         }
 
-        gameZone.init(
+        background.init(
                 0f,
                 SCREEN_HEIGHT / 8,
                 SCREEN_WIDTH,
                 SCREEN_HEIGHT - SCREEN_HEIGHT / 8,
-                GAME_ZONE_HEALTH,
                 level.assets.background,
                 road
         )
-        addActor(gameZone)
+        addActor(background)
 
         enemy.init(
                 roadMap.startPositionX * BLOCK_SIZE,
@@ -174,7 +176,7 @@ class GameScreen(
             }
         }
 
-        gameZone.road.forEach {
+        background.road.forEach {
             if (it.isCollidesZone(enemy)) {
                 enemy.changeDirection(it.type)
             }
@@ -193,8 +195,8 @@ class GameScreen(
             )
         }
 
-        if (enemy.isFinished) {
-            gameZone.hit(enemy.power)
+        if (enemy.isPassed) {
+            health -= enemy.power
             enemy.init(
                     roadMap.startPositionX * BLOCK_SIZE,
                     roadMap.startPositionY * BLOCK_SIZE + SCREEN_HEIGHT / 8,
@@ -207,7 +209,7 @@ class GameScreen(
             )
         }
 
-        if (gameZone.isGameOver) {
+        if (health <= 0) {
             init()
         }
     }

@@ -24,8 +24,8 @@ public class Constants {
     // Zone
     public static final float ZONE_ALPHA = 0.5f;
 
-    // Game zone
-    public static final float GAME_ZONE_HEALTH = 100;
+    // Game
+    public static final float GAME_HEALTH = 100;
 
 
     private Constants() {

@@ -1,4 +1,4 @@
-package io.cucumber.model.actor;
+package io.cucumber.model.actor.ui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,22 +9,19 @@ import io.cucumber.base.model.base.StaticActor;
 import io.cucumber.base.model.bound.RectangleBound;
 import io.cucumber.model.actor.road.RoadBlock;
 
-public class GameZone extends StaticActor<Rectangle> {
+public class Background extends StaticActor<Rectangle> {
 
     private Array<RoadBlock> road;
-    private float health;
 
-    public GameZone(float x, float y, float width, float height, float health, TextureRegion region,
-                    Array<RoadBlock> road) {
+    public Background(float x, float y, float width, float height, TextureRegion region,
+                      Array<RoadBlock> road) {
         super(new RectangleBound(x, y, width, height), region);
-        this.health = health;
         this.road = new Array<>(road);
     }
 
-    public GameZone init(float x, float y, float width, float height, float health,
-                         TextureRegion region, Array<RoadBlock> road) {
+    public Background init(float x, float y, float width, float height, TextureRegion region,
+                           Array<RoadBlock> road) {
         super.init(new RectangleBound(x, y, width, height), region);
-        this.health = health;
         this.road.clear();
         this.road.addAll(road);
         return this;
@@ -40,13 +37,5 @@ public class GameZone extends StaticActor<Rectangle> {
 
     public Array<RoadBlock> getRoad() {
         return road;
-    }
-
-    public void hit(float power) {
-        health -= power;
-    }
-
-    public boolean isGameOver() {
-        return health <= 0;
     }
 }

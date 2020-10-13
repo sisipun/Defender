@@ -8,6 +8,8 @@ import io.cucumber.model.level.CommonAssets;
 import io.cucumber.model.level.DefenderType;
 import io.cucumber.model.level.Level;
 
+import static io.cucumber.utils.constants.Constants.GAME_LENGTH;
+
 public class LevelManager {
 
     private TextureAtlas atlas;
@@ -28,7 +30,7 @@ public class LevelManager {
                 "menu_background");
         defenderStorage.init(atlas);
 
-        level = new Level(assets, defenderStorage.get(Array.with(DefenderType.BASE)));
+        level = new Level(GAME_LENGTH, assets, defenderStorage.get(Array.with(DefenderType.BASE)));
         return level;
     }
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop
 import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.Timer
 import io.cucumber.Game
 import io.cucumber.base.model.bound.RectangleBound
 import io.cucumber.base.view.BaseScreen
@@ -26,6 +27,7 @@ class GameScreen(
 ) : BaseScreen(game) {
 
     private var health: Float = GAME_HEALTH
+    private var timer: Float = level.length
 
     private val roadMapGenerator: RoadMapGenerator = RoadMapGenerator()
     private val defenders: Array<Defender> = Array()
@@ -102,6 +104,12 @@ class GameScreen(
             }
         })
 
+        Timer.schedule(object : Timer.Task() {
+            override fun run() {
+                timer--
+            }
+        }, 0f, 1f)
+
 
         init()
     }
@@ -113,6 +121,7 @@ class GameScreen(
         defenders.forEach { it.remove() }
 
         health = GAME_HEALTH
+        timer = level.length
 
         roadMap = roadMapGenerator.generate(
                 (SCREEN_WIDTH / BLOCK_SIZE).toInt(),
@@ -210,6 +219,10 @@ class GameScreen(
         }
 
         if (health <= 0) {
+            init()
+        }
+
+        if (timer <=0) {
             init()
         }
     }

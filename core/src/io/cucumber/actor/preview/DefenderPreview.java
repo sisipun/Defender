@@ -1,4 +1,4 @@
-package io.cucumber.model.actor.preview;
+package io.cucumber.actor.preview;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -6,11 +6,11 @@ import com.badlogic.gdx.math.Rectangle;
 
 import io.cucumber.base.model.base.StaticActor;
 import io.cucumber.base.model.bound.RectangleBound;
-import io.cucumber.model.level.DefenderData;
+import io.cucumber.storage.model.DefenderData;
 
 public class DefenderPreview extends StaticActor<Rectangle> {
 
-    private DefenderZonePreview zone;
+    private io.cucumber.actor.preview.DefenderZonePreview zone;
     private float power;
     private TextureRegion availableRegion;
     private TextureRegion unavailableRegion;

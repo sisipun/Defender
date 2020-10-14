@@ -1,4 +1,4 @@
-package io.cucumber.model.actor.preview;
+package io.cucumber.actor.preview;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;

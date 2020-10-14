@@ -1,4 +1,4 @@
-package io.cucumber.model.actor.road;
+package io.cucumber.actor.road;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -6,8 +6,8 @@ import com.badlogic.gdx.math.Rectangle;
 
 import io.cucumber.base.model.base.StaticActor;
 import io.cucumber.base.model.bound.RectangleBound;
-import io.cucumber.model.actor.Enemy;
-import io.cucumber.model.actor.Zone;
+import io.cucumber.actor.Enemy;
+import io.cucumber.actor.Zone;
 
 public class RoadBlock extends StaticActor<Rectangle> {
 

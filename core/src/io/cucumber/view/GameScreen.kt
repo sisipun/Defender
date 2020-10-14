@@ -6,18 +6,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Timer
 import io.cucumber.Game
+import io.cucumber.actor.Defender
+import io.cucumber.actor.Enemy
+import io.cucumber.actor.preview.DefenderPreview
+import io.cucumber.actor.road.RoadBlock
+import io.cucumber.actor.road.RoadMap
+import io.cucumber.actor.road.RoadType
+import io.cucumber.actor.ui.Background
+import io.cucumber.actor.ui.Menu
+import io.cucumber.actor.ui.MenuItem
 import io.cucumber.base.model.bound.RectangleBound
 import io.cucumber.base.view.BaseScreen
-import io.cucumber.model.actor.Defender
-import io.cucumber.model.actor.Enemy
-import io.cucumber.model.actor.preview.DefenderPreview
-import io.cucumber.model.actor.road.RoadBlock
-import io.cucumber.model.actor.road.RoadMap
-import io.cucumber.model.actor.road.RoadType
-import io.cucumber.model.actor.ui.Background
-import io.cucumber.model.actor.ui.Menu
-import io.cucumber.model.actor.ui.MenuItem
-import io.cucumber.model.level.Level
+import io.cucumber.storage.event.EventType
+import io.cucumber.storage.model.Level
 import io.cucumber.utils.constants.Constants.*
 import io.cucumber.utils.generator.RoadMapGenerator
 
@@ -27,22 +28,13 @@ class GameScreen(
 ) : BaseScreen(game) {
 
     private var health: Float = GAME_HEALTH
-    private var timer: Float = level.length
+    private var timer: Int = level.length
 
     private val roadMapGenerator: RoadMapGenerator = RoadMapGenerator()
     private val defenders: Array<Defender> = Array()
+    private val enemies: Array<Enemy> = Array()
 
     private lateinit var roadMap: RoadMap
-    private val enemy: Enemy = Enemy(
-            0f,
-            0f,
-            ENEMY_SIZE,
-            ENEMY_VELOCITY,
-            ENEMY_VELOCITY,
-            ENEMY_POWER,
-            ENEMY_HEALTH,
-            level.assets.enemy
-    )
     private val background: Background = Background(
             0f,
             SCREEN_HEIGHT / 8,
@@ -85,7 +77,7 @@ class GameScreen(
                 val defender = payload?.dragActor as DefenderPreview? ?: return false
 
                 val available = !menu.isCollides(defender) &&
-                        !enemy.isCollides(defender) &&
+                        !enemies.any { it.isCollides(defender) } &&
                         !background.road.any { it.isCollides(defender) } &&
                         !defenders.any { it.isCollides(defender) }
 
@@ -106,6 +98,21 @@ class GameScreen(
 
         Timer.schedule(object : Timer.Task() {
             override fun run() {
+                val event = level.getEvent(level.length - timer)
+                if (EventType.GENERATE_ENEMY == event?.eventType) {
+                    val enemy = Enemy(
+                            roadMap.startPositionX * BLOCK_SIZE,
+                            roadMap.startPositionY * BLOCK_SIZE + SCREEN_HEIGHT / 8,
+                            ENEMY_SIZE,
+                            ENEMY_VELOCITY,
+                            ENEMY_VELOCITY,
+                            ENEMY_POWER,
+                            ENEMY_HEALTH,
+                            level.assets.enemy
+                    )
+                    enemies.add(enemy)
+                    addActor(enemy)
+                }
                 timer--
             }
         }, 0f, 1f)
@@ -115,10 +122,10 @@ class GameScreen(
     }
 
     fun init(): GameScreen {
-        enemy.remove()
         menu.remove()
         background.remove()
         defenders.forEach { it.remove() }
+        enemies.forEach { it.remove() }
 
         health = GAME_HEALTH
         timer = level.length
@@ -155,19 +162,6 @@ class GameScreen(
                 road
         )
         addActor(background)
-
-        enemy.init(
-                roadMap.startPositionX * BLOCK_SIZE,
-                roadMap.startPositionY * BLOCK_SIZE + SCREEN_HEIGHT / 8,
-                ENEMY_SIZE,
-                ENEMY_VELOCITY,
-                ENEMY_VELOCITY,
-                ENEMY_POWER,
-                ENEMY_HEALTH,
-                level.assets.enemy
-        )
-        addActor(enemy)
-
         menu.init(
                 RectangleBound(0f, 0f, SCREEN_WIDTH, SCREEN_HEIGHT / 8),
                 level.assets.menuBackground,
@@ -179,50 +173,36 @@ class GameScreen(
     }
 
     override fun stateCheck() {
-        defenders.forEach {
-            if (it.isCollidesZone(enemy)) {
-                enemy.hit(it.power * Gdx.graphics.deltaTime)
+        enemies.forEachIndexed { index, enemy ->
+            defenders.forEach { defender ->
+                if (defender.isCollidesZone(enemy)) {
+                    enemy.hit(defender.power * Gdx.graphics.deltaTime)
+                }
             }
-        }
 
-        background.road.forEach {
-            if (it.isCollidesZone(enemy)) {
-                enemy.changeDirection(it.type)
+            background.road.forEach { road ->
+                if (road.isCollidesZone(enemy)) {
+                    enemy.changeDirection(road.type)
+                }
             }
-        }
 
-        if (enemy.isDead) {
-            enemy.init(
-                    roadMap.startPositionX * BLOCK_SIZE,
-                    roadMap.startPositionY * BLOCK_SIZE + SCREEN_HEIGHT / 8,
-                    ENEMY_SIZE,
-                    ENEMY_VELOCITY,
-                    ENEMY_VELOCITY,
-                    ENEMY_POWER,
-                    ENEMY_HEALTH,
-                    level.assets.enemy
-            )
-        }
+            if (enemy.isDead) {
+                enemies.removeIndex(index)
+                enemy.remove()
+            }
 
-        if (enemy.isPassed) {
-            health -= enemy.power
-            enemy.init(
-                    roadMap.startPositionX * BLOCK_SIZE,
-                    roadMap.startPositionY * BLOCK_SIZE + SCREEN_HEIGHT / 8,
-                    ENEMY_SIZE,
-                    ENEMY_VELOCITY,
-                    ENEMY_VELOCITY,
-                    ENEMY_POWER,
-                    ENEMY_HEALTH,
-                    level.assets.enemy
-            )
+            if (enemy.isPassed) {
+                health -= enemy.power
+                enemies.removeIndex(index)
+                enemy.remove()
+            }
         }
 
         if (health <= 0) {
             init()
         }
 
-        if (timer <=0) {
+        if (timer <= 0) {
             init()
         }
     }

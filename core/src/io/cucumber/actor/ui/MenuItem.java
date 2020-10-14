@@ -1,10 +1,10 @@
-package io.cucumber.model.actor.ui;
+package io.cucumber.actor.ui;
 
 import com.badlogic.gdx.math.Rectangle;
 
 import io.cucumber.base.model.base.StaticActor;
 import io.cucumber.base.model.bound.RectangleBound;
-import io.cucumber.model.level.DefenderData;
+import io.cucumber.storage.model.DefenderData;
 
 public class MenuItem extends StaticActor<Rectangle> {
 

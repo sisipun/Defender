@@ -26,7 +26,7 @@ public class Constants {
 
     // Game
     public static final float GAME_HEALTH = 100;
-    public static final float GAME_LENGTH = 60;
+    public static final int GAME_LENGTH = 60;
 
 
     private Constants() {

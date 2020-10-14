@@ -1,4 +1,4 @@
-package io.cucumber.manager;
+package io.cucumber.storage;
 
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -7,8 +7,8 @@ import com.badlogic.gdx.utils.Array;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.cucumber.model.level.DefenderData;
-import io.cucumber.model.level.DefenderType;
+import io.cucumber.storage.model.DefenderData;
+import io.cucumber.storage.model.DefenderType;
 
 import static io.cucumber.utils.constants.Constants.DEFENDER_POWER;
 import static io.cucumber.utils.constants.Constants.DEFENDER_SIZE;

@@ -1,4 +1,4 @@
-package io.cucumber.model.level;
+package io.cucumber.storage.model;
 
 public enum  DefenderType {
     BASE

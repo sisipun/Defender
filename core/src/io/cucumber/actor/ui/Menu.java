@@ -1,4 +1,4 @@
-package io.cucumber.model.actor.ui;
+package io.cucumber.actor.ui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Array;
 
 import io.cucumber.base.model.base.StaticActor;
 import io.cucumber.base.model.bound.RectangleBound;
-import io.cucumber.model.level.DefenderData;
+import io.cucumber.storage.model.DefenderData;
 
 public class Menu extends StaticActor<Rectangle> {
 

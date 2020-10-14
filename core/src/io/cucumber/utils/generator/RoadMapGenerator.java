@@ -2,8 +2,8 @@ package io.cucumber.utils.generator;
 
 import java.util.Random;
 
-import io.cucumber.model.actor.road.RoadMap;
-import io.cucumber.model.actor.road.RoadType;
+import io.cucumber.actor.road.RoadMap;
+import io.cucumber.actor.road.RoadType;
 
 public class RoadMapGenerator {
 

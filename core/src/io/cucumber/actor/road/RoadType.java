@@ -1,4 +1,4 @@
-package io.cucumber.model.actor.road;
+package io.cucumber.actor.road;
 
 public enum RoadType {
     NONE,

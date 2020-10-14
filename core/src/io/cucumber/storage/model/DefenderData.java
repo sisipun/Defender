@@ -1,4 +1,4 @@
-package io.cucumber.model.level;
+package io.cucumber.storage.model;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

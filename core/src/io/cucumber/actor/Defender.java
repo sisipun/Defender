@@ -1,15 +1,15 @@
-package io.cucumber.model.actor;
+package io.cucumber.actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 
+import io.cucumber.actor.preview.DefenderPreview;
 import io.cucumber.base.model.base.StaticActor;
 import io.cucumber.base.model.bound.RectangleBound;
-import io.cucumber.model.actor.preview.DefenderPreview;
 
 public class Defender extends StaticActor<Rectangle> {
 
-    private Zone zone;
+    private io.cucumber.actor.Zone zone;
     private float power;
 
     public Defender(DefenderPreview preview) {

@@ -1,12 +1,12 @@
-package io.cucumber.model.actor;
+package io.cucumber.actor;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import io.cucumber.actor.road.RoadType;
 import io.cucumber.base.model.base.DynamicActor;
 import io.cucumber.base.model.bound.RectangleBound;
-import io.cucumber.model.actor.road.RoadType;
 
 public class Enemy extends DynamicActor<Rectangle> {
 
@@ -45,23 +45,23 @@ public class Enemy extends DynamicActor<Rectangle> {
         super.act(delta);
     }
 
-    public void changeDirection(RoadType roadType) {
+    public void changeDirection(io.cucumber.actor.road.RoadType roadType) {
         if (passed) {
             return;
         }
 
-        if (RoadType.NONE.equals(roadType)) {
+        if (io.cucumber.actor.road.RoadType.NONE.equals(roadType)) {
             health = 0;
-        } else if (RoadType.UP.equals(roadType)) {
+        } else if (io.cucumber.actor.road.RoadType.UP.equals(roadType)) {
             velocity.y = initialVelocity.y;
             velocity.x = 0;
-        } else if (RoadType.DOWN.equals(roadType)) {
+        } else if (io.cucumber.actor.road.RoadType.DOWN.equals(roadType)) {
             velocity.y = -initialVelocity.y;
             velocity.x = 0;
-        } else if (RoadType.LEFT.equals(roadType)) {
+        } else if (io.cucumber.actor.road.RoadType.LEFT.equals(roadType)) {
             velocity.y = 0;
             velocity.x = -initialVelocity.x;
-        } else if (RoadType.RIGHT.equals(roadType)) {
+        } else if (io.cucumber.actor.road.RoadType.RIGHT.equals(roadType)) {
             velocity.y = 0;
             velocity.x = initialVelocity.x;
         } else if (RoadType.END.equals(roadType)) {

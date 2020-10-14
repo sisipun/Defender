@@ -13,15 +13,15 @@ public class Background extends StaticActor<Rectangle> {
 
     private Array<io.cucumber.actor.road.RoadBlock> road;
 
-    public Background(float x, float y, float width, float height, TextureRegion region,
+    public Background(float x, float y, float width, float height, TextureRegion texture,
                       Array<io.cucumber.actor.road.RoadBlock> road) {
-        super(new RectangleBound(x, y, width, height), region);
+        super(new RectangleBound(x, y, width, height), texture);
         this.road = new Array<>(road);
     }
 
-    public Background init(float x, float y, float width, float height, TextureRegion region,
+    public Background init(float x, float y, float width, float height, TextureRegion texture,
                            Array<io.cucumber.actor.road.RoadBlock> road) {
-        super.init(new RectangleBound(x, y, width, height), region);
+        super.init(new RectangleBound(x, y, width, height), texture);
         this.road.clear();
         this.road.addAll(road);
         return this;
@@ -30,7 +30,7 @@ public class Background extends StaticActor<Rectangle> {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        for (io.cucumber.actor.road.RoadBlock roadBlock : road) {
+        for (RoadBlock roadBlock : road) {
             roadBlock.draw(batch, parentAlpha);
         }
     }

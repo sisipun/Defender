@@ -10,14 +10,15 @@ import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.LOOP;
 
 public abstract class AnimationActor<T extends Shape2D> extends DynamicActor<T> {
 
-    private Animation<TextureRegion> animation;
     private float stateTime;
+
+    private Animation<TextureRegion> animation;
 
     public AnimationActor(Bound2D<T> bound, float horizontalVelocity,
                           float verticalVelocity, Animation<TextureRegion> animation, boolean flipX, boolean flipY) {
         super(bound, horizontalVelocity, verticalVelocity, animation.getKeyFrame(0), flipX, flipY);
-        this.animation = animation;
         this.stateTime = 0f;
+        this.animation = animation;
     }
 
     public AnimationActor(Bound2D<T> bound, float horizontalVelocity,
@@ -40,7 +41,7 @@ public abstract class AnimationActor<T extends Shape2D> extends DynamicActor<T> 
     public void act(float delta) {
         super.act(delta);
         stateTime += delta;
-        region = animation.getKeyFrame(stateTime);
+        texture = animation.getKeyFrame(stateTime);
         if (stateTime > animation.getAnimationDuration() && animation.getPlayMode().equals(LOOP)) {
             stateTime -= animation.getAnimationDuration();
         }

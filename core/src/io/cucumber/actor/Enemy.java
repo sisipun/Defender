@@ -13,11 +13,12 @@ public class Enemy extends DynamicActor<Rectangle> {
     private float power;
     private float health;
     private boolean passed;
+
     private Vector2 initialVelocity;
 
     public Enemy(float x, float y, float size, float horizontalVelocity, float verticalVelocity,
-                 float power, float health, TextureRegion region) {
-        super(new RectangleBound(x, y, size, size), horizontalVelocity, verticalVelocity, region);
+                 float power, float health, TextureRegion texture) {
+        super(new RectangleBound(x, y, size, size), horizontalVelocity, verticalVelocity, texture);
         this.power = power;
         this.health = health;
         this.passed = false;
@@ -25,8 +26,8 @@ public class Enemy extends DynamicActor<Rectangle> {
     }
 
     public Enemy init(float x, float y, float size, float horizontalVelocity, float verticalVelocity,
-                      float power, float health, TextureRegion region) {
-        super.init(new RectangleBound(x, y, size, size), horizontalVelocity, verticalVelocity, region);
+                      float power, float health, TextureRegion texture) {
+        super.init(new RectangleBound(x, y, size, size), horizontalVelocity, verticalVelocity, texture);
         this.power = power;
         this.health = health;
         this.passed = false;
@@ -45,7 +46,7 @@ public class Enemy extends DynamicActor<Rectangle> {
         super.act(delta);
     }
 
-    public void changeDirection(io.cucumber.actor.road.RoadType roadType) {
+    public void changeDirection(RoadType roadType) {
         if (passed) {
             return;
         }

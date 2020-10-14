@@ -9,14 +9,14 @@ import io.cucumber.base.model.bound.RectangleBound;
 
 public class Defender extends StaticActor<Rectangle> {
 
-    private io.cucumber.actor.Zone zone;
     private float power;
+    private Zone zone;
 
     public Defender(DefenderPreview preview) {
         super(new RectangleBound(preview.getX(), preview.getY(), preview.getWidth(),
-                preview.getHeight()), preview.getRegion());
-        this.zone = new Zone(this, preview.getZoneSize(), preview.getZoneRegion());
+                preview.getHeight()), preview.getTexture());
         this.power = preview.getPower();
+        this.zone = new Zone(this, preview.getZoneSize(), preview.getZoneTexture());
     }
 
     @Override

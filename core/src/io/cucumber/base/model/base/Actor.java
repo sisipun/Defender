@@ -9,34 +9,32 @@ import io.cucumber.base.model.bound.Bound2D;
 
 public abstract class Actor<T extends Shape2D> extends com.badlogic.gdx.scenes.scene2d.Actor implements Pool.Poolable {
 
-    protected TextureRegion region;
-
-    private Bound2D<T> bound;
-
     private boolean flipX;
-
     private boolean flipY;
 
-    public Actor(Bound2D<T> bound, TextureRegion region, boolean flipX, boolean flipY) {
-        init(bound, region, flipX, flipY);
+    protected TextureRegion texture;
+    private Bound2D<T> bound;
+
+    public Actor(Bound2D<T> bound, TextureRegion texture, boolean flipX, boolean flipY) {
+        init(bound, texture, flipX, flipY);
     }
 
-    public Actor(Bound2D<T> bound, TextureRegion region) {
-        init(bound, region);
+    public Actor(Bound2D<T> bound, TextureRegion texture) {
+        init(bound, texture);
     }
 
-    public Actor<T> init(Bound2D<T> bound, TextureRegion region, boolean flipX, boolean flipY) {
-        this.bound = bound;
-        this.region = region;
+    public Actor<T> init(Bound2D<T> bound, TextureRegion texture, boolean flipX, boolean flipY) {
         this.flipX = flipX;
         this.flipY = flipY;
+        this.bound = bound;
+        this.texture = texture;
         setBounds(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
         setOrigin(getWidth()/ 2, getHeight() / 2);
         return this;
     }
 
-    public Actor<T> init(Bound2D<T> bound, TextureRegion region) {
-        return init(bound, region, false, false);
+    public Actor<T> init(Bound2D<T> bound, TextureRegion texture) {
+        return init(bound, texture, false, false);
     }
 
     public boolean isCollides(Actor<T> actor) {
@@ -47,12 +45,12 @@ public abstract class Actor<T extends Shape2D> extends com.badlogic.gdx.scenes.s
         return bound.contains(x, y);
     }
 
-    public TextureRegion getRegion() {
-        return region;
+    public TextureRegion getTexture() {
+        return texture;
     }
 
-    public void setRegion(TextureRegion region) {
-        this.region = region;
+    public void setTexture(TextureRegion texture) {
+        this.texture = texture;
     }
 
     public Bound2D<T> getBound() {
@@ -101,7 +99,7 @@ public abstract class Actor<T extends Shape2D> extends com.badlogic.gdx.scenes.s
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.draw(
-                region.getTexture(),
+                texture.getTexture(),
                 getX(),
                 getY(),
                 getOriginX(),
@@ -111,10 +109,10 @@ public abstract class Actor<T extends Shape2D> extends com.badlogic.gdx.scenes.s
                 getScaleX(),
                 getScaleY(),
                 getRotation(),
-                region.getRegionX(),
-                region.getRegionY(),
-                region.getRegionWidth(),
-                region.getRegionHeight(),
+                texture.getRegionX(),
+                texture.getRegionY(),
+                texture.getRegionWidth(),
+                texture.getRegionHeight(),
                 flipX,
                 flipY
         );
@@ -129,6 +127,6 @@ public abstract class Actor<T extends Shape2D> extends com.badlogic.gdx.scenes.s
         setWidth(0);
         setHeight(0);
         setOrigin(0, 0);
-        region = null;
+        texture = null;
     }
 }

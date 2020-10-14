@@ -13,9 +13,8 @@ import io.cucumber.actor.road.RoadBlock
 import io.cucumber.actor.road.RoadMap
 import io.cucumber.actor.road.RoadType
 import io.cucumber.actor.ui.Background
-import io.cucumber.actor.ui.Menu
-import io.cucumber.actor.ui.MenuItem
-import io.cucumber.base.model.bound.RectangleBound
+import io.cucumber.actor.ui.DefenderMenu
+import io.cucumber.actor.ui.DefenderMenuItem
 import io.cucumber.base.view.BaseScreen
 import io.cucumber.storage.event.EventType
 import io.cucumber.storage.model.Level
@@ -43,22 +42,25 @@ class GameScreen(
             level.assets.background,
             Array()
     )
-    private val menu: Menu = Menu(
-            RectangleBound(0f, 0f, SCREEN_WIDTH, SCREEN_HEIGHT / 8),
+    private val defenderMenu: DefenderMenu = DefenderMenu(
+            0f,
+            0f,
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT / 8,
             level.assets.menuBackground,
             level.defenderTypes
     )
 
     init {
         val dragAndDrop = DragAndDrop()
-        dragAndDrop.addSource(object : DragAndDrop.Source(menu) {
+        dragAndDrop.addSource(object : DragAndDrop.Source(defenderMenu) {
             override fun dragStart(event: InputEvent, x: Float, y: Float, pointer: Int): DragAndDrop.Payload {
                 val payload = DragAndDrop.Payload()
-                val item: MenuItem = (actor as Menu).getItem(x, y) ?: return payload
+                val itemDefender: DefenderMenuItem = (actor as DefenderMenu).getItem(x, y) ?: return payload
                 val actor = DefenderPreview(
                         x,
                         y,
-                        item.defenderData,
+                        itemDefender.value,
                         level.assets.zone
                 )
                 payload.dragActor = actor
@@ -76,7 +78,7 @@ class GameScreen(
             override fun drag(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float, y: Float, pointer: Int): Boolean {
                 val defender = payload?.dragActor as DefenderPreview? ?: return false
 
-                val available = !menu.isCollides(defender) &&
+                val available = !defenderMenu.isCollides(defender) &&
                         !enemies.any { it.isCollides(defender) } &&
                         !background.road.any { it.isCollides(defender) } &&
                         !defenders.any { it.isCollides(defender) }
@@ -122,7 +124,7 @@ class GameScreen(
     }
 
     fun init(): GameScreen {
-        menu.remove()
+        defenderMenu.remove()
         background.remove()
         defenders.forEach { it.remove() }
         enemies.forEach { it.remove() }
@@ -162,12 +164,15 @@ class GameScreen(
                 road
         )
         addActor(background)
-        menu.init(
-                RectangleBound(0f, 0f, SCREEN_WIDTH, SCREEN_HEIGHT / 8),
+        defenderMenu.init(
+                0f,
+                0f,
+                SCREEN_WIDTH,
+                SCREEN_HEIGHT / 8,
                 level.assets.menuBackground,
                 level.defenderTypes
         )
-        addActor(menu)
+        addActor(defenderMenu)
 
         return this
     }
@@ -202,7 +207,7 @@ class GameScreen(
             init()
         }
 
-        if (timer <= 0) {
+        if (timer <= 0 && enemies.isEmpty) {
             init()
         }
     }

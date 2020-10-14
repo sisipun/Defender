@@ -8,16 +8,17 @@ public class DefenderData {
     private final float size;
     private final float power;
     private final float zoneSize;
-    private final TextureRegion availableRegion;
-    private final TextureRegion unavailableRegion;
+
+    private final TextureRegion availableTexture;
+    private final TextureRegion unavailableTexture;
 
     public DefenderData(TextureAtlas atlas, float size, float power, float zoneSize,
-                        String availableRegion, String unavailableRegion) {
+                        String availableTexture, String unavailableTexture) {
         this.size = size;
         this.power = power;
         this.zoneSize = zoneSize;
-        this.availableRegion = atlas.findRegion(availableRegion);
-        this.unavailableRegion = atlas.findRegion(unavailableRegion);
+        this.availableTexture = atlas.findRegion(availableTexture);
+        this.unavailableTexture = atlas.findRegion(unavailableTexture);
     }
 
     public float getSize() {
@@ -32,11 +33,11 @@ public class DefenderData {
         return zoneSize;
     }
 
-    public TextureRegion getAvailableRegion() {
-        return availableRegion;
+    public TextureRegion getAvailableTexture() {
+        return availableTexture;
     }
 
-    public TextureRegion getUnavailableRegion() {
-        return unavailableRegion;
+    public TextureRegion getUnavailableTexture() {
+        return unavailableTexture;
     }
 }

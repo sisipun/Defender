@@ -14,12 +14,12 @@ import static io.cucumber.utils.constants.Constants.ZONE_ALPHA;
 
 public class Zone extends StaticActor<Circle> {
 
-    public Zone(Actor actor, float size, TextureRegion region) {
+    public Zone(Actor parent, float size, TextureRegion texture) {
         super(new CircleBound(
-                actor.getX() + actor.getWidth() / 2f - size / 2f,
-                actor.getY() + actor.getHeight() / 2f - size / 2f,
+                parent.getX() + parent.getWidth() / 2f - size / 2f,
+                parent.getY() + parent.getHeight() / 2f - size / 2f,
                 size / 2
-        ), region);
+        ), texture);
     }
 
     @Override

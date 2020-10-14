@@ -9,6 +9,7 @@ import io.cucumber.storage.event.Event;
 public class Level {
 
     private final int length;
+
     private final CommonAssets assets;
     private final Array<DefenderData> defenderTypes;
     private final Map<Integer, Event> timeEvents;

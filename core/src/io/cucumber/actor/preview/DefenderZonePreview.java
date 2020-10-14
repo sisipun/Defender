@@ -12,17 +12,18 @@ import static io.cucumber.utils.constants.Constants.ZONE_ALPHA;
 
 public class DefenderZonePreview extends StaticActor<Circle> {
 
-    private DefenderPreview defender;
     private float size;
 
-    public DefenderZonePreview(DefenderPreview defender, float size, TextureRegion region) {
+    private DefenderPreview parent;
+
+    public DefenderZonePreview(DefenderPreview parent, float size, TextureRegion texture) {
         super(new CircleBound(
-                defender.getX() + defender.getWidth() / 2f - size / 2f,
-                defender.getY() + defender.getHeight() / 2f - size / 2f,
+                parent.getX() + parent.getWidth() / 2f - size / 2f,
+                parent.getY() + parent.getHeight() / 2f - size / 2f,
                 size / 2
-        ), region);
-        this.defender = defender;
+        ), texture);
         this.size = size;
+        this.parent = parent;
     }
 
     @Override
@@ -36,27 +37,27 @@ public class DefenderZonePreview extends StaticActor<Circle> {
 
     @Override
     public void setX(float x) {
-        super.setX(x + defender.getWidth() / 2f - getWidth() / 2f);
+        super.setX(x + parent.getWidth() / 2f - getWidth() / 2f);
     }
 
     @Override
     public void setY(float y) {
-        super.setY(y + defender.getHeight() / 2f - getHeight() / 2f);
+        super.setY(y + parent.getHeight() / 2f - getHeight() / 2f);
     }
 
     @Override
     public void setPosition(float x, float y) {
         super.setPosition(
-                x + defender.getWidth() / 2f - getWidth() / 2f,
-                y + defender.getHeight() / 2f - getHeight() / 2f
+                x + parent.getWidth() / 2f - getWidth() / 2f,
+                y + parent.getHeight() / 2f - getHeight() / 2f
         );
     }
 
     @Override
     public void setPosition(float x, float y, int alignment) {
         super.setPosition(
-                x + defender.getWidth() / 2f - getWidth() / 2f,
-                y + defender.getHeight() / 2f - getHeight() / 2f,
+                x + parent.getWidth() / 2f - getWidth() / 2f,
+                y + parent.getHeight() / 2f - getHeight() / 2f,
                 alignment
         );
     }

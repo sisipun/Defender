@@ -11,27 +11,27 @@ public abstract class DynamicActor<T extends Shape2D> extends Actor<T> {
     protected Vector2 velocity;
 
     public DynamicActor(Bound2D<T> bound, float horizontalVelocity, float verticalVelocity,
-                        TextureRegion region, boolean flipX, boolean flipY) {
-        super(bound, region, flipX, flipY);
+                        TextureRegion texture, boolean flipX, boolean flipY) {
+        super(bound, texture, flipX, flipY);
         this.velocity = new Vector2(horizontalVelocity, verticalVelocity);
     }
 
     public DynamicActor(Bound2D<T> bound, float horizontalVelocity, float verticalVelocity,
-                        TextureRegion region) {
-        super(bound, region);
+                        TextureRegion texture) {
+        super(bound, texture);
         this.velocity = new Vector2(horizontalVelocity, verticalVelocity);
     }
 
     public DynamicActor<T> init(Bound2D<T> bound, float horizontalVelocity, float verticalVelocity,
-                             TextureRegion region, boolean flipX, boolean flipY) {
-        super.init(bound, region, flipX, flipY);
+                             TextureRegion texture, boolean flipX, boolean flipY) {
+        super.init(bound, texture, flipX, flipY);
         this.velocity = new Vector2(horizontalVelocity, verticalVelocity);
         return this;
     }
 
     public DynamicActor<T> init(Bound2D<T> bound, float horizontalVelocity, float verticalVelocity,
-                             TextureRegion region) {
-        super.init(bound, region);
+                             TextureRegion texture) {
+        super.init(bound, texture);
         this.velocity = new Vector2(horizontalVelocity, verticalVelocity);
         return this;
     }

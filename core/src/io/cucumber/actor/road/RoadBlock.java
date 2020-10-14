@@ -11,14 +11,14 @@ import io.cucumber.actor.Zone;
 
 public class RoadBlock extends StaticActor<Rectangle> {
 
-    private RoadType roadType;
+    private RoadType type;
     private Zone zone;
 
-    public RoadBlock(float x, float y, float size, RoadType type, TextureRegion region,
-                     float zoneSize, TextureRegion zoneRegion) {
-        super(new RectangleBound(x, y, size, size), region);
-        this.roadType = type;
-        this.zone = new Zone(this, zoneSize, zoneRegion);
+    public RoadBlock(float x, float y, float size, RoadType type, TextureRegion texture,
+                     float zoneSize, TextureRegion zoneTexture) {
+        super(new RectangleBound(x, y, size, size), texture);
+        this.type = type;
+        this.zone = new Zone(this, zoneSize, zoneTexture);
     }
 
     @Override
@@ -26,35 +26,11 @@ public class RoadBlock extends StaticActor<Rectangle> {
         super.draw(batch, parentAlpha);
     }
 
-    @Override
-    public void setX(float x) {
-        zone.setX(x);
-        super.setX(x);
-    }
-
-    @Override
-    public void setY(float y) {
-        zone.setY(y);
-        super.setY(y);
-    }
-
-    @Override
-    public void setPosition(float x, float y) {
-        zone.setPosition(x, y);
-        super.setPosition(x, y);
-    }
-
-    @Override
-    public void setPosition(float x, float y, int alignment) {
-        zone.setPosition(x, y, alignment);
-        super.setPosition(x, y, alignment);
-    }
-
     public boolean isCollidesZone(Enemy enemy) {
         return zone.isCollides(enemy);
     }
 
     public RoadType getType() {
-        return roadType;
+        return type;
     }
 }

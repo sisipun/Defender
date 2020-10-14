@@ -10,18 +10,20 @@ import io.cucumber.storage.model.DefenderData;
 
 public class DefenderPreview extends StaticActor<Rectangle> {
 
-    private io.cucumber.actor.preview.DefenderZonePreview zone;
     private float power;
-    private TextureRegion availableRegion;
-    private TextureRegion unavailableRegion;
     private boolean available;
 
-    public DefenderPreview(float x, float y, DefenderData data, TextureRegion zoneRegion) {
-        super(new RectangleBound(x, y, data.getSize(), data.getSize()), data.getAvailableRegion());
+    private DefenderZonePreview zone;
+    private TextureRegion availableTexture;
+    private TextureRegion unavailableTexture;
+
+    public DefenderPreview(float x, float y, DefenderData data, TextureRegion zoneTexture) {
+        super(new RectangleBound(x, y, data.getSize(), data.getSize()), data.getAvailableTexture());
         this.power = data.getPower();
-        this.zone = new DefenderZonePreview(this, data.getZoneSize(), zoneRegion);
-        this.availableRegion = data.getAvailableRegion();
-        this.unavailableRegion = data.getUnavailableRegion();
+        this.available = true;
+        this.zone = new DefenderZonePreview(this, data.getZoneSize(), zoneTexture);
+        this.availableTexture = data.getAvailableTexture();
+        this.unavailableTexture = data.getUnavailableTexture();
     }
 
     @Override
@@ -29,6 +31,7 @@ public class DefenderPreview extends StaticActor<Rectangle> {
         zone.draw(batch, parentAlpha);
         super.draw(batch, parentAlpha);
     }
+
     @Override
     public void setX(float x) {
         zone.setX(x);
@@ -53,9 +56,8 @@ public class DefenderPreview extends StaticActor<Rectangle> {
         super.setPosition(x, y, alignment);
     }
 
-
-    public TextureRegion getZoneRegion() {
-        return zone.getRegion();
+    public TextureRegion getZoneTexture() {
+        return zone.getTexture();
     }
 
     public float getZoneSize() {
@@ -73,9 +75,9 @@ public class DefenderPreview extends StaticActor<Rectangle> {
     public void setAvailable(boolean available) {
         this.available = available;
         if (available) {
-            setRegion(availableRegion);
+            setTexture(availableTexture);
         } else {
-            setRegion(unavailableRegion);
+            setTexture(unavailableTexture);
         }
     }
 }

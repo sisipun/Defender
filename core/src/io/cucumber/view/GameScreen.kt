@@ -138,19 +138,36 @@ class GameScreen(
         )
 
         val road = Array<RoadBlock>()
-        roadMap.value.forEachIndexed { i, row ->
-            row.forEachIndexed { j, roadType ->
-                if (roadType != RoadType.NONE) {
-                    val block = RoadBlock(
-                            i * BLOCK_SIZE,
-                            j * BLOCK_SIZE + SCREEN_HEIGHT / 8,
-                            BLOCK_SIZE,
-                            roadType,
-                            level.assets.block,
-                            BLOCK_ZONE_SIZE,
-                            level.assets.zone
-                    )
-                    road.add(block)
+        var block: RoadBlock? = null
+        var i = roadMap.startPositionX
+        var j = roadMap.startPositionY
+        while (block?.type != RoadType.END || block.type == RoadType.NONE) {
+            val roadType = roadMap.value[i][j]
+            val previousType = block?.type ?: RoadType.NONE
+            block = RoadBlock(
+                    i * BLOCK_SIZE,
+                    j * BLOCK_SIZE + SCREEN_HEIGHT / 8,
+                    BLOCK_SIZE,
+                    roadType,
+                    previousType,
+                    level.assets.block,
+                    BLOCK_ZONE_SIZE,
+                    level.assets.zone
+            )
+            road.add(block)
+
+            when (roadType) {
+                RoadType.LEFT -> {
+                    i--
+                }
+                RoadType.RIGHT -> {
+                    i++
+                }
+                RoadType.DOWN -> {
+                    j--
+                }
+                RoadType.UP -> {
+                    j++
                 }
             }
         }

@@ -21,7 +21,12 @@ public class DefenderPreview extends StaticActor<Rectangle> {
         super(new RectangleBound(x, y, data.getSize(), data.getSize()), data.getAvailableTexture());
         this.power = data.getPower();
         this.available = true;
-        this.zone = new DefenderZonePreview(this, data.getZoneSize(), zoneTexture);
+        this.zone = new DefenderZonePreview(
+                getX() + getWidth() / 2f - data.getZoneSize() / 2f,
+                getY() + getHeight() / 2f - data.getZoneSize() / 2f,
+                data.getZoneSize(),
+                zoneTexture
+        );
         this.availableTexture = data.getAvailableTexture();
         this.unavailableTexture = data.getUnavailableTexture();
     }
@@ -34,25 +39,32 @@ public class DefenderPreview extends StaticActor<Rectangle> {
 
     @Override
     public void setX(float x) {
-        zone.setX(x);
+        zone.setX(x + getWidth() / 2f - zone.getWidth() / 2f);
         super.setX(x);
     }
 
     @Override
     public void setY(float y) {
-        zone.setY(y);
+        zone.setY(y + getHeight() / 2f - zone.getHeight() / 2f);
         super.setY(y);
     }
 
     @Override
     public void setPosition(float x, float y) {
-        zone.setPosition(x, y);
+        zone.setPosition(
+                x + getWidth() / 2f - zone.getWidth() / 2f,
+                y + getHeight() / 2f - zone.getHeight() / 2f
+        );
         super.setPosition(x, y);
     }
 
     @Override
     public void setPosition(float x, float y, int alignment) {
-        zone.setPosition(x, y, alignment);
+        zone.setPosition(
+                x + getWidth() / 2f - zone.getWidth() / 2f,
+                y + getHeight() / 2f - zone.getHeight() / 2f,
+                alignment
+        );
         super.setPosition(x, y, alignment);
     }
 

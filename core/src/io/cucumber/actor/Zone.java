@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 
-import io.cucumber.base.model.base.Actor;
 import io.cucumber.base.model.base.StaticActor;
 import io.cucumber.base.model.bound.CircleBound;
 
@@ -14,12 +13,8 @@ import static io.cucumber.utils.constants.Constants.ZONE_ALPHA;
 
 public class Zone extends StaticActor<Circle> {
 
-    public Zone(Actor parent, float size, TextureRegion texture) {
-        super(new CircleBound(
-                parent.getX() + parent.getWidth() / 2f - size / 2f,
-                parent.getY() + parent.getHeight() / 2f - size / 2f,
-                size / 2
-        ), texture);
+    public Zone(float x, float y, float size, TextureRegion texture) {
+        super(new CircleBound(x, y, size / 2), texture);
     }
 
     @Override

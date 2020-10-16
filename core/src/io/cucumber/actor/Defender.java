@@ -16,7 +16,12 @@ public class Defender extends StaticActor<Rectangle> {
         super(new RectangleBound(preview.getX(), preview.getY(), preview.getWidth(),
                 preview.getHeight()), preview.getTexture());
         this.power = preview.getPower();
-        this.zone = new Zone(this, preview.getZoneSize(), preview.getZoneTexture());
+        this.zone = new Zone(
+                getX() + getWidth() / 2f - preview.getZoneSize() / 2f,
+                getY() + getHeight() / 2f - preview.getZoneSize() / 2f,
+                preview.getZoneSize(),
+                preview.getZoneTexture()
+        );
     }
 
     @Override

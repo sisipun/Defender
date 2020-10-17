@@ -9,14 +9,16 @@ import io.cucumber.storage.event.Event;
 public class Level {
 
     private final int length;
+    private final int initialBalance;
 
     private final CommonAssets assets;
     private final Array<DefenderData> defenderTypes;
     private final Map<Integer, Event> timeEvents;
 
-    public Level(int length, CommonAssets assets, Array<DefenderData> defenderTypes,
+    public Level(int length, int initialBalance, CommonAssets assets, Array<DefenderData> defenderTypes,
                  Map<Integer, Event> timeEvents) {
         this.length = length;
+        this.initialBalance = initialBalance;
         this.assets = assets;
         this.defenderTypes = defenderTypes;
         this.timeEvents = timeEvents;
@@ -24,6 +26,10 @@ public class Level {
 
     public int getLength() {
         return length;
+    }
+
+    public int getInitialBalance() {
+        return initialBalance;
     }
 
     public CommonAssets getAssets() {

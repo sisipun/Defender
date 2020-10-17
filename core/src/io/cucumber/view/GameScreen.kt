@@ -28,6 +28,7 @@ class GameScreen(
 
     private var health: Float = GAME_HEALTH
     private var timer: Int = level.length
+    private var balance: Int = level.initialBalance
 
     private val roadMapGenerator: RoadMapGenerator = RoadMapGenerator()
     private val defenders: Array<Defender> = Array()
@@ -54,17 +55,21 @@ class GameScreen(
     init {
         val dragAndDrop = DragAndDrop()
         dragAndDrop.addSource(object : DragAndDrop.Source(defenderMenu) {
-            override fun dragStart(event: InputEvent, x: Float, y: Float, pointer: Int): DragAndDrop.Payload {
+            override fun dragStart(event: InputEvent, x: Float,
+                                   y: Float, pointer: Int): DragAndDrop.Payload {
                 val payload = DragAndDrop.Payload()
-                val itemDefender: DefenderMenuItem = (actor as DefenderMenu).getItem(x, y) ?: return payload
+                val itemDefender: DefenderMenuItem = (actor as DefenderMenu).getItem(x, y)
+                        ?: return payload
                 val actor = DefenderPreview(
                         x,
                         y,
                         itemDefender.value,
                         level.assets.zone
                 )
-                payload.dragActor = actor
-                addActor(actor)
+                if (balance >= actor.cost) {
+                    payload.dragActor = actor
+                    addActor(actor)
+                }
                 return payload
             }
 
@@ -75,7 +80,8 @@ class GameScreen(
             }
         })
         dragAndDrop.addTarget(object : DragAndDrop.Target(background) {
-            override fun drag(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float, y: Float, pointer: Int): Boolean {
+            override fun drag(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float,
+                              y: Float, pointer: Int): Boolean {
                 val defender = payload?.dragActor as DefenderPreview? ?: return false
 
                 val available = !defenderMenu.isCollides(defender) &&
@@ -90,11 +96,13 @@ class GameScreen(
                 return available
             }
 
-            override fun drop(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float, y: Float, pointer: Int) {
+            override fun drop(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float,
+                              y: Float, pointer: Int) {
                 val defenderPreview = payload?.dragActor as DefenderPreview? ?: return
                 val defender = Defender(defenderPreview)
                 defenders.add(defender)
                 addActor(defender)
+                balance -= defenderPreview.cost
             }
         })
 

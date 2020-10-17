@@ -14,6 +14,7 @@ import io.cucumber.storage.model.DefenderData;
 import io.cucumber.storage.model.DefenderType;
 import io.cucumber.storage.model.Level;
 
+import static io.cucumber.utils.constants.Constants.GAME_INITIAL_BALANCE;
 import static io.cucumber.utils.constants.Constants.GAME_LENGTH;
 
 public class LevelStorage {
@@ -44,7 +45,7 @@ public class LevelStorage {
         timeEvents.put(25, new Event(EventType.GENERATE_ENEMY));
         timeEvents.put(40, new Event(EventType.GENERATE_ENEMY));
 
-        level = new Level(GAME_LENGTH, assets, defenders, timeEvents);
+        level = new Level(GAME_LENGTH, GAME_INITIAL_BALANCE, assets, defenders, timeEvents);
         return level;
     }
 

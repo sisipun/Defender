@@ -10,6 +10,7 @@ import java.util.Map;
 import io.cucumber.storage.model.DefenderData;
 import io.cucumber.storage.model.DefenderType;
 
+import static io.cucumber.utils.constants.Constants.DEFENDER_COST;
 import static io.cucumber.utils.constants.Constants.DEFENDER_POWER;
 import static io.cucumber.utils.constants.Constants.DEFENDER_SIZE;
 import static io.cucumber.utils.constants.Constants.DEFENDER_ZONE_SIZE;
@@ -27,6 +28,7 @@ public class DefenderStorage {
                 atlas,
                 DEFENDER_SIZE,
                 DEFENDER_POWER,
+                DEFENDER_COST,
                 DEFENDER_ZONE_SIZE,
                 "defender",
                 "enemy"

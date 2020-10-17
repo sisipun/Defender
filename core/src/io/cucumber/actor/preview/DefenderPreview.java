@@ -11,6 +11,7 @@ import io.cucumber.storage.model.DefenderData;
 public class DefenderPreview extends StaticActor<Rectangle> {
 
     private float power;
+    private int cost;
     private boolean available;
 
     private DefenderZonePreview zone;
@@ -20,6 +21,7 @@ public class DefenderPreview extends StaticActor<Rectangle> {
     public DefenderPreview(float x, float y, DefenderData data, TextureRegion zoneTexture) {
         super(new RectangleBound(x, y, data.getSize(), data.getSize()), data.getAvailableTexture());
         this.power = data.getPower();
+        this.cost = data.getCost();
         this.available = true;
         this.zone = new DefenderZonePreview(
                 getX() + getWidth() / 2f - data.getZoneSize() / 2f,
@@ -68,16 +70,12 @@ public class DefenderPreview extends StaticActor<Rectangle> {
         super.setPosition(x, y, alignment);
     }
 
-    public TextureRegion getZoneTexture() {
-        return zone.getTexture();
-    }
-
-    public float getZoneSize() {
-        return zone.getSize();
-    }
-
     public float getPower() {
         return power;
+    }
+
+    public int getCost() {
+        return cost;
     }
 
     public boolean isAvailable() {
@@ -91,5 +89,13 @@ public class DefenderPreview extends StaticActor<Rectangle> {
         } else {
             setTexture(unavailableTexture);
         }
+    }
+
+    public float getZoneSize() {
+        return zone.getSize();
+    }
+
+    public TextureRegion getZoneTexture() {
+        return zone.getTexture();
     }
 }

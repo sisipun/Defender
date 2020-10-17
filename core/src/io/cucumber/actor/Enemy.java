@@ -12,24 +12,27 @@ public class Enemy extends DynamicActor<Rectangle> {
 
     private float power;
     private float health;
+    private int cost;
     private boolean passed;
 
     private Vector2 initialVelocity;
 
     public Enemy(float x, float y, float size, float horizontalVelocity, float verticalVelocity,
-                 float power, float health, TextureRegion texture) {
+                 float power, float health, int cost, TextureRegion texture) {
         super(new RectangleBound(x, y, size, size), horizontalVelocity, verticalVelocity, texture);
         this.power = power;
         this.health = health;
+        this.cost = cost;
         this.passed = false;
         this.initialVelocity = new Vector2(horizontalVelocity, verticalVelocity);
     }
 
     public Enemy init(float x, float y, float size, float horizontalVelocity, float verticalVelocity,
-                      float power, float health, TextureRegion texture) {
+                      float power, float health, int cost, TextureRegion texture) {
         super.init(new RectangleBound(x, y, size, size), horizontalVelocity, verticalVelocity, texture);
         this.power = power;
         this.health = health;
+        this.cost = cost;
         this.passed = false;
         this.initialVelocity = new Vector2(horizontalVelocity, verticalVelocity);
         return this;
@@ -78,15 +81,19 @@ public class Enemy extends DynamicActor<Rectangle> {
         health -= power;
     }
 
+    public float getPower() {
+        return power;
+    }
+
     public boolean isDead() {
         return health <= 0;
     }
 
-    public boolean isPassed() {
-        return passed;
+    public int getCost() {
+        return cost;
     }
 
-    public float getPower() {
-        return power;
+    public boolean isPassed() {
+        return passed;
     }
 }

@@ -118,6 +118,7 @@ class GameScreen(
                             ENEMY_VELOCITY,
                             ENEMY_POWER,
                             ENEMY_HEALTH,
+                            ENEMY_COST,
                             level.assets.enemy
                     )
                     enemies.add(enemy)
@@ -219,6 +220,7 @@ class GameScreen(
             if (enemy.isDead) {
                 enemies.removeIndex(index)
                 enemy.remove()
+                balance += enemy.cost
             }
 
             if (enemy.isPassed) {

@@ -21,6 +21,7 @@ public class Constants {
     public static final float ENEMY_VELOCITY = 100;
     public static final float ENEMY_HEALTH = 10;
     public static final float ENEMY_POWER = 5;
+    public static final int ENEMY_COST = 50;
 
     // Zone
     public static final float ZONE_ALPHA = 0.5f;
@@ -28,7 +29,7 @@ public class Constants {
     // Game
     public static final float GAME_HEALTH = 100;
     public static final int GAME_LENGTH = 60;
-    public static final int GAME_INITIAL_BALANCE = 1000;
+    public static final int GAME_INITIAL_BALANCE = 400;
 
 
     private Constants() {

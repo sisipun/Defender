@@ -1,6 +1,6 @@
-package io.cucumber.storage.event;
+package io.cucumber.manager.event;
 
-public class Event {
+public abstract class Event {
 
     private final EventType eventType;
 

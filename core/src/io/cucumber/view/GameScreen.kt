@@ -16,8 +16,9 @@ import io.cucumber.actor.ui.Background
 import io.cucumber.actor.ui.DefenderMenu
 import io.cucumber.actor.ui.DefenderMenuItem
 import io.cucumber.base.view.BaseScreen
-import io.cucumber.storage.event.EventType
-import io.cucumber.storage.model.Level
+import io.cucumber.manager.Level
+import io.cucumber.manager.event.EventType
+import io.cucumber.manager.event.GenerateEnemyEvent
 import io.cucumber.utils.constants.Constants.*
 import io.cucumber.utils.generator.RoadMapGenerator
 
@@ -99,7 +100,16 @@ class GameScreen(
             override fun drop(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float,
                               y: Float, pointer: Int) {
                 val defenderPreview = payload?.dragActor as DefenderPreview? ?: return
-                val defender = Defender(defenderPreview)
+                val defender = Defender(
+                        defenderPreview.x,
+                        defenderPreview.y,
+                        defenderPreview.width,
+                        defenderPreview.height,
+                        defenderPreview.power,
+                        defenderPreview.texture,
+                        defenderPreview.zoneSize,
+                        defenderPreview.zoneTexture
+                )
                 defenders.add(defender)
                 addActor(defender)
                 balance -= defenderPreview.cost
@@ -110,16 +120,19 @@ class GameScreen(
             override fun run() {
                 val event = level.getEvent(level.length - timer)
                 if (EventType.GENERATE_ENEMY == event?.eventType) {
+                    event as GenerateEnemyEvent
+                    val enemyData = event.data
                     val enemy = Enemy(
                             roadMap.startPositionX * BLOCK_SIZE,
                             roadMap.startPositionY * BLOCK_SIZE + SCREEN_HEIGHT / 8,
-                            ENEMY_SIZE,
-                            ENEMY_VELOCITY,
-                            ENEMY_VELOCITY,
-                            ENEMY_POWER,
-                            ENEMY_HEALTH,
-                            ENEMY_COST,
-                            level.assets.enemy
+                            enemyData.size,
+                            enemyData.size,
+                            enemyData.velocity,
+                            enemyData.velocity,
+                            enemyData.power,
+                            enemyData.health,
+                            enemyData.cost,
+                            enemyData.texture
                     )
                     enemies.add(enemy)
                     addActor(enemy)

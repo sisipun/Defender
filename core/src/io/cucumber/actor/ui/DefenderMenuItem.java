@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 import io.cucumber.base.model.base.StaticActor;
 import io.cucumber.base.model.bound.RectangleBound;
-import io.cucumber.storage.model.DefenderData;
+import io.cucumber.storage.defender.DefenderData;
 
 public class DefenderMenuItem extends StaticActor<Rectangle> {
 

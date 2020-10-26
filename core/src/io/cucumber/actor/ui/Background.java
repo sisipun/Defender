@@ -11,16 +11,16 @@ import io.cucumber.base.model.bound.RectangleBound;
 
 public class Background extends StaticActor<Rectangle> {
 
-    private Array<io.cucumber.actor.road.RoadBlock> road;
+    private Array<RoadBlock> road;
 
     public Background(float x, float y, float width, float height, TextureRegion texture,
-                      Array<io.cucumber.actor.road.RoadBlock> road) {
+                      Array<RoadBlock> road) {
         super(new RectangleBound(x, y, width, height), texture);
         this.road = new Array<>(road);
     }
 
     public Background init(float x, float y, float width, float height, TextureRegion texture,
-                           Array<io.cucumber.actor.road.RoadBlock> road) {
+                           Array<RoadBlock> road) {
         super.init(new RectangleBound(x, y, width, height), texture);
         this.road.clear();
         this.road.addAll(road);

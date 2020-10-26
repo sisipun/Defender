@@ -17,9 +17,9 @@ public class Enemy extends DynamicActor<Rectangle> {
 
     private Vector2 initialVelocity;
 
-    public Enemy(float x, float y, float size, float horizontalVelocity, float verticalVelocity,
-                 float power, float health, int cost, TextureRegion texture) {
-        super(new RectangleBound(x, y, size, size), horizontalVelocity, verticalVelocity, texture);
+    public Enemy(float x, float y, float width, float height, float horizontalVelocity,
+                 float verticalVelocity, float power, float health, int cost, TextureRegion texture) {
+        super(new RectangleBound(x, y, width, height), horizontalVelocity, verticalVelocity, texture);
         this.power = power;
         this.health = health;
         this.cost = cost;

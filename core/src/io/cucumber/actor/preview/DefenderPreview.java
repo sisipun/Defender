@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 import io.cucumber.base.model.base.StaticActor;
 import io.cucumber.base.model.bound.RectangleBound;
-import io.cucumber.storage.model.DefenderData;
+import io.cucumber.storage.defender.DefenderData;
 
 public class DefenderPreview extends StaticActor<Rectangle> {
 
@@ -14,23 +14,23 @@ public class DefenderPreview extends StaticActor<Rectangle> {
     private int cost;
     private boolean available;
 
-    private DefenderZonePreview zone;
     private TextureRegion availableTexture;
     private TextureRegion unavailableTexture;
+    private DefenderZonePreview zone;
 
     public DefenderPreview(float x, float y, DefenderData data, TextureRegion zoneTexture) {
         super(new RectangleBound(x, y, data.getSize(), data.getSize()), data.getAvailableTexture());
         this.power = data.getPower();
         this.cost = data.getCost();
         this.available = true;
+        this.availableTexture = data.getAvailableTexture();
+        this.unavailableTexture = data.getUnavailableTexture();
         this.zone = new DefenderZonePreview(
                 getX() + getWidth() / 2f - data.getZoneSize() / 2f,
                 getY() + getHeight() / 2f - data.getZoneSize() / 2f,
                 data.getZoneSize(),
                 zoneTexture
         );
-        this.availableTexture = data.getAvailableTexture();
-        this.unavailableTexture = data.getUnavailableTexture();
     }
 
     @Override

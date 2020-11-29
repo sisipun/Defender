@@ -1,6 +1,5 @@
 package io.cucumber.storage.enemy;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class EnemyData {
@@ -13,14 +12,14 @@ public class EnemyData {
 
     private final TextureRegion texture;
 
-    public EnemyData(TextureAtlas atlas, float size, float power, float health, float velocity,
-                     int cost, String texture) {
+    public EnemyData(float size, float power, float health, float velocity,
+                     int cost, TextureRegion texture) {
         this.size = size;
         this.power = power;
         this.health = health;
         this.velocity = velocity;
         this.cost = cost;
-        this.texture = atlas.findRegion(texture);
+        this.texture = texture;
     }
 
     public float getSize() {

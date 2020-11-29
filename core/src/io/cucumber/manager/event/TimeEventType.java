@@ -1,5 +1,5 @@
 package io.cucumber.manager.event;
 
-public enum EventType {
+public enum TimeEventType {
     GENERATE_ENEMY
 }

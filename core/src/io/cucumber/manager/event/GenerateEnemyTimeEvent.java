@@ -2,12 +2,12 @@ package io.cucumber.manager.event;
 
 import io.cucumber.storage.enemy.EnemyData;
 
-public class GenerateEnemyEvent extends Event {
+public class GenerateEnemyTimeEvent extends TimeEvent {
 
     private final EnemyData data;
 
-    public GenerateEnemyEvent(EnemyData data) {
-        super(EventType.GENERATE_ENEMY);
+    public GenerateEnemyTimeEvent(int time, EnemyData data) {
+        super(time, TimeEventType.GENERATE_ENEMY);
         this.data = data;
     }
 

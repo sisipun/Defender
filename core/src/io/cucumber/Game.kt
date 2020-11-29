@@ -20,7 +20,12 @@ class Game : Game() {
         Gdx.input.inputProcessor = stage
 
         levelManager = LevelManager()
-        setScreen(GameScreen(this, levelManager.init()))
+        val levelManagerInited = levelManager.init()
+        if (!levelManagerInited) {
+            Gdx.app.exit()
+        }
+
+        setScreen(GameScreen(this, levelManager.loadLevel(0)))
     }
 
     override fun dispose() {

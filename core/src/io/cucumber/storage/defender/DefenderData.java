@@ -1,6 +1,5 @@
 package io.cucumber.storage.defender;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class DefenderData {
@@ -13,14 +12,14 @@ public class DefenderData {
     private final TextureRegion availableTexture;
     private final TextureRegion unavailableTexture;
 
-    public DefenderData(TextureAtlas atlas, float size, float power, int cost, float zoneSize,
-                        String availableTexture, String unavailableTexture) {
+    public DefenderData(float size, float power, int cost, float zoneSize,
+                        TextureRegion availableTexture, TextureRegion unavailableTexture) {
         this.size = size;
         this.power = power;
         this.cost = cost;
         this.zoneSize = zoneSize;
-        this.availableTexture = atlas.findRegion(availableTexture);
-        this.unavailableTexture = atlas.findRegion(unavailableTexture);
+        this.availableTexture = availableTexture;
+        this.unavailableTexture = unavailableTexture;
     }
 
     public float getSize() {

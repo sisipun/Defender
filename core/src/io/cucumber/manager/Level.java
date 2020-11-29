@@ -4,25 +4,31 @@ import com.badlogic.gdx.utils.Array;
 
 import java.util.Map;
 
+import io.cucumber.manager.event.TimeEvent;
 import io.cucumber.storage.defender.DefenderData;
-import io.cucumber.manager.event.Event;
 
 public class Level {
 
+    private final float health;
     private final int length;
     private final int initialBalance;
 
-    private final CommonAssets assets;
+    private final Assets assets;
     private final Array<DefenderData> defenderTypes;
-    private final Map<Integer, Event> timeEvents;
+    private final Map<Integer, TimeEvent> timeEvents;
 
-    public Level(int length, int initialBalance, CommonAssets assets, Array<DefenderData> defenderTypes,
-                 Map<Integer, Event> timeEvents) {
+    public Level(float health, int length, int initialBalance, Assets assets,
+                 Array<DefenderData> defenderTypes, Map<Integer, TimeEvent> timeEvents) {
+        this.health = health;
         this.length = length;
         this.initialBalance = initialBalance;
         this.assets = assets;
         this.defenderTypes = defenderTypes;
         this.timeEvents = timeEvents;
+    }
+
+    public float getHealth() {
+        return health;
     }
 
     public int getLength() {
@@ -33,7 +39,7 @@ public class Level {
         return initialBalance;
     }
 
-    public CommonAssets getAssets() {
+    public Assets getAssets() {
         return assets;
     }
 
@@ -41,7 +47,7 @@ public class Level {
         return defenderTypes;
     }
 
-    public Event getEvent(int time) {
+    public TimeEvent getEvent(int time) {
         return timeEvents.get(time);
     }
 }

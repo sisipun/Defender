@@ -2,7 +2,6 @@ package io.cucumber.storage.defender;
 
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.utils.Array;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,36 +23,25 @@ public class DefenderStorage {
         this.data = new HashMap<>();
     }
 
-    public void init(TextureAtlas atlas) {
+    public boolean init(TextureAtlas atlas) {
         data.put(DefenderType.BASE, new DefenderData(
-                atlas,
                 DEFENDER_SIZE,
                 DEFENDER_POWER,
                 DEFENDER_COST,
                 DEFENDER_ZONE_SIZE,
-                "defender",
-                "enemy"
+                atlas.findRegion("defender"),
+                atlas.findRegion("enemy")
         ));
         data.put(DefenderType.SMALL, new DefenderData(
-                atlas,
                 DEFENDER_SMALL_SIZE,
                 DEFENDER_SMALL_POWER,
                 DEFENDER_SMALL_COST,
                 DEFENDER_SMALL_ZONE_SIZE,
-                "defender_small",
-                "enemy"
+                atlas.findRegion("defender_small"),
+                atlas.findRegion("enemy")
         ));
-    }
 
-    public Array<DefenderData> get(Array<DefenderType> types) {
-        Array<DefenderData> data = new Array<>();
-        for (DefenderType type : types) {
-            if (this.data.containsKey(type)) {
-                data.add(this.data.get(type));
-            }
-        }
-
-        return data;
+        return true;
     }
 
     public DefenderData get(DefenderType type) {

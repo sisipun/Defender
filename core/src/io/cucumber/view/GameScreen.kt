@@ -17,8 +17,8 @@ import io.cucumber.actor.ui.DefenderMenu
 import io.cucumber.actor.ui.DefenderMenuItem
 import io.cucumber.base.view.BaseScreen
 import io.cucumber.manager.Level
-import io.cucumber.manager.event.EventType
-import io.cucumber.manager.event.GenerateEnemyEvent
+import io.cucumber.manager.event.GenerateEnemyTimeEvent
+import io.cucumber.manager.event.TimeEventType
 import io.cucumber.utils.constants.Constants.*
 import io.cucumber.utils.generator.RoadMapGenerator
 
@@ -27,7 +27,7 @@ class GameScreen(
         private val level: Level
 ) : BaseScreen(game) {
 
-    private var health: Float = GAME_HEALTH
+    private var health: Float = level.health
     private var timer: Int = level.length
     private var balance: Int = level.initialBalance
 
@@ -119,9 +119,8 @@ class GameScreen(
         Timer.schedule(object : Timer.Task() {
             override fun run() {
                 val event = level.getEvent(level.length - timer)
-                if (EventType.GENERATE_ENEMY == event?.eventType) {
-                    event as GenerateEnemyEvent
-                    val enemyData = event.data
+                if (TimeEventType.GENERATE_ENEMY == event?.type) {
+                    val enemyData = (event as GenerateEnemyTimeEvent).data
                     val enemy = Enemy(
                             roadMap.startPositionX * BLOCK_SIZE,
                             roadMap.startPositionY * BLOCK_SIZE + SCREEN_HEIGHT / 8,

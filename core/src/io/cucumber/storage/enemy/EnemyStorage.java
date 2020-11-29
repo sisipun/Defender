@@ -1,7 +1,6 @@
 package io.cucumber.storage.enemy;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.utils.Array;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,36 +24,25 @@ public class EnemyStorage {
         this.data = new HashMap<>();
     }
 
-    public void init(TextureAtlas atlas) {
+    public boolean init(TextureAtlas atlas) {
         data.put(EnemyType.BASE, new EnemyData(
-                atlas,
                 ENEMY_SIZE,
                 ENEMY_POWER,
                 ENEMY_HEALTH,
                 ENEMY_VELOCITY,
                 ENEMY_COST,
-                "enemy"
+                atlas.findRegion("enemy")
         ));
         data.put(EnemyType.SMALL, new EnemyData(
-                atlas,
                 ENEMY_SMALL_SIZE,
                 ENEMY_SMALL_POWER,
                 ENEMY_SMALL_HEALTH,
                 ENEMY_SMALL_VELOCITY,
                 ENEMY_SMALL_COST,
-                "enemy_small"
+                atlas.findRegion("enemy_small")
         ));
-    }
 
-    public Array<EnemyData> get(Array<EnemyType> types) {
-        Array<EnemyData> data = new Array<>();
-        for (EnemyType type : types) {
-            if (this.data.containsKey(type)) {
-                data.add(this.data.get(type));
-            }
-        }
-
-        return data;
+        return true;
     }
 
     public EnemyData get(EnemyType type) {

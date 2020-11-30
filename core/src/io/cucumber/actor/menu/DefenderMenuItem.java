@@ -1,4 +1,4 @@
-package io.cucumber.actor.ui;
+package io.cucumber.actor.menu;
 
 import com.badlogic.gdx.math.Rectangle;
 

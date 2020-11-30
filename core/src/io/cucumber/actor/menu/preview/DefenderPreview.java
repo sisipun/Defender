@@ -1,4 +1,4 @@
-package io.cucumber.actor.preview;
+package io.cucumber.actor.menu.preview;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -16,7 +16,7 @@ public class DefenderPreview extends StaticActor<Rectangle> {
 
     private TextureRegion availableTexture;
     private TextureRegion unavailableTexture;
-    private DefenderZonePreview zone;
+    private io.cucumber.actor.menu.preview.DefenderZonePreview zone;
 
     public DefenderPreview(float x, float y, DefenderData data, TextureRegion zoneTexture) {
         super(new RectangleBound(x, y, data.getSize(), data.getSize()), data.getAvailableTexture());

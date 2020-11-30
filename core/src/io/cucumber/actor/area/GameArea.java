@@ -1,16 +1,14 @@
-package io.cucumber.actor.ui;
+package io.cucumber.actor.area;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 
 import io.cucumber.actor.Defender;
 import io.cucumber.actor.Enemy;
-import io.cucumber.actor.preview.DefenderPreview;
-import io.cucumber.actor.road.RoadBlock;
-import io.cucumber.actor.road.RoadType;
+import io.cucumber.actor.menu.preview.DefenderPreview;
 import io.cucumber.storage.enemy.EnemyData;
 
-public class GameZone extends Group {
+public class GameArea extends Group {
 
     private float health;
     private int balance;
@@ -18,29 +16,29 @@ public class GameZone extends Group {
     private float startPositionX;
     private float startPositionY;
 
-    private Array<RoadBlock> road;
+    private Array<AreaBlock> area;
     private Array<Defender> defenders;
     private Array<Enemy> enemies;
 
-    public GameZone(float health, int balance) {
+    public GameArea(float health, int balance) {
         this.health = health;
         this.balance = balance;
         this.startPositionX = 0;
         this.startPositionY = 0;
-        this.road = new Array<>();
+        this.area = new Array<>();
         this.defenders = new Array<>();
         this.enemies = new Array<>();
     }
 
-    public GameZone init(float health, int balance, float startPositionX, float startPositionY,
-                         Array<RoadBlock> road) {
+    public GameArea init(float health, int balance, float startPositionX, float startPositionY,
+                         Array<AreaBlock> zone) {
         removeChildren();
 
         this.health = health;
         this.balance = balance;
         this.startPositionX = startPositionX;
         this.startPositionY = startPositionY;
-        this.setRoad(road);
+        this.setArea(zone);
 
         return this;
     }
@@ -62,8 +60,8 @@ public class GameZone extends Group {
                 }
             }
 
-            for (int j = 0; j < road.size; j++) {
-                RoadBlock block = road.get(j);
+            for (int j = 0; j < area.size; j++) {
+                AreaBlock block = area.get(j);
                 if (block.isCollidesZone(enemy)) {
                     enemy.changeDirection(block.getType());
                 }
@@ -84,14 +82,14 @@ public class GameZone extends Group {
         super.act(delta);
     }
 
-    public void setRoad(Array<RoadBlock> road) {
-        this.road.clear();
+    public void setArea(Array<AreaBlock> area) {
+        this.area.clear();
 
-        for (int i = 0; i < road.size; i++) {
-            addActor(road.get(i));
+        for (int i = 0; i < area.size; i++) {
+            addActor(area.get(i));
         }
 
-        this.road.addAll(road);
+        this.area.addAll(area);
     }
 
     public boolean addEnemy(float x, float y, EnemyData data) {
@@ -134,9 +132,9 @@ public class GameZone extends Group {
     }
 
     public boolean isCollides(DefenderPreview preview) {
-        for (int i = 0; i < road.size; i++) {
-            RoadBlock block = road.get(i);
-            if (block.getType() != RoadType.NONE && block.isCollides(preview)) {
+        for (int i = 0; i < area.size; i++) {
+            AreaBlock block = area.get(i);
+            if (block.getType() != AreaType.NONE && block.isCollides(preview)) {
                 return true;
             }
         }
@@ -178,13 +176,13 @@ public class GameZone extends Group {
         return startPositionY;
     }
 
-    public Array<RoadBlock> getRoad() {
-        return road;
+    public Array<AreaBlock> getArea() {
+        return area;
     }
 
     private void removeChildren() {
-        for (int i = 0; i < this.road.size; i++) {
-            this.road.get(i).remove();
+        for (int i = 0; i < this.area.size; i++) {
+            this.area.get(i).remove();
         }
 
         for (int i = 0; i < this.enemies.size; i++) {
@@ -196,7 +194,7 @@ public class GameZone extends Group {
         }
 
         clearChildren();
-        this.road.clear();
+        this.area.clear();
         this.defenders.clear();
         this.enemies.clear();
     }

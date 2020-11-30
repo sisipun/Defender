@@ -5,18 +5,18 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Timer
 import io.cucumber.Game
-import io.cucumber.actor.preview.DefenderPreview
-import io.cucumber.actor.road.RoadBlock
-import io.cucumber.actor.road.RoadType
-import io.cucumber.actor.ui.DefenderMenu
-import io.cucumber.actor.ui.DefenderMenuItem
-import io.cucumber.actor.ui.GameZone
+import io.cucumber.actor.area.AreaBlock
+import io.cucumber.actor.area.AreaType
+import io.cucumber.actor.area.GameArea
+import io.cucumber.actor.menu.DefenderMenu
+import io.cucumber.actor.menu.DefenderMenuItem
+import io.cucumber.actor.menu.preview.DefenderPreview
 import io.cucumber.base.view.BaseScreen
 import io.cucumber.manager.Level
 import io.cucumber.manager.event.GenerateEnemyTimeEvent
 import io.cucumber.manager.event.TimeEventType
 import io.cucumber.utils.constants.Constants.*
-import io.cucumber.utils.generator.RoadMapGenerator
+import io.cucumber.utils.generator.AreaMapGenerator
 
 class GameScreen(
         game: Game,
@@ -25,9 +25,9 @@ class GameScreen(
 
     private var timer: Int = level.length
 
-    private val roadMapGenerator: RoadMapGenerator = RoadMapGenerator()
+    private val areaMapGenerator: AreaMapGenerator = AreaMapGenerator()
 
-    private val gameZone: GameZone = GameZone(level.health, level.initialBalance)
+    private val gameArea: GameArea = GameArea(level.health, level.initialBalance)
     private val defenderMenu: DefenderMenu = DefenderMenu(
             0f,
             0f,
@@ -51,7 +51,7 @@ class GameScreen(
                         itemDefender.value,
                         level.assets.zone
                 )
-                if (gameZone.canAdd(defender)) {
+                if (gameArea.canAdd(defender)) {
                     payload.dragActor = defender
                     addActor(defender)
                 }
@@ -64,13 +64,13 @@ class GameScreen(
                 defender.remove()
             }
         })
-        defenderMenuDragAndDrop.addTarget(object : DragAndDrop.Target(gameZone) {
+        defenderMenuDragAndDrop.addTarget(object : DragAndDrop.Target(gameArea) {
             override fun drag(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float,
                               y: Float, pointer: Int): Boolean {
                 val defender = payload?.dragActor as DefenderPreview? ?: return false
 
                 val available = !defenderMenu.isCollides(defender) &&
-                        !gameZone.isCollides(defender)
+                        !gameArea.isCollides(defender)
 
                 if (available != defender.isAvailable) {
                     defender.isAvailable = available
@@ -82,7 +82,7 @@ class GameScreen(
             override fun drop(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float,
                               y: Float, pointer: Int) {
                 val defenderPreview = payload?.dragActor as DefenderPreview? ?: return
-                gameZone.addDefender(defenderPreview.x, defenderPreview.y, defenderPreview)
+                gameArea.addDefender(defenderPreview.x, defenderPreview.y, defenderPreview)
             }
         })
 
@@ -91,7 +91,7 @@ class GameScreen(
                 val event = level.getEvent(level.length - timer)
                 if (TimeEventType.GENERATE_ENEMY == event?.type) {
                     val enemyData = (event as GenerateEnemyTimeEvent).data
-                    gameZone.addEnemy(gameZone.startPositionX, gameZone.startPositionY + SCREEN_HEIGHT / 8, enemyData)
+                    gameArea.addEnemy(gameArea.startPositionX, gameArea.startPositionY + SCREEN_HEIGHT / 8, enemyData)
                 }
                 timer--
             }
@@ -103,76 +103,76 @@ class GameScreen(
 
     fun init(): GameScreen {
         defenderMenu.remove()
-        gameZone.remove()
+        gameArea.remove()
 
         timer = level.length
 
-        val roadMap = roadMapGenerator.generate(
+        val areaMap = areaMapGenerator.generate(
                 (SCREEN_WIDTH / BLOCK_SIZE).toInt(),
                 ((SCREEN_HEIGHT - SCREEN_HEIGHT / 8) / BLOCK_SIZE).toInt()
         )
 
-        val road = Array<RoadBlock>()
-        var block: RoadBlock? = null
-        var i = roadMap.startPositionX
-        var j = roadMap.startPositionY
-        while (block?.type != RoadType.END || block.type == RoadType.NONE) {
-            val roadType = roadMap.value[i][j]
-            val previousType = block?.type ?: RoadType.NONE
-            block = RoadBlock(
+        val area = Array<AreaBlock>()
+        var block: AreaBlock? = null
+        var i = areaMap.startPositionX
+        var j = areaMap.startPositionY
+        while (block?.type != AreaType.END || block.type == AreaType.NONE) {
+            val areaType = areaMap.value[i][j]
+            val previousType = block?.type ?: AreaType.NONE
+            block = AreaBlock(
                     i * BLOCK_SIZE,
                     j * BLOCK_SIZE + SCREEN_HEIGHT / 8,
                     BLOCK_SIZE,
-                    roadType,
+                    areaType,
                     previousType,
                     level.assets.block,
                     BLOCK_ZONE_SIZE,
                     level.assets.zone
             )
-            road.add(block)
+            area.add(block)
 
-            when (roadType) {
-                RoadType.LEFT -> {
+            when (areaType) {
+                AreaType.LEFT -> {
                     i--
                 }
-                RoadType.RIGHT -> {
+                AreaType.RIGHT -> {
                     i++
                 }
-                RoadType.DOWN -> {
+                AreaType.DOWN -> {
                     j--
                 }
-                RoadType.UP -> {
+                AreaType.UP -> {
                     j++
                 }
             }
         }
 
-        roadMap.value.forEachIndexed { rowIndex, row ->
+        areaMap.value.forEachIndexed { rowIndex, row ->
             row.forEachIndexed { typeIndex, type ->
-                if (type == RoadType.NONE) {
-                    block = RoadBlock(
+                if (type == AreaType.NONE) {
+                    block = AreaBlock(
                             rowIndex * BLOCK_SIZE,
                             typeIndex * BLOCK_SIZE + SCREEN_HEIGHT / 8,
                             BLOCK_SIZE,
                             type,
-                            RoadType.NONE,
+                            AreaType.NONE,
                             level.assets.background,
                             BLOCK_ZONE_SIZE,
                             level.assets.zone
                     )
-                    road.add(block)
+                    area.add(block)
                 }
             }
         }
 
-        gameZone.init(
+        gameArea.init(
                 level.health,
                 level.initialBalance,
-                roadMap.startPositionX * BLOCK_SIZE,
-                roadMap.startPositionY * BLOCK_SIZE,
-                road
+                areaMap.startPositionX * BLOCK_SIZE,
+                areaMap.startPositionY * BLOCK_SIZE,
+                area
         )
-        addActor(gameZone)
+        addActor(gameArea)
         defenderMenu.init(
                 0f,
                 0f,
@@ -187,11 +187,11 @@ class GameScreen(
     }
 
     override fun stateCheck() {
-        if (gameZone.isGameOver) {
+        if (gameArea.isGameOver) {
             init()
         }
 
-        if (timer <= 0 && gameZone.hasEnemies()) {
+        if (timer <= 0 && gameArea.hasEnemies()) {
             init()
         }
     }

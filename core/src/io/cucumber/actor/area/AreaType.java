@@ -1,6 +1,6 @@
-package io.cucumber.actor.road;
+package io.cucumber.actor.area;
 
-public enum RoadType {
+public enum AreaType {
     NONE,
     UP,
     DOWN,

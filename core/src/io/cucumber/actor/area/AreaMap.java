@@ -1,19 +1,19 @@
-package io.cucumber.actor.road;
+package io.cucumber.actor.area;
 
-public class RoadMap {
+public class AreaMap {
 
     private final int startPositionX;
     private final int startPositionY;
 
-    private final RoadType[][] value;
+    private final AreaType[][] value;
 
-    public RoadMap(RoadType[][] value, int startPositionX, int startPositionY) {
+    public AreaMap(AreaType[][] value, int startPositionX, int startPositionY) {
         this.startPositionX = startPositionX;
         this.startPositionY = startPositionY;
         this.value = value;
     }
 
-    public RoadType[][] getValue() {
+    public AreaType[][] getValue() {
         return value;
     }
 

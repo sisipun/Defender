@@ -1,4 +1,4 @@
-package io.cucumber.actor.ui;
+package io.cucumber.actor.menu;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

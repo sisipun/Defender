@@ -2,21 +2,21 @@ package io.cucumber.utils.generator;
 
 import java.util.Random;
 
-import io.cucumber.actor.road.RoadMap;
-import io.cucumber.actor.road.RoadType;
+import io.cucumber.actor.area.AreaMap;
+import io.cucumber.actor.area.AreaType;
 
-public class RoadMapGenerator {
+public class AreaMapGenerator {
 
-    public RoadMap generate(int width, int height) {
+    public AreaMap generate(int width, int height) {
         if (width <= 0 || height <= 0) {
-            return new RoadMap(new RoadType[0][0], 0, 0);
+            return new AreaMap(new AreaType[0][0], 0, 0);
         }
 
         Random random = new Random();
-        RoadType[][] map = new RoadType[width][height];
+        AreaType[][] map = new AreaType[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                map[i][j] = RoadType.NONE;
+                map[i][j] = AreaType.NONE;
             }
         }
 
@@ -31,26 +31,26 @@ public class RoadMapGenerator {
             if (direction == 0 && currentPositionX > 0) {
                 int size = random.nextInt(currentPositionX);
                 for (int i = 0; i < size; i++) {
-                    map[currentPositionX][currentPositionY] = RoadType.LEFT;
+                    map[currentPositionX][currentPositionY] = AreaType.LEFT;
                     currentPositionX--;
                 }
             } else if (direction == 1 && currentPositionX < width) {
                 int size = random.nextInt(width - currentPositionX);
                 for (int i = 0; i < size; i++) {
-                    map[currentPositionX][currentPositionY] = RoadType.RIGHT;
+                    map[currentPositionX][currentPositionY] = AreaType.RIGHT;
                     currentPositionX++;
                 }
             }
 
-            map[currentPositionX][currentPositionY] = RoadType.DOWN;
+            map[currentPositionX][currentPositionY] = AreaType.DOWN;
             currentPositionY--;
-            map[currentPositionX][currentPositionY] = RoadType.DOWN;
+            map[currentPositionX][currentPositionY] = AreaType.DOWN;
             currentPositionY--;
         }
 
-        map[currentPositionX][currentPositionY] = RoadType.END;
+        map[currentPositionX][currentPositionY] = AreaType.END;
 
-        return new RoadMap(map, startPositionX, startPositionY);
+        return new AreaMap(map, startPositionX, startPositionY);
     }
 
 }

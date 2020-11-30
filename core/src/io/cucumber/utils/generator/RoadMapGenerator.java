@@ -28,13 +28,13 @@ public class RoadMapGenerator {
 
         while (currentPositionY - 1 > 0) {
             int direction = random.nextInt(2);
-            if (direction == 0) {
+            if (direction == 0 && currentPositionX > 0) {
                 int size = random.nextInt(currentPositionX);
                 for (int i = 0; i < size; i++) {
                     map[currentPositionX][currentPositionY] = RoadType.LEFT;
                     currentPositionX--;
                 }
-            } else if (direction == 1) {
+            } else if (direction == 1 && currentPositionX < width) {
                 int size = random.nextInt(width - currentPositionX);
                 for (int i = 0; i < size; i++) {
                     map[currentPositionX][currentPositionY] = RoadType.RIGHT;

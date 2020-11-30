@@ -17,7 +17,7 @@ public class Constants {
     public static final float DEFENDER_ZONE_SIZE = 200;
 
     public static final float DEFENDER_SMALL_SIZE = 25;
-    public static final float DEFENDER_SMALL_POWER = 2;
+    public static final float DEFENDER_SMALL_POWER = 3;
     public static final int DEFENDER_SMALL_COST = 50;
     public static final float DEFENDER_SMALL_ZONE_SIZE = 100;
 
@@ -36,12 +36,6 @@ public class Constants {
 
     // Zone
     public static final float ZONE_ALPHA = 0.5f;
-
-    // Game
-    public static final float GAME_HEALTH = 100;
-    public static final int GAME_LENGTH = 60;
-    public static final int GAME_INITIAL_BALANCE = 400;
-
 
     private Constants() {
     }

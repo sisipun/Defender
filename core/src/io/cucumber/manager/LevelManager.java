@@ -44,7 +44,7 @@ public class LevelManager {
         levels.addAll(
                 new LevelInfo(
                         100,
-                        60,
+                        45,
                         400,
                         new AssetsInfo("block", "zone", "background", "menu_background"),
                         Array.with(DefenderType.BASE, DefenderType.SMALL),

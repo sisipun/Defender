@@ -15,10 +15,10 @@ public class Level {
 
     private final Assets assets;
     private final Array<DefenderData> defenderTypes;
-    private final Map<Integer, TimeEvent> timeEvents;
+    private final Map<Integer, ? extends TimeEvent> timeEvents;
 
     public Level(float health, int length, int initialBalance, Assets assets,
-                 Array<DefenderData> defenderTypes, Map<Integer, TimeEvent> timeEvents) {
+                 Array<DefenderData> defenderTypes, Map<Integer, ? extends TimeEvent> timeEvents) {
         this.health = health;
         this.length = length;
         this.initialBalance = initialBalance;

@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.cucumber.manager.Assets;
+
 import static io.cucumber.utils.constants.Constants.DEFENDER_COST;
 import static io.cucumber.utils.constants.Constants.DEFENDER_POWER;
 import static io.cucumber.utils.constants.Constants.DEFENDER_SIZE;
@@ -23,7 +25,7 @@ public class DefenderStorage {
         this.data = new HashMap<>();
     }
 
-    public boolean init(TextureAtlas atlas) {
+    public boolean init(TextureAtlas atlas, Assets assets) {
         data.put(DefenderType.BASE, new DefenderData(
                 DEFENDER_SIZE,
                 DEFENDER_POWER,

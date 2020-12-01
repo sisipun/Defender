@@ -8,12 +8,18 @@ public class Assets {
     private final TextureAtlas.AtlasRegion zone;
     private final TextureAtlas.AtlasRegion background;
     private final TextureAtlas.AtlasRegion menuBackground;
+    private final TextureAtlas.AtlasRegion health;
+    private final TextureAtlas.AtlasRegion healthBackground;
 
-    public Assets(TextureAtlas atlas, AssetsInfo info) {
-        this.block = atlas.findRegion(info.getBlock());
-        this.zone = atlas.findRegion(info.getZone());
-        this.background = atlas.findRegion(info.getBackground());
-        this.menuBackground = atlas.findRegion(info.getMenuBackground());
+    public Assets(TextureAtlas atlas, String block, String zone,
+                  String background, String menuBackground,
+                  String health, String healthBackground) {
+        this.block = atlas.findRegion(block);
+        this.zone = atlas.findRegion(zone);
+        this.background = atlas.findRegion(background);
+        this.menuBackground = atlas.findRegion(menuBackground);
+        this.health = atlas.findRegion(health);
+        this.healthBackground = atlas.findRegion(healthBackground);
     }
 
     public TextureAtlas.AtlasRegion getBlock() {
@@ -30,5 +36,13 @@ public class Assets {
 
     public TextureAtlas.AtlasRegion getMenuBackground() {
         return menuBackground;
+    }
+
+    public TextureAtlas.AtlasRegion getHealth() {
+        return health;
+    }
+
+    public TextureAtlas.AtlasRegion getHealthBackground() {
+        return healthBackground;
     }
 }

@@ -103,7 +103,9 @@ public class GameArea extends Group {
                 data.getPower(),
                 data.getHealth(),
                 data.getCost(),
-                data.getTexture()
+                data.getTexture(),
+                data.getHealthTexture(),
+                data.getHealthBackTexture()
         );
         addActor(enemy);
         this.enemies.add(enemy);

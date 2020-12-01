@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.cucumber.manager.event.GenerateEnemyTimeEvent;
-import io.cucumber.storage.defender.DefenderData;
 import io.cucumber.storage.defender.DefenderStorage;
 import io.cucumber.storage.defender.DefenderType;
 import io.cucumber.storage.enemy.EnemyStorage;
@@ -14,7 +16,7 @@ import io.cucumber.storage.enemy.EnemyType;
 public class LevelManager {
 
     private TextureAtlas atlas;
-    private Array<LevelInfo> levels;
+    private Array<Level> levels;
     private DefenderStorage defenderStorage;
     private EnemyStorage enemyStorage;
 
@@ -30,57 +32,40 @@ public class LevelManager {
         }
 
         atlas = new TextureAtlas(Gdx.files.internal("atlas/game.atlas"));
+        Assets assets = new Assets(atlas, "block", "zone", "background", "menu_background",
+                "health", "health_background");
 
-        boolean defenderStorageInited = defenderStorage.init(atlas);
+        boolean defenderStorageInited = defenderStorage.init(atlas, assets);
         if (!defenderStorageInited) {
             return false;
         }
 
-        boolean enemyStorageInited = enemyStorage.init(atlas);
+        boolean enemyStorageInited = enemyStorage.init(atlas, assets);
         if (!enemyStorageInited) {
             return false;
         }
 
+        Map<Integer, GenerateEnemyTimeEvent> timeEvents = new HashMap<>();
+        timeEvents.put(1, new GenerateEnemyTimeEvent(1, enemyStorage.get(EnemyType.BASE)));
+        timeEvents.put(10, new GenerateEnemyTimeEvent(10, enemyStorage.get(EnemyType.SMALL)));
+        timeEvents.put(25, new GenerateEnemyTimeEvent(25, enemyStorage.get(EnemyType.BASE)));
+        timeEvents.put(40, new GenerateEnemyTimeEvent(40, enemyStorage.get(EnemyType.SMALL)));
+
         levels.addAll(
-                new LevelInfo(
+                new Level(
                         100,
                         45,
                         400,
-                        new AssetsInfo("block", "zone", "background", "menu_background"),
-                        Array.with(DefenderType.BASE, DefenderType.SMALL),
-                        Array.with(EnemyType.BASE, EnemyType.SMALL),
-                        Array.with(
-                                // TODO move enemy data init to load level method
-                                new GenerateEnemyTimeEvent(1, enemyStorage.get(EnemyType.BASE)),
-                                new GenerateEnemyTimeEvent(10, enemyStorage.get(EnemyType.SMALL)),
-                                new GenerateEnemyTimeEvent(25, enemyStorage.get(EnemyType.BASE)),
-                                new GenerateEnemyTimeEvent(40, enemyStorage.get(EnemyType.SMALL))
-                        )
+                        assets,
+                        Array.with(defenderStorage.get(DefenderType.BASE), defenderStorage.get(DefenderType.SMALL)),
+                        timeEvents
                 )
         );
         return true;
     }
 
     public Level loadLevel(int index) {
-        LevelInfo levelInfo = levels.get(index);
-        if (levelInfo == null) {
-            return null;
-        }
-
-        Array<DefenderType> defenderTypes = levelInfo.getDefenderTypes();
-        Array<DefenderData> defenders = new Array<>(defenderTypes.size);
-        for (int i = 0; i < defenderTypes.size; i++) {
-            defenders.add(defenderStorage.get(defenderTypes.get(i)));
-        }
-
-        return new Level(
-                levelInfo.getHealth(),
-                levelInfo.getLength(),
-                levelInfo.getInitialBalance(),
-                new Assets(atlas, levelInfo.getAssets()),
-                defenders,
-                levelInfo.getTimeEvents()
-        );
+        return levels.get(index);
     }
 
     public void removeLevel() {

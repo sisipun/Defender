@@ -10,35 +10,23 @@ import io.cucumber.storage.enemy.EnemyData;
 
 public class GameArea extends Group {
 
-    private float health;
-    private int balance;
-
-    private float startPositionX;
-    private float startPositionY;
-
     private Array<AreaBlock> area;
     private Array<Defender> defenders;
     private Array<Enemy> enemies;
 
-    public GameArea(float health, int balance) {
-        this.health = health;
-        this.balance = balance;
-        this.startPositionX = 0;
-        this.startPositionY = 0;
+    public GameArea() {
         this.area = new Array<>();
         this.defenders = new Array<>();
         this.enemies = new Array<>();
     }
 
-    public GameArea init(float health, int balance, float startPositionX, float startPositionY,
-                         Array<AreaBlock> zone) {
+    public GameArea init(Array<AreaBlock> area) {
         removeChildren();
 
-        this.health = health;
-        this.balance = balance;
-        this.startPositionX = startPositionX;
-        this.startPositionY = startPositionY;
-        this.setArea(zone);
+        for (int i = 0; i < area.size; i++) {
+            addActor(area.get(i));
+        }
+        this.area.addAll(area);
 
         return this;
     }
@@ -51,45 +39,7 @@ public class GameArea extends Group {
 
     @Override
     public void act(float delta) {
-        for (int i = 0; i < enemies.size; i++) {
-            Enemy enemy = enemies.get(i);
-            for (int j = 0; j < defenders.size; j++) {
-                Defender defender = defenders.get(j);
-                if (defender.isCollidesZone(enemy)) {
-                    enemy.hit(defender.getPower() * delta);
-                }
-            }
-
-            for (int j = 0; j < area.size; j++) {
-                AreaBlock block = area.get(j);
-                if (block.isCollidesZone(enemy)) {
-                    enemy.changeDirection(block.getType());
-                }
-            }
-
-            if (enemy.isDead()) {
-                balance += enemy.getCost();
-                enemies.removeIndex(i);
-                enemy.remove();
-            }
-
-            if (enemy.isPassed()) {
-                health -= enemy.getPower();
-                enemies.removeIndex(i);
-                enemy.remove();
-            }
-        }
         super.act(delta);
-    }
-
-    public void setArea(Array<AreaBlock> area) {
-        this.area.clear();
-
-        for (int i = 0; i < area.size; i++) {
-            addActor(area.get(i));
-        }
-
-        this.area.addAll(area);
     }
 
     public boolean addEnemy(float x, float y, EnemyData data) {
@@ -113,11 +63,6 @@ public class GameArea extends Group {
     }
 
     public boolean addDefender(float x, float y, DefenderPreview preview) {
-        if (balance < preview.getCost()) {
-            return false;
-        }
-        balance -= preview.getCost();
-
         Defender defender = new Defender(
                 x,
                 y,
@@ -158,24 +103,12 @@ public class GameArea extends Group {
         return false;
     }
 
-    public boolean canAdd(DefenderPreview defender) {
-        return balance >= defender.getCost();
+    public Array<Defender> getDefenders() {
+        return defenders;
     }
 
-    public boolean isGameOver() {
-        return health <= 0;
-    }
-
-    public boolean hasEnemies() {
-        return enemies.size > 0;
-    }
-
-    public float getStartPositionX() {
-        return startPositionX;
-    }
-
-    public float getStartPositionY() {
-        return startPositionY;
+    public Array<Enemy> getEnemies() {
+        return enemies;
     }
 
     public Array<AreaBlock> getArea() {

@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Timer
 import io.cucumber.Game
+import io.cucumber.actor.HealthBar
 import io.cucumber.actor.area.AreaBlock
 import io.cucumber.actor.area.AreaType
 import io.cucumber.actor.area.GameArea
@@ -23,16 +24,29 @@ class GameScreen(
         private val level: Level
 ) : BaseScreen(game) {
 
+    private var health: Float = level.health
     private var timer: Int = level.length
+    private var balance: Int = level.initialBalance
+
+    private var startPositionX: Float = 0f
+    private var startPositionY: Float = 0f
 
     private val areaMapGenerator: AreaMapGenerator = AreaMapGenerator()
 
-    private val gameArea: GameArea = GameArea(level.health, level.initialBalance)
+    private val gameArea: GameArea = GameArea()
+    private val healthBar: HealthBar = HealthBar(
+            0f,
+            SCREEN_HEIGHT / 8 - SCREEN_HEIGHT / 64,
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT / 64,
+            level.assets.health,
+            level.assets.healthBackground
+    )
     private val defenderMenu: DefenderMenu = DefenderMenu(
             0f,
             0f,
             SCREEN_WIDTH,
-            SCREEN_HEIGHT / 8,
+            SCREEN_HEIGHT / 8 - SCREEN_HEIGHT / 64,
             level.assets.menuBackground,
             level.defenderTypes
     )
@@ -51,7 +65,7 @@ class GameScreen(
                         itemDefender.value,
                         level.assets.zone
                 )
-                if (gameArea.canAdd(defender)) {
+                if (balance >= defender.cost) {
                     payload.dragActor = defender
                     addActor(defender)
                 }
@@ -82,7 +96,10 @@ class GameScreen(
             override fun drop(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float,
                               y: Float, pointer: Int) {
                 val defenderPreview = payload?.dragActor as DefenderPreview? ?: return
-                gameArea.addDefender(defenderPreview.x, defenderPreview.y, defenderPreview)
+                if (balance >= defenderPreview.cost) {
+                    gameArea.addDefender(defenderPreview.x, defenderPreview.y, defenderPreview)
+                    balance -= defenderPreview.cost
+                }
             }
         })
 
@@ -91,7 +108,7 @@ class GameScreen(
                 val event = level.getEvent(level.length - timer)
                 if (TimeEventType.GENERATE_ENEMY == event?.type) {
                     val enemyData = (event as GenerateEnemyTimeEvent).data
-                    gameArea.addEnemy(gameArea.startPositionX, gameArea.startPositionY + SCREEN_HEIGHT / 8, enemyData)
+                    gameArea.addEnemy(startPositionX, startPositionY + SCREEN_HEIGHT / 8, enemyData)
                 }
                 timer--
             }
@@ -105,7 +122,9 @@ class GameScreen(
         defenderMenu.remove()
         gameArea.remove()
 
+        health = level.health
         timer = level.length
+        balance = level.initialBalance
 
         val areaMap = areaMapGenerator.generate(
                 (SCREEN_WIDTH / BLOCK_SIZE).toInt(),
@@ -165,19 +184,27 @@ class GameScreen(
             }
         }
 
-        gameArea.init(
-                level.health,
-                level.initialBalance,
-                areaMap.startPositionX * BLOCK_SIZE,
-                areaMap.startPositionY * BLOCK_SIZE,
-                area
-        )
+        startPositionX = areaMap.startPositionX * BLOCK_SIZE
+        startPositionY = areaMap.startPositionY * BLOCK_SIZE
+
+        gameArea.init(area)
         addActor(gameArea)
+
+        healthBar.init(
+                0f,
+                SCREEN_HEIGHT / 8 - SCREEN_HEIGHT / 64,
+                SCREEN_WIDTH,
+                SCREEN_HEIGHT / 64,
+                level.assets.health,
+                level.assets.healthBackground
+        )
+        addActor(healthBar)
+
         defenderMenu.init(
                 0f,
                 0f,
                 SCREEN_WIDTH,
-                SCREEN_HEIGHT / 8,
+                SCREEN_HEIGHT / 8 - SCREEN_HEIGHT / 64,
                 level.assets.menuBackground,
                 level.defenderTypes
         )
@@ -186,12 +213,36 @@ class GameScreen(
         return this
     }
 
-    override fun stateCheck() {
-        if (gameArea.isGameOver) {
+    override fun stateCheck(delta: Float) {
+        gameArea.enemies.forEachIndexed { i, enemy ->
+            gameArea.defenders.forEach { defender ->
+                if (defender.isCollidesZone(enemy)) {
+                    enemy.hit(defender.power * delta)
+                }
+            }
+            gameArea.area.forEach { block ->
+                if (block.isCollidesZone(enemy)) {
+                    enemy.changeDirection(block.type)
+                }
+            }
+            if (enemy.isDead) {
+                balance += enemy.cost
+                gameArea.enemies.removeIndex(i)
+                enemy.remove()
+            }
+            if (enemy.isPassed) {
+                health -= enemy.power
+                healthBar.setAmount(((health / level.health) * 100).toInt())
+                gameArea.enemies.removeIndex(i)
+                enemy.remove()
+            }
+        }
+
+        if (health <= 0) {
             init()
         }
 
-        if (timer <= 0 && gameArea.hasEnemies()) {
+        if (timer <= 0 && gameArea.enemies.size <= 0) {
             init()
         }
     }

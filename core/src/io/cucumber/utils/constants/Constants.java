@@ -31,7 +31,7 @@ public class Constants {
     public static final float ENEMY_SMALL_SIZE = 25;
     public static final float ENEMY_SMALL_VELOCITY = 150;
     public static final float ENEMY_SMALL_HEALTH = 10;
-    public static final float ENEMY_SMALL_POWER = 3;
+    public static final float ENEMY_SMALL_POWER = 30;
     public static final int ENEMY_SMALL_COST = 25;
 
     // Zone

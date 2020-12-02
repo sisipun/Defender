@@ -26,11 +26,11 @@ abstract class BaseScreen(
 
         game.stage.act(delta)
         game.stage.draw()
-        stateCheck()
+        stateCheck(delta)
         super.render(delta)
     }
 
-    protected open fun stateCheck() {}
+    protected open fun stateCheck(delta: Float) {}
 
     protected fun addActor(actor: Actor) {
         game.stage.addActor(actor)

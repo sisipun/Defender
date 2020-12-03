@@ -9,6 +9,8 @@ import io.cucumber.base.model.bound.RectangleBound;
 
 public class HealthBar extends StaticActor<Rectangle> {
 
+    private static final int MAX_AMOUNT = 100;
+
     private int amount;
     private TextureRegion healthTexture;
 
@@ -23,7 +25,7 @@ public class HealthBar extends StaticActor<Rectangle> {
                           TextureRegion healthBackTexture) {
         super.init(new RectangleBound(x, y, width, height), healthBackTexture);
         this.healthTexture = healthTexture;
-        this.amount = 100;
+        this.amount = MAX_AMOUNT;
         return this;
     }
 
@@ -36,7 +38,7 @@ public class HealthBar extends StaticActor<Rectangle> {
                 getY(),
                 getOriginX(),
                 getOriginY(),
-                (amount / 100f) * getWidth(),
+                (1f * amount / MAX_AMOUNT) * getWidth(),
                 getHeight(),
                 getScaleX(),
                 getScaleY(),
@@ -51,6 +53,6 @@ public class HealthBar extends StaticActor<Rectangle> {
     }
 
     public void setAmount(int amount) {
-        this.amount = Math.min(100, Math.max(amount, 0));
+        this.amount = Math.min(MAX_AMOUNT, Math.max(amount, 0));
     }
 }

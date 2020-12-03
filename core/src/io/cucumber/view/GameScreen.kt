@@ -2,6 +2,7 @@ package io.cucumber.view
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop
+import com.badlogic.gdx.scenes.scene2d.utils.DragListener
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Timer
 import io.cucumber.Game
@@ -52,13 +53,26 @@ class GameScreen(
     )
 
     init {
+        gameArea.listeners.add(object : DragListener() {
+            override fun drag(event: InputEvent?, x: Float, y: Float, pointer: Int) {
+                game.stage.viewport.camera.translate(0f, -deltaY, 0f)
+                val cameraX = game.stage.camera.position.x - game.stage.camera.viewportWidth / 2
+                val cameraY = game.stage.camera.position.y - game.stage.camera.viewportHeight / 2
+                defenderMenu.setPosition(cameraX, cameraY)
+                healthBar.setPosition(cameraX, cameraY + SCREEN_HEIGHT / 8 - SCREEN_HEIGHT / 64)
+                super.drag(event, x, y, pointer)
+            }
+        })
+
         val defenderMenuDragAndDrop = DragAndDrop()
         defenderMenuDragAndDrop.addSource(object : DragAndDrop.Source(defenderMenu) {
             override fun dragStart(event: InputEvent, x: Float,
                                    y: Float, pointer: Int): DragAndDrop.Payload {
                 val payload = DragAndDrop.Payload()
-                val itemDefender: DefenderMenuItem = (actor as DefenderMenu).getItem(x, y)
-                        ?: return payload
+                val itemDefender: DefenderMenuItem = (actor as DefenderMenu).getItem(
+                        x + game.stage.camera.position.x - game.stage.camera.viewportWidth / 2,
+                        y + game.stage.camera.position.y - game.stage.camera.viewportHeight / 2
+                ) ?: return payload
                 val defender = DefenderPreview(
                         x,
                         y,

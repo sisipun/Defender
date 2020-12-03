@@ -45,6 +45,14 @@ public class DefenderMenu extends StaticActor<Rectangle> {
     }
 
     @Override
+    public void setPosition(float x, float y) {
+        super.setPosition(x, y);
+        for (int i = 0; i < items.size; i++) {
+            items.get(i).setPosition(getX() + i * 3 * getHeight() / 2, getY());
+        }
+    }
+
+    @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
 

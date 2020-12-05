@@ -37,6 +37,12 @@ public class Constants {
     // Zone
     public static final float ZONE_ALPHA = 0.5f;
 
+    // UI
+    public static final float HEALTH_BAR_HEIGHT = SCREEN_HEIGHT / 64;
+    public static final float MENU_HEIGHT = SCREEN_HEIGHT / 8 - HEALTH_BAR_HEIGHT;
+    public static final float GAME_UI_HEIGHT = MENU_HEIGHT + HEALTH_BAR_HEIGHT;
+
+
     private Constants() {
     }
 

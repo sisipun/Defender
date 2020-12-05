@@ -19,6 +19,8 @@ import io.cucumber.manager.event.GenerateEnemyTimeEvent
 import io.cucumber.manager.event.TimeEventType
 import io.cucumber.utils.constants.Constants.*
 import io.cucumber.utils.generator.AreaMapGenerator
+import kotlin.math.max
+import kotlin.math.min
 
 class GameScreen(
         game: Game,
@@ -26,7 +28,7 @@ class GameScreen(
 ) : BaseScreen(game) {
 
     private var health: Float = level.health
-    private var timer: Int = level.length
+    private var timer: Int = level.timeInSeconds
     private var balance: Int = level.initialBalance
 
     private var startPositionX: Float = 0f
@@ -37,9 +39,9 @@ class GameScreen(
     private val gameArea: GameArea = GameArea()
     private val healthBar: HealthBar = HealthBar(
             0f,
-            SCREEN_HEIGHT / 8 - SCREEN_HEIGHT / 64,
+            MENU_HEIGHT,
             SCREEN_WIDTH,
-            SCREEN_HEIGHT / 64,
+            HEALTH_BAR_HEIGHT,
             level.assets.health,
             level.assets.healthBackground
     )
@@ -47,7 +49,7 @@ class GameScreen(
             0f,
             0f,
             SCREEN_WIDTH,
-            SCREEN_HEIGHT / 8 - SCREEN_HEIGHT / 64,
+            MENU_HEIGHT,
             level.assets.menuBackground,
             level.defenderTypes
     )
@@ -55,16 +57,24 @@ class GameScreen(
     init {
         gameArea.listeners.add(object : DragListener() {
             override fun drag(event: InputEvent?, x: Float, y: Float, pointer: Int) {
-                game.stage.viewport.camera.translate(0f, -deltaY, 0f)
-                val cameraX = game.stage.camera.position.x - game.stage.camera.viewportWidth / 2
-                val cameraY = game.stage.camera.position.y - game.stage.camera.viewportHeight / 2
-                defenderMenu.setPosition(cameraX, cameraY)
-                healthBar.setPosition(cameraX, cameraY + SCREEN_HEIGHT / 8 - SCREEN_HEIGHT / 64)
+                val camera = game.stage.viewport.camera
+                val cameraDeltaY = if (deltaY < 0f) {
+                    min(-deltaY, max(gameArea.topY -
+                            (camera.position.y + camera.viewportHeight / 2), 0f))
+                } else {
+                    -min(deltaY, max((camera.position.y -
+                            camera.viewportHeight / 2) - gameArea.bottomY, 0f))
+                }
+
+                camera.translate(0f, cameraDeltaY, 0f)
+                defenderMenu.moveBy(0f, cameraDeltaY)
+                healthBar.moveBy(0f, cameraDeltaY)
                 super.drag(event, x, y, pointer)
             }
         })
 
         val defenderMenuDragAndDrop = DragAndDrop()
+        defenderMenuDragAndDrop.setKeepWithinStage(false)
         defenderMenuDragAndDrop.addSource(object : DragAndDrop.Source(defenderMenu) {
             override fun dragStart(event: InputEvent, x: Float,
                                    y: Float, pointer: Int): DragAndDrop.Payload {
@@ -119,10 +129,10 @@ class GameScreen(
 
         Timer.schedule(object : Timer.Task() {
             override fun run() {
-                val event = level.getEvent(level.length - timer)
+                val event = level.getEvent(level.timeInSeconds - timer)
                 if (TimeEventType.GENERATE_ENEMY == event?.type) {
                     val enemyData = (event as GenerateEnemyTimeEvent).data
-                    gameArea.addEnemy(startPositionX, startPositionY + SCREEN_HEIGHT / 8, enemyData)
+                    gameArea.addEnemy(startPositionX, startPositionY + GAME_UI_HEIGHT, enemyData)
                 }
                 timer--
             }
@@ -137,12 +147,12 @@ class GameScreen(
         gameArea.remove()
 
         health = level.health
-        timer = level.length
+        timer = level.timeInSeconds
         balance = level.initialBalance
 
         val areaMap = areaMapGenerator.generate(
                 (SCREEN_WIDTH / BLOCK_SIZE).toInt(),
-                ((SCREEN_HEIGHT - SCREEN_HEIGHT / 8) / BLOCK_SIZE).toInt()
+                level.horizontalBlockCount
         )
 
         val area = Array<AreaBlock>()
@@ -154,7 +164,7 @@ class GameScreen(
             val previousType = block?.type ?: AreaType.NONE
             block = AreaBlock(
                     i * BLOCK_SIZE,
-                    j * BLOCK_SIZE + SCREEN_HEIGHT / 8,
+                    j * BLOCK_SIZE + GAME_UI_HEIGHT,
                     BLOCK_SIZE,
                     areaType,
                     previousType,
@@ -185,7 +195,7 @@ class GameScreen(
                 if (type == AreaType.NONE) {
                     block = AreaBlock(
                             rowIndex * BLOCK_SIZE,
-                            typeIndex * BLOCK_SIZE + SCREEN_HEIGHT / 8,
+                            typeIndex * BLOCK_SIZE + GAME_UI_HEIGHT,
                             BLOCK_SIZE,
                             type,
                             AreaType.NONE,
@@ -206,9 +216,9 @@ class GameScreen(
 
         healthBar.init(
                 0f,
-                SCREEN_HEIGHT / 8 - SCREEN_HEIGHT / 64,
+                MENU_HEIGHT,
                 SCREEN_WIDTH,
-                SCREEN_HEIGHT / 64,
+                HEALTH_BAR_HEIGHT,
                 level.assets.health,
                 level.assets.healthBackground
         )
@@ -218,7 +228,7 @@ class GameScreen(
                 0f,
                 0f,
                 SCREEN_WIDTH,
-                SCREEN_HEIGHT / 8 - SCREEN_HEIGHT / 64,
+                MENU_HEIGHT,
                 level.assets.menuBackground,
                 level.defenderTypes
         )

@@ -37,6 +37,14 @@ public abstract class AnimationActor<T extends Shape2D> extends DynamicActor<T> 
         return this;
     }
 
+    public AnimationActor<T> init(Bound2D<T> bound, float horizontalVelocity,
+                     float verticalVelocity, Animation<TextureRegion> animation) {
+        super.init(bound, horizontalVelocity, verticalVelocity, animation.getKeyFrame(0));
+        this.animation = animation;
+        this.stateTime = 0f;
+        return this;
+    }
+
     @Override
     public void act(float delta) {
         super.act(delta);

@@ -1,64 +1,56 @@
 package io.cucumber.actor.menu;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 
-import io.cucumber.base.model.base.StaticActor;
+import io.cucumber.actor.menu.preview.DefenderPreview;
 import io.cucumber.base.model.bound.RectangleBound;
+import io.cucumber.base.model.simple.SimpleRectangle;
 import io.cucumber.storage.defender.DefenderData;
 
-public class DefenderMenu extends StaticActor<Rectangle> {
+public class DefenderMenu extends Group {
 
+    private SimpleRectangle background;
     private Array<DefenderMenuItem> items;
 
     public DefenderMenu(float x, float y, float width, float height, TextureRegion texture,
                         Array<DefenderData> items) {
-        super(new RectangleBound(x, y, width, height), texture);
+        this.background = new SimpleRectangle(x, y, width, height, texture);
+        addActor(this.background);
         this.items = new Array<>();
         for (int i = 0; i < items.size; i++) {
             RectangleBound itemBound = new RectangleBound(
-                    getX() + i * 3 * getHeight() / 2,
-                    getY(),
-                    getHeight(),
-                    getHeight()
+                    background.getX() + i * 3 * background.getHeight() / 2,
+                    background.getY(),
+                    background.getHeight(),
+                    background.getHeight()
             );
-            this.items.add(new DefenderMenuItem(itemBound, items.get(i)));
+            DefenderMenuItem item = new DefenderMenuItem(itemBound, items.get(i));
+            this.items.add(item);
+            addActor(item);
         }
     }
 
     public DefenderMenu init(float x, float y, float width, float height, TextureRegion texture,
                              Array<DefenderData> items) {
-        super.init(new RectangleBound(x, y, width, height), texture);
-        this.items.clear();
+        removeChildren();
+
+        this.background.init(x, y, width, height, texture);
+        addActor(this.background);
         for (int i = 0; i < items.size; i++) {
             RectangleBound itemBound = new RectangleBound(
-                    getX() + i * 3 * getHeight() / 2,
-                    getY(),
-                    getHeight(),
-                    getHeight()
+                    background.getX() + i * 3 * background.getHeight() / 2,
+                    background.getY(),
+                    background.getHeight(),
+                    background.getHeight()
             );
-            this.items.add(new DefenderMenuItem(itemBound, items.get(i)));
+            DefenderMenuItem item = new DefenderMenuItem(itemBound, items.get(i));
+            this.items.add(item);
+            addActor(item);
         }
+
         return this;
-    }
-
-    @Override
-    public void setPosition(float x, float y) {
-        super.setPosition(x, y);
-        for (int i = 0; i < items.size; i++) {
-            items.get(i).setPosition(getX() + i * 3 * getHeight() / 2, getY());
-        }
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-
-        for (DefenderMenuItem item : items) {
-            item.draw(batch, parentAlpha);
-        }
     }
 
     public DefenderMenuItem getItem(float x, float y) {
@@ -70,5 +62,26 @@ public class DefenderMenu extends StaticActor<Rectangle> {
         }
 
         return null;
+    }
+
+    public boolean isCollides(DefenderPreview preview) {
+        for (int i = 0; i < items.size; i++) {
+            DefenderMenuItem item = items.get(i);
+            if (item.isCollides(preview)) {
+                return true;
+            }
+        }
+
+        return background.isCollides(preview);
+    }
+
+    private void removeChildren() {
+        this.background.remove();
+        for (int i = 0; i < this.items.size; i++) {
+            this.items.get(i).remove();
+        }
+
+        clearChildren();
+        this.items.clear();
     }
 }

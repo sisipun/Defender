@@ -13,18 +13,28 @@ public class GameArea extends Group {
     private Array<AreaBlock> area;
     private Array<Defender> defenders;
     private Array<Enemy> enemies;
+    private float topY;
+    private float bottomY;
 
     public GameArea() {
         this.area = new Array<>();
         this.defenders = new Array<>();
         this.enemies = new Array<>();
+        this.topY = 0f;
+        this.bottomY = 0f;
     }
 
     public GameArea init(Array<AreaBlock> area) {
         removeChildren();
 
         for (int i = 0; i < area.size; i++) {
-            addActor(area.get(i));
+            AreaBlock block = area.get(i);
+            addActor(block);
+            if (block.getY() + block.getHeight() > topY) {
+                this.topY = block.getY() + block.getHeight();
+            } else if (block.getY() < bottomY) {
+                this.bottomY = block.getY();
+            }
         }
         this.area.addAll(area);
 
@@ -113,6 +123,14 @@ public class GameArea extends Group {
 
     public Array<AreaBlock> getArea() {
         return area;
+    }
+
+    public float getTopY() {
+        return topY;
+    }
+
+    public float getBottomY() {
+        return bottomY;
     }
 
     private void removeChildren() {

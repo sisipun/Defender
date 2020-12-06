@@ -1,10 +1,10 @@
-package io.cucumber.base.model.base;
+package io.cucumber.base.actor.base;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Shape2D;
 
-import io.cucumber.base.model.bound.Bound2D;
+import io.cucumber.base.actor.bound.Bound2D;
 
 import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.LOOP;
 
@@ -14,22 +14,22 @@ public abstract class AnimationActor<T extends Shape2D> extends DynamicActor<T> 
 
     private Animation<TextureRegion> animation;
 
-    public AnimationActor(Bound2D<T> bound, float horizontalVelocity,
+    public AnimationActor(io.cucumber.base.actor.bound.Bound2D<T> bound, float horizontalVelocity,
                           float verticalVelocity, Animation<TextureRegion> animation, boolean flipX, boolean flipY) {
         super(bound, horizontalVelocity, verticalVelocity, animation.getKeyFrame(0), flipX, flipY);
         this.stateTime = 0f;
         this.animation = animation;
     }
 
-    public AnimationActor(Bound2D<T> bound, float horizontalVelocity,
+    public AnimationActor(io.cucumber.base.actor.bound.Bound2D<T> bound, float horizontalVelocity,
                           float verticalVelocity, Animation<TextureRegion> animation) {
         super(bound, horizontalVelocity, verticalVelocity, animation.getKeyFrame(0));
         this.animation = animation;
         this.stateTime = 0f;
     }
 
-    public AnimationActor<T> init(Bound2D<T> bound, float horizontalVelocity,
-                     float verticalVelocity, Animation<TextureRegion> animation, boolean flipX, boolean flipY) {
+    public AnimationActor<T> init(io.cucumber.base.actor.bound.Bound2D<T> bound, float horizontalVelocity,
+                                  float verticalVelocity, Animation<TextureRegion> animation, boolean flipX, boolean flipY) {
         super.init(bound, horizontalVelocity, verticalVelocity, animation.getKeyFrame(0),
                 flipX, flipY);
         this.animation = animation;
@@ -38,7 +38,7 @@ public abstract class AnimationActor<T extends Shape2D> extends DynamicActor<T> 
     }
 
     public AnimationActor<T> init(Bound2D<T> bound, float horizontalVelocity,
-                     float verticalVelocity, Animation<TextureRegion> animation) {
+                                  float verticalVelocity, Animation<TextureRegion> animation) {
         super.init(bound, horizontalVelocity, verticalVelocity, animation.getKeyFrame(0));
         this.animation = animation;
         this.stateTime = 0f;

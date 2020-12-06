@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
-import io.cucumber.base.model.base.StaticActor;
-import io.cucumber.base.model.bound.RectangleBound;
+import io.cucumber.base.actor.base.StaticActor;
+import io.cucumber.base.actor.bound.RectangleBound;
 
 public class HealthBar extends StaticActor<Rectangle> {
 

@@ -6,8 +6,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import io.cucumber.actor.area.AreaType;
-import io.cucumber.base.model.base.DynamicActor;
-import io.cucumber.base.model.bound.RectangleBound;
+import io.cucumber.base.actor.base.DynamicActor;
+import io.cucumber.base.actor.bound.RectangleBound;
 
 public class Enemy extends DynamicActor<Rectangle> {
 

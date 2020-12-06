@@ -1,4 +1,4 @@
-package io.cucumber.base.model.bound;
+package io.cucumber.base.actor.bound;
 
 import com.badlogic.gdx.math.Rectangle;
 

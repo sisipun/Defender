@@ -1,4 +1,4 @@
-package io.cucumber.base.model.bound;
+package io.cucumber.base.actor.bound;
 
 import com.badlogic.gdx.math.Shape2D;
 
@@ -22,6 +22,16 @@ public abstract class Bound2D<T extends Shape2D> {
 
     public abstract void setY(float y);
 
+    public void setPosition(float x, float y) {
+        setX(x);
+        setY(y);
+    }
+
+    public void moveBy(float x, float y) {
+        setX(getX() + x);
+        setY(getY() + y);
+    }
+
     public abstract void setWidth(float width);
 
     public abstract void setHeight(float height);
@@ -31,4 +41,5 @@ public abstract class Bound2D<T extends Shape2D> {
     public abstract T getValue();
 
     public abstract boolean contains(float x, float y);
+
 }

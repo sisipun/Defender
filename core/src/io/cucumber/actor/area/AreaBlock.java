@@ -5,8 +5,8 @@ import com.badlogic.gdx.math.Rectangle;
 
 import io.cucumber.actor.Enemy;
 import io.cucumber.actor.Zone;
-import io.cucumber.base.model.base.StaticActor;
-import io.cucumber.base.model.bound.RectangleBound;
+import io.cucumber.base.actor.base.StaticActor;
+import io.cucumber.base.actor.bound.RectangleBound;
 
 public class AreaBlock extends StaticActor<Rectangle> {
 

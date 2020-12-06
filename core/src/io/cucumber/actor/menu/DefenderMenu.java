@@ -5,8 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 
 import io.cucumber.actor.menu.preview.DefenderPreview;
-import io.cucumber.base.model.bound.RectangleBound;
-import io.cucumber.base.model.simple.SimpleRectangle;
+import io.cucumber.base.actor.bound.RectangleBound;
+import io.cucumber.base.actor.simple.SimpleRectangle;
 import io.cucumber.storage.defender.DefenderData;
 
 public class DefenderMenu extends Group {

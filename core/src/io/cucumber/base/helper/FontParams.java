@@ -1,4 +1,4 @@
-package io.cucumber.base.model.font;
+package io.cucumber.base.helper;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;

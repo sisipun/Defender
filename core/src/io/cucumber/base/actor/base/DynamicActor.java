@@ -1,36 +1,36 @@
-package io.cucumber.base.model.base;
+package io.cucumber.base.actor.base;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 
-import io.cucumber.base.model.bound.Bound2D;
+import io.cucumber.base.actor.bound.Bound2D;
 
 public abstract class DynamicActor<T extends Shape2D> extends Actor<T> {
 
     protected Vector2 velocity;
 
-    public DynamicActor(Bound2D<T> bound, float horizontalVelocity, float verticalVelocity,
+    public DynamicActor(io.cucumber.base.actor.bound.Bound2D<T> bound, float horizontalVelocity, float verticalVelocity,
                         TextureRegion texture, boolean flipX, boolean flipY) {
         super(bound, texture, flipX, flipY);
         this.velocity = new Vector2(horizontalVelocity, verticalVelocity);
     }
 
-    public DynamicActor(Bound2D<T> bound, float horizontalVelocity, float verticalVelocity,
+    public DynamicActor(io.cucumber.base.actor.bound.Bound2D<T> bound, float horizontalVelocity, float verticalVelocity,
                         TextureRegion texture) {
         super(bound, texture);
         this.velocity = new Vector2(horizontalVelocity, verticalVelocity);
     }
 
-    public DynamicActor<T> init(Bound2D<T> bound, float horizontalVelocity, float verticalVelocity,
-                             TextureRegion texture, boolean flipX, boolean flipY) {
+    public DynamicActor<T> init(io.cucumber.base.actor.bound.Bound2D<T> bound, float horizontalVelocity, float verticalVelocity,
+                                TextureRegion texture, boolean flipX, boolean flipY) {
         super.init(bound, texture, flipX, flipY);
         this.velocity = new Vector2(horizontalVelocity, verticalVelocity);
         return this;
     }
 
     public DynamicActor<T> init(Bound2D<T> bound, float horizontalVelocity, float verticalVelocity,
-                             TextureRegion texture) {
+                                TextureRegion texture) {
         super.init(bound, texture);
         this.velocity = new Vector2(horizontalVelocity, verticalVelocity);
         return this;

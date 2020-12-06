@@ -48,7 +48,20 @@ public class AreaMapGenerator {
             currentPositionY--;
         }
 
+        while (currentPositionY > 0) {
+            map[currentPositionX][currentPositionY] = AreaType.DOWN;
+            currentPositionY--;
+        }
+
         map[currentPositionX][currentPositionY] = AreaType.END;
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                System.out.print(map[i][j]);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
 
         return new AreaMap(map, startPositionX, startPositionY);
     }

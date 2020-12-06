@@ -2,8 +2,8 @@ package io.cucumber.actor.menu;
 
 import com.badlogic.gdx.math.Rectangle;
 
-import io.cucumber.base.model.base.StaticActor;
-import io.cucumber.base.model.bound.RectangleBound;
+import io.cucumber.base.actor.base.StaticActor;
+import io.cucumber.base.actor.bound.RectangleBound;
 import io.cucumber.storage.defender.DefenderData;
 
 public class DefenderMenuItem extends StaticActor<Rectangle> {

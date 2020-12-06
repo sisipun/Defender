@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 
-import io.cucumber.base.model.base.StaticActor;
-import io.cucumber.base.model.bound.CircleBound;
+import io.cucumber.base.actor.base.StaticActor;
+import io.cucumber.base.actor.bound.CircleBound;
 
 import static io.cucumber.utils.constants.Constants.ZONE_ALPHA;
 

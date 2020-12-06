@@ -1,5 +1,6 @@
 package io.cucumber.view
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener
@@ -13,6 +14,9 @@ import io.cucumber.actor.area.GameArea
 import io.cucumber.actor.menu.DefenderMenu
 import io.cucumber.actor.menu.DefenderMenuItem
 import io.cucumber.actor.menu.preview.DefenderPreview
+import io.cucumber.base.actor.base.TextLabel
+import io.cucumber.base.helper.FontHelper
+import io.cucumber.base.helper.FontParams
 import io.cucumber.base.view.BaseScreen
 import io.cucumber.manager.Level
 import io.cucumber.manager.event.GenerateEnemyTimeEvent
@@ -53,6 +57,12 @@ class GameScreen(
             level.assets.menuBackground,
             level.defenderTypes
     )
+    private val balanceLabel: TextLabel = TextLabel(
+            SCREEN_WIDTH / 16,
+            SCREEN_HEIGHT - SCREEN_HEIGHT / 16,
+            balance.toString(),
+            FontHelper.toFont(DEFAULT_FONT, FontParams(10, Color.WHITE))
+    )
 
     init {
         gameArea.listeners.add(object : DragListener() {
@@ -69,6 +79,7 @@ class GameScreen(
                 camera.translate(0f, cameraDeltaY, 0f)
                 defenderMenu.moveBy(0f, cameraDeltaY)
                 healthBar.moveBy(0f, cameraDeltaY)
+                balanceLabel.moveBy(0f, cameraDeltaY)
                 super.drag(event, x, y, pointer)
             }
         })
@@ -79,10 +90,8 @@ class GameScreen(
             override fun dragStart(event: InputEvent, x: Float,
                                    y: Float, pointer: Int): DragAndDrop.Payload {
                 val payload = DragAndDrop.Payload()
-                val itemDefender: DefenderMenuItem = (actor as DefenderMenu).getItem(
-                        x + game.stage.camera.position.x - game.stage.camera.viewportWidth / 2,
-                        y + game.stage.camera.position.y - game.stage.camera.viewportHeight / 2
-                ) ?: return payload
+                val itemDefender: DefenderMenuItem = (actor as DefenderMenu).getItem(x, y)
+                        ?: return payload
                 val defender = DefenderPreview(
                         x,
                         y,
@@ -123,6 +132,7 @@ class GameScreen(
                 if (balance >= defenderPreview.cost) {
                     gameArea.addDefender(defenderPreview.x, defenderPreview.y, defenderPreview)
                     balance -= defenderPreview.cost
+                    balanceLabel.setText(balance.toString())
                 }
             }
         })
@@ -145,6 +155,7 @@ class GameScreen(
     fun init(): GameScreen {
         defenderMenu.remove()
         gameArea.remove()
+        balanceLabel.remove()
 
         health = level.health
         timer = level.timeInSeconds
@@ -234,6 +245,14 @@ class GameScreen(
         )
         addActor(defenderMenu)
 
+        balanceLabel.init(
+                SCREEN_WIDTH / 64,
+                SCREEN_HEIGHT - SCREEN_HEIGHT / 16,
+                balance.toString(),
+                FontHelper.toFont(DEFAULT_FONT, FontParams(20, Color.WHITE))
+        )
+        addActor(balanceLabel)
+
         return this
     }
 
@@ -251,6 +270,7 @@ class GameScreen(
             }
             if (enemy.isDead) {
                 balance += enemy.cost
+                balanceLabel.setText(balance.toString())
                 gameArea.enemies.removeIndex(i)
                 enemy.remove()
             }

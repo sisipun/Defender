@@ -1,8 +1,8 @@
-package io.cucumber.base.model.bound;
+package io.cucumber.base.actor.bound;
 
 import com.badlogic.gdx.math.Circle;
 
-public class CircleBound extends Bound2D<Circle> {
+public class CircleBound extends io.cucumber.base.actor.bound.Bound2D<Circle> {
 
     public CircleBound(float x, float y, float radius) {
         super(new Circle(x + radius, y + radius, radius));

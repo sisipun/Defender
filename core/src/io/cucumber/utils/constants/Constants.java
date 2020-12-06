@@ -42,6 +42,9 @@ public class Constants {
     public static final float MENU_HEIGHT = SCREEN_HEIGHT / 8 - HEALTH_BAR_HEIGHT;
     public static final float GAME_UI_HEIGHT = MENU_HEIGHT + HEALTH_BAR_HEIGHT;
 
+    // Fonts
+    public static final String DEFAULT_FONT = "fonts/font.ttf";
+
 
     private Constants() {
     }

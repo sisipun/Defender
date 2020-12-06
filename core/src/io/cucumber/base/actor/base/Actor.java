@@ -1,11 +1,11 @@
-package io.cucumber.base.model.base;
+package io.cucumber.base.actor.base;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.utils.Pool;
 
-import io.cucumber.base.model.bound.Bound2D;
+import io.cucumber.base.actor.bound.Bound2D;
 
 public abstract class Actor<T extends Shape2D> extends com.badlogic.gdx.scenes.scene2d.Actor implements Pool.Poolable {
 
@@ -13,27 +13,27 @@ public abstract class Actor<T extends Shape2D> extends com.badlogic.gdx.scenes.s
     private boolean flipY;
 
     protected TextureRegion texture;
-    private Bound2D<T> bound;
+    private io.cucumber.base.actor.bound.Bound2D<T> bound;
 
-    public Actor(Bound2D<T> bound, TextureRegion texture, boolean flipX, boolean flipY) {
+    public Actor(io.cucumber.base.actor.bound.Bound2D<T> bound, TextureRegion texture, boolean flipX, boolean flipY) {
         init(bound, texture, flipX, flipY);
     }
 
-    public Actor(Bound2D<T> bound, TextureRegion texture) {
+    public Actor(io.cucumber.base.actor.bound.Bound2D<T> bound, TextureRegion texture) {
         init(bound, texture);
     }
 
-    public Actor<T> init(Bound2D<T> bound, TextureRegion texture, boolean flipX, boolean flipY) {
+    public Actor<T> init(io.cucumber.base.actor.bound.Bound2D<T> bound, TextureRegion texture, boolean flipX, boolean flipY) {
         this.flipX = flipX;
         this.flipY = flipY;
         this.bound = bound;
         this.texture = texture;
         setBounds(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
-        setOrigin(getWidth()/ 2, getHeight() / 2);
+        setOrigin(getWidth() / 2, getHeight() / 2);
         return this;
     }
 
-    public Actor<T> init(Bound2D<T> bound, TextureRegion texture) {
+    public Actor<T> init(io.cucumber.base.actor.bound.Bound2D<T> bound, TextureRegion texture) {
         return init(bound, texture, false, false);
     }
 
@@ -71,15 +71,13 @@ public abstract class Actor<T extends Shape2D> extends com.badlogic.gdx.scenes.s
 
     @Override
     public void setPosition(float x, float y) {
-        bound.setX(x);
-        bound.setY(y);
+        bound.setPosition(x, y);
         super.setPosition(x, y);
     }
 
     @Override
     public void setPosition(float x, float y, int alignment) {
-        bound.setX(x);
-        bound.setY(y);
+        bound.setPosition(x, y);
         super.setPosition(x, y, alignment);
     }
 
@@ -92,7 +90,14 @@ public abstract class Actor<T extends Shape2D> extends com.badlogic.gdx.scenes.s
     @Override
     public void setHeight(float height) {
         bound.setHeight(height);
-        super.setHeight(bound.getHeight() );
+        super.setHeight(bound.getHeight());
+    }
+
+    @Override
+    public void moveBy(float x, float y) {
+        bound.moveBy(x, y);
+        bound.setY(bound.getY() + y);
+        super.moveBy(x, y);
     }
 
     @Override

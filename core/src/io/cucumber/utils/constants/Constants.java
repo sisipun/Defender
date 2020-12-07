@@ -25,13 +25,13 @@ public class Constants {
     public static final float ENEMY_SIZE = 50;
     public static final float ENEMY_VELOCITY = 100;
     public static final float ENEMY_HEALTH = 20;
-    public static final float ENEMY_POWER = 5;
+    public static final float ENEMY_POWER = 10;
     public static final int ENEMY_COST = 50;
 
     public static final float ENEMY_SMALL_SIZE = 25;
     public static final float ENEMY_SMALL_VELOCITY = 150;
     public static final float ENEMY_SMALL_HEALTH = 10;
-    public static final float ENEMY_SMALL_POWER = 30;
+    public static final float ENEMY_SMALL_POWER = 40;
     public static final int ENEMY_SMALL_COST = 25;
 
     // Zone

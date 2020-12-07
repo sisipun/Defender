@@ -1,7 +1,9 @@
 package io.cucumber.view
 
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.InputEvent
+import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener
 import com.badlogic.gdx.utils.Array
@@ -31,7 +33,6 @@ class GameScreen(
         private val level: Level
 ) : BaseScreen(game) {
 
-    private var health: Float = level.health
     private var timer: Int = level.timeInSeconds
     private var balance: Int = level.initialBalance
 
@@ -47,7 +48,8 @@ class GameScreen(
             SCREEN_WIDTH,
             HEALTH_BAR_HEIGHT,
             level.assets.health,
-            level.assets.healthBackground
+            level.assets.healthBackground,
+            level.health
     )
     private val defenderMenu: DefenderMenu = DefenderMenu(
             0f,
@@ -65,6 +67,7 @@ class GameScreen(
     )
 
     init {
+        game.stage.keyboardFocus = gameArea
         gameArea.listeners.add(object : DragListener() {
             override fun drag(event: InputEvent?, x: Float, y: Float, pointer: Int) {
                 val camera = game.stage.viewport.camera
@@ -81,6 +84,32 @@ class GameScreen(
                 healthBar.moveBy(0f, cameraDeltaY)
                 balanceLabel.moveBy(0f, cameraDeltaY)
                 super.drag(event, x, y, pointer)
+            }
+        })
+        gameArea.listeners.add(object: InputListener() {
+            override fun keyDown(event: InputEvent?, keycode: Int): Boolean {
+                if (Input.Keys.Q == keycode) {
+                    gameArea.defenders.forEachIndexed { i, defender ->
+                        if (defender.isHighlighted) {
+                            balance += defender.cost
+                            balanceLabel.setText(balance.toString())
+                            gameArea.defenders.removeIndex(i)
+                            defender.remove()
+                        }
+                    }
+                }
+
+                return super.keyDown(event, keycode)
+            }
+
+            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+                gameArea.defenders.forEach { defender ->
+                    defender.isHighlighted = false
+                    if (defender.isContains(x, y)) {
+                        defender.isHighlighted = true
+                    }
+                }
+                return super.touchDown(event, x, y, pointer, button)
             }
         })
 
@@ -130,6 +159,7 @@ class GameScreen(
                               y: Float, pointer: Int) {
                 val defenderPreview = payload?.dragActor as DefenderPreview? ?: return
                 if (balance >= defenderPreview.cost) {
+                    gameArea.defenders.forEach { defender -> defender.isHighlighted = false }
                     gameArea.addDefender(defenderPreview.x, defenderPreview.y, defenderPreview)
                     balance -= defenderPreview.cost
                     balanceLabel.setText(balance.toString())
@@ -157,7 +187,6 @@ class GameScreen(
         gameArea.remove()
         balanceLabel.remove()
 
-        health = level.health
         timer = level.timeInSeconds
         balance = level.initialBalance
 
@@ -231,7 +260,8 @@ class GameScreen(
                 SCREEN_WIDTH,
                 HEALTH_BAR_HEIGHT,
                 level.assets.health,
-                level.assets.healthBackground
+                level.assets.healthBackground,
+                level.health
         )
         addActor(healthBar)
 
@@ -275,14 +305,13 @@ class GameScreen(
                 enemy.remove()
             }
             if (enemy.isPassed) {
-                health -= enemy.power
-                healthBar.setAmount(((health / level.health) * 100).toInt())
+                healthBar.minus(enemy.power)
                 gameArea.enemies.removeIndex(i)
                 enemy.remove()
             }
         }
 
-        if (health <= 0) {
+        if (!healthBar.hasHealth()) {
             init()
         }
 

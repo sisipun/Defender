@@ -9,23 +9,24 @@ import io.cucumber.base.actor.bound.RectangleBound;
 
 public class HealthBar extends StaticActor<Rectangle> {
 
-    private static final int MAX_AMOUNT = 100;
-
-    private int amount;
+    private float maxValue;
+    private float currentValue;
     private TextureRegion healthTexture;
 
     public HealthBar(float x, float y, float width, float height, TextureRegion healthTexture,
-                     TextureRegion healthBackTexture) {
+                     TextureRegion healthBackTexture, float value) {
         super(new RectangleBound(x, y, width, height), healthBackTexture);
         this.healthTexture = healthTexture;
-        this.amount = 100;
+        this.maxValue = value;
+        this.currentValue = value;
     }
 
     public HealthBar init(float x, float y, float width, float height, TextureRegion healthTexture,
-                          TextureRegion healthBackTexture) {
+                          TextureRegion healthBackTexture, float value) {
         super.init(new RectangleBound(x, y, width, height), healthBackTexture);
         this.healthTexture = healthTexture;
-        this.amount = MAX_AMOUNT;
+        this.maxValue = value;
+        this.currentValue = value;
         return this;
     }
 
@@ -38,7 +39,7 @@ public class HealthBar extends StaticActor<Rectangle> {
                 getY(),
                 getOriginX(),
                 getOriginY(),
-                (1f * amount / MAX_AMOUNT) * getWidth(),
+                (1f * currentValue / maxValue) * getWidth(),
                 getHeight(),
                 getScaleX(),
                 getScaleY(),
@@ -52,7 +53,15 @@ public class HealthBar extends StaticActor<Rectangle> {
         );
     }
 
-    public void setAmount(int amount) {
-        this.amount = Math.min(MAX_AMOUNT, Math.max(amount, 0));
+    public void minus(float value) {
+        this.currentValue = Math.max(this.currentValue - value, 0f);
+    }
+
+    public float getValue() {
+        return currentValue;
+    }
+
+    public boolean hasHealth() {
+        return this.currentValue > 0f;
     }
 }

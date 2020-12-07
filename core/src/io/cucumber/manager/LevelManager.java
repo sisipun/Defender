@@ -55,7 +55,7 @@ public class LevelManager {
                 new Level(
                         100,
                         45,
-                        39,
+                        40,
                         400,
                         assets,
                         Array.with(defenderStorage.get(DefenderType.BASE), defenderStorage.get(DefenderType.SMALL)),

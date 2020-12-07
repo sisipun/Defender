@@ -79,6 +79,7 @@ public class GameArea extends Group {
                 preview.getWidth(),
                 preview.getHeight(),
                 preview.getPower(),
+                preview.getCost(),
                 preview.getTexture(),
                 preview.getZoneSize(),
                 preview.getZoneTexture()

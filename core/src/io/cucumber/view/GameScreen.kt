@@ -7,16 +7,16 @@ import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.Timer
 import io.cucumber.Game
-import io.cucumber.actor.HealthBar
+import io.cucumber.actor.Balance
+import io.cucumber.actor.Health
+import io.cucumber.actor.SecondsTimer
 import io.cucumber.actor.area.AreaBlock
 import io.cucumber.actor.area.AreaType
 import io.cucumber.actor.area.GameArea
 import io.cucumber.actor.menu.DefenderMenu
 import io.cucumber.actor.menu.DefenderMenuItem
 import io.cucumber.actor.menu.preview.DefenderPreview
-import io.cucumber.base.actor.base.TextLabel
 import io.cucumber.base.helper.FontHelper
 import io.cucumber.base.helper.FontParams
 import io.cucumber.base.view.BaseScreen
@@ -33,16 +33,13 @@ class GameScreen(
         private val level: Level
 ) : BaseScreen(game) {
 
-    private var timer: Int = level.timeInSeconds
-    private var balance: Int = level.initialBalance
-
     private var startPositionX: Float = 0f
     private var startPositionY: Float = 0f
 
     private val areaMapGenerator: AreaMapGenerator = AreaMapGenerator()
 
     private val gameArea: GameArea = GameArea()
-    private val healthBar: HealthBar = HealthBar(
+    private val health: Health = Health(
             0f,
             MENU_HEIGHT,
             SCREEN_WIDTH,
@@ -59,11 +56,17 @@ class GameScreen(
             level.assets.menuBackground,
             level.defenderTypes
     )
-    private val balanceLabel: TextLabel = TextLabel(
-            SCREEN_WIDTH / 16,
+    private val balance: Balance = Balance(
+            SCREEN_WIDTH / 64,
             SCREEN_HEIGHT - SCREEN_HEIGHT / 16,
-            balance.toString(),
-            FontHelper.toFont(DEFAULT_FONT, FontParams(10, Color.WHITE))
+            FontHelper.toFont(DEFAULT_FONT, FontParams(20, Color.WHITE)),
+            level.initialBalance
+    )
+    private val timer: SecondsTimer = SecondsTimer(
+            SCREEN_WIDTH - SCREEN_WIDTH / 16,
+            SCREEN_HEIGHT - SCREEN_HEIGHT / 16,
+            FontHelper.toFont(DEFAULT_FONT, FontParams(20, Color.WHITE)),
+            level.timeInSeconds
     )
 
     init {
@@ -81,18 +84,18 @@ class GameScreen(
 
                 camera.translate(0f, cameraDeltaY, 0f)
                 defenderMenu.moveBy(0f, cameraDeltaY)
-                healthBar.moveBy(0f, cameraDeltaY)
-                balanceLabel.moveBy(0f, cameraDeltaY)
+                health.moveBy(0f, cameraDeltaY)
+                balance.moveBy(0f, cameraDeltaY)
+                timer.moveBy(0f, cameraDeltaY)
                 super.drag(event, x, y, pointer)
             }
         })
-        gameArea.listeners.add(object: InputListener() {
+        gameArea.listeners.add(object : InputListener() {
             override fun keyDown(event: InputEvent?, keycode: Int): Boolean {
                 if (Input.Keys.Q == keycode) {
                     gameArea.defenders.forEachIndexed { i, defender ->
                         if (defender.isHighlighted) {
-                            balance += defender.cost
-                            balanceLabel.setText(balance.toString())
+                            balance.plus(defender.cost)
                             gameArea.defenders.removeIndex(i)
                             defender.remove()
                         }
@@ -127,7 +130,7 @@ class GameScreen(
                         itemDefender.value,
                         level.assets.zone
                 )
-                if (balance >= defender.cost) {
+                if (balance.hasBalance(defender.cost)) {
                     payload.dragActor = defender
                     addActor(defender)
                 }
@@ -158,26 +161,13 @@ class GameScreen(
             override fun drop(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float,
                               y: Float, pointer: Int) {
                 val defenderPreview = payload?.dragActor as DefenderPreview? ?: return
-                if (balance >= defenderPreview.cost) {
+                if (balance.hasBalance(defenderPreview.cost)) {
                     gameArea.defenders.forEach { defender -> defender.isHighlighted = false }
                     gameArea.addDefender(defenderPreview.x, defenderPreview.y, defenderPreview)
-                    balance -= defenderPreview.cost
-                    balanceLabel.setText(balance.toString())
+                    balance.minus(defenderPreview.cost)
                 }
             }
         })
-
-        Timer.schedule(object : Timer.Task() {
-            override fun run() {
-                val event = level.getEvent(level.timeInSeconds - timer)
-                if (TimeEventType.GENERATE_ENEMY == event?.type) {
-                    val enemyData = (event as GenerateEnemyTimeEvent).data
-                    gameArea.addEnemy(startPositionX, startPositionY + GAME_UI_HEIGHT, enemyData)
-                }
-                timer--
-            }
-        }, 0f, 1f)
-
 
         init()
     }
@@ -185,10 +175,7 @@ class GameScreen(
     fun init(): GameScreen {
         defenderMenu.remove()
         gameArea.remove()
-        balanceLabel.remove()
-
-        timer = level.timeInSeconds
-        balance = level.initialBalance
+        balance.remove()
 
         val areaMap = areaMapGenerator.generate(
                 (SCREEN_WIDTH / BLOCK_SIZE).toInt(),
@@ -254,7 +241,7 @@ class GameScreen(
         gameArea.init(area)
         addActor(gameArea)
 
-        healthBar.init(
+        health.init(
                 0f,
                 MENU_HEIGHT,
                 SCREEN_WIDTH,
@@ -263,7 +250,7 @@ class GameScreen(
                 level.assets.healthBackground,
                 level.health
         )
-        addActor(healthBar)
+        addActor(health)
 
         defenderMenu.init(
                 0f,
@@ -275,13 +262,28 @@ class GameScreen(
         )
         addActor(defenderMenu)
 
-        balanceLabel.init(
+        balance.init(
                 SCREEN_WIDTH / 64,
                 SCREEN_HEIGHT - SCREEN_HEIGHT / 16,
-                balance.toString(),
-                FontHelper.toFont(DEFAULT_FONT, FontParams(20, Color.WHITE))
+                FontHelper.toFont(DEFAULT_FONT, FontParams(20, Color.WHITE)),
+                level.initialBalance
         )
-        addActor(balanceLabel)
+        addActor(balance)
+
+        timer.init(
+                SCREEN_WIDTH - SCREEN_WIDTH / 16,
+                SCREEN_HEIGHT - SCREEN_HEIGHT / 16,
+                FontHelper.toFont(DEFAULT_FONT, FontParams(20, Color.WHITE)),
+                level.timeInSeconds
+        )
+        timer.scheduleAction{
+            val event = level.getEvent(timer.value)
+            if (TimeEventType.GENERATE_ENEMY == event?.type) {
+                val enemyData = (event as GenerateEnemyTimeEvent).data
+                gameArea.addEnemy(startPositionX, startPositionY + GAME_UI_HEIGHT, enemyData)
+            }
+        }
+        addActor(timer)
 
         return this
     }
@@ -299,23 +301,22 @@ class GameScreen(
                 }
             }
             if (enemy.isDead) {
-                balance += enemy.cost
-                balanceLabel.setText(balance.toString())
+                balance.plus(enemy.cost)
                 gameArea.enemies.removeIndex(i)
                 enemy.remove()
             }
             if (enemy.isPassed) {
-                healthBar.minus(enemy.power)
+                health.minus(enemy.power)
                 gameArea.enemies.removeIndex(i)
                 enemy.remove()
             }
         }
 
-        if (!healthBar.hasHealth()) {
+        if (!health.hasHealth()) {
             init()
         }
 
-        if (timer <= 0 && gameArea.enemies.size <= 0) {
+        if (timer.isCompleted && gameArea.enemies.size <= 0) {
             init()
         }
     }

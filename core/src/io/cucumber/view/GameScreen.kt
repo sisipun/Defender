@@ -36,6 +36,8 @@ class GameScreen(
     private var startPositionX: Float = 0f
     private var startPositionY: Float = 0f
 
+    private var initialCameraY: Float = game.stage.camera.position.y
+
     private val areaMapGenerator: AreaMapGenerator = AreaMapGenerator()
 
     private val gameArea: GameArea = GameArea()
@@ -175,7 +177,11 @@ class GameScreen(
     fun init(): GameScreen {
         defenderMenu.remove()
         gameArea.remove()
+        health.remove()
         balance.remove()
+        timer.remove()
+
+        game.stage.viewport.camera.position.y = initialCameraY
 
         val areaMap = areaMapGenerator.generate(
                 (SCREEN_WIDTH / BLOCK_SIZE).toInt(),

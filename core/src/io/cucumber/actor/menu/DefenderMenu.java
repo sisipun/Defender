@@ -11,11 +11,12 @@ import io.cucumber.storage.defender.DefenderData;
 
 public class DefenderMenu extends Group {
 
-    private SimpleRectangle background;
+    public SimpleRectangle background;
     private Array<DefenderMenuItem> items;
 
     public DefenderMenu(float x, float y, float width, float height, TextureRegion texture,
                         Array<DefenderData> items) {
+        setPosition(x, y);
         this.background = new SimpleRectangle(x, y, width, height, texture);
         addActor(this.background);
         this.items = new Array<>();
@@ -34,6 +35,7 @@ public class DefenderMenu extends Group {
 
     public DefenderMenu init(float x, float y, float width, float height, TextureRegion texture,
                              Array<DefenderData> items) {
+        setPosition(x, y);
         removeChildren();
 
         this.background.init(x, y, width, height, texture);
@@ -51,6 +53,12 @@ public class DefenderMenu extends Group {
         }
 
         return this;
+    }
+
+    @Override
+    public boolean remove() {
+        removeChildren();
+        return super.remove();
     }
 
     public DefenderMenuItem getItem(float x, float y) {

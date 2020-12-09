@@ -45,7 +45,9 @@ public class Defender extends StaticActor<Rectangle> {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        zone.draw(batch, parentAlpha);
+        if (highlighted) {
+            zone.draw(batch, parentAlpha);
+        }
         super.draw(batch, parentAlpha);
     }
 

@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 
 import io.cucumber.actor.menu.preview.DefenderPreview;
-import io.cucumber.base.actor.bound.RectangleBound;
 import io.cucumber.base.actor.simple.SimpleRectangle;
 import io.cucumber.storage.defender.DefenderData;
 
@@ -21,13 +20,13 @@ public class DefenderMenu extends Group {
         addActor(this.background);
         this.items = new Array<>();
         for (int i = 0; i < items.size; i++) {
-            RectangleBound itemBound = new RectangleBound(
+            DefenderMenuItem item = new DefenderMenuItem(
                     background.getX() + i * 3 * background.getHeight() / 2,
                     background.getY(),
                     background.getHeight(),
-                    background.getHeight()
+                    background.getHeight(),
+                    items.get(i)
             );
-            DefenderMenuItem item = new DefenderMenuItem(itemBound, items.get(i));
             this.items.add(item);
             addActor(item);
         }
@@ -41,13 +40,13 @@ public class DefenderMenu extends Group {
         this.background.init(x, y, width, height, texture);
         addActor(this.background);
         for (int i = 0; i < items.size; i++) {
-            RectangleBound itemBound = new RectangleBound(
+            DefenderMenuItem item = new DefenderMenuItem(
                     background.getX() + i * 3 * background.getHeight() / 2,
                     background.getY(),
                     background.getHeight(),
-                    background.getHeight()
+                    background.getHeight(),
+                    items.get(i)
             );
-            DefenderMenuItem item = new DefenderMenuItem(itemBound, items.get(i));
             this.items.add(item);
             addActor(item);
         }

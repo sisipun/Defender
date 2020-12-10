@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Array
 import io.cucumber.Game
 import io.cucumber.actor.Balance
 import io.cucumber.actor.Health
-import io.cucumber.actor.SecondsTimer
+import io.cucumber.actor.TimerInSeconds
 import io.cucumber.actor.area.AreaBlock
 import io.cucumber.actor.area.AreaType
 import io.cucumber.actor.area.GameArea
@@ -33,22 +33,13 @@ class GameScreen(
         private val level: Level
 ) : BaseScreen(game) {
 
-    private var startPositionX: Float = 0f
-    private var startPositionY: Float = 0f
-
     private var initialCameraY: Float = game.stage.camera.position.y
 
     private val areaMapGenerator: AreaMapGenerator = AreaMapGenerator()
 
-    private val gameArea: GameArea = GameArea()
-    private val health: Health = Health(
+    private val gameArea: GameArea = GameArea(
             0f,
-            MENU_HEIGHT,
-            SCREEN_WIDTH,
-            HEALTH_BAR_HEIGHT,
-            level.assets.health,
-            level.assets.healthBackground,
-            level.health
+            0f
     )
     private val defenderMenu: DefenderMenu = DefenderMenu(
             0f,
@@ -58,13 +49,23 @@ class GameScreen(
             level.assets.menuBackground,
             level.defenderTypes
     )
+
+    private val health: Health = Health(
+            0f,
+            MENU_HEIGHT,
+            SCREEN_WIDTH,
+            HEALTH_BAR_HEIGHT,
+            level.assets.health,
+            level.assets.healthBackground,
+            level.health
+    )
     private val balance: Balance = Balance(
             SCREEN_WIDTH / 64,
             SCREEN_HEIGHT - SCREEN_HEIGHT / 16,
             FontHelper.toFont(DEFAULT_FONT, FontParams(20, Color.WHITE)),
             level.initialBalance
     )
-    private val timer: SecondsTimer = SecondsTimer(
+    private val timer: TimerInSeconds = TimerInSeconds(
             SCREEN_WIDTH - SCREEN_WIDTH / 16,
             SCREEN_HEIGHT - SCREEN_HEIGHT / 16,
             FontHelper.toFont(DEFAULT_FONT, FontParams(20, Color.WHITE)),
@@ -72,7 +73,6 @@ class GameScreen(
     )
 
     init {
-        game.stage.keyboardFocus = gameArea
         gameArea.listeners.add(object : DragListener() {
             override fun drag(event: InputEvent?, x: Float, y: Float, pointer: Int) {
                 val camera = game.stage.viewport.camera
@@ -92,9 +92,9 @@ class GameScreen(
                 super.drag(event, x, y, pointer)
             }
         })
-        gameArea.listeners.add(object : InputListener() {
+        game.stage.addListener(object : InputListener() {
             override fun keyDown(event: InputEvent?, keycode: Int): Boolean {
-                if (Input.Keys.Q == keycode) {
+                if (Input.Keys.BACKSPACE == keycode) {
                     gameArea.defenders.forEachIndexed { i, defender ->
                         if (defender.isHighlighted) {
                             balance.plus(defender.cost)
@@ -122,20 +122,22 @@ class GameScreen(
         defenderMenuDragAndDrop.setKeepWithinStage(false)
         defenderMenuDragAndDrop.addSource(object : DragAndDrop.Source(defenderMenu) {
             override fun dragStart(event: InputEvent, x: Float,
-                                   y: Float, pointer: Int): DragAndDrop.Payload {
-                val payload = DragAndDrop.Payload()
-                val itemDefender: DefenderMenuItem = (actor as DefenderMenu).getItem(x, y)
-                        ?: return payload
+                                   y: Float, pointer: Int): DragAndDrop.Payload? {
+                val itemDefender: DefenderMenuItem? = (actor as DefenderMenu).getItem(x, y)
+                if (itemDefender == null || !balance.hasBalance(itemDefender.value.cost)) {
+                    return null
+                }
+
                 val defender = DefenderPreview(
                         x,
                         y,
                         itemDefender.value,
                         level.assets.zone
                 )
-                if (balance.hasBalance(defender.cost)) {
-                    payload.dragActor = defender
-                    addActor(defender)
-                }
+                addActor(defender)
+
+                val payload = DragAndDrop.Payload()
+                payload.dragActor = defender
                 return payload
             }
 
@@ -189,6 +191,7 @@ class GameScreen(
         )
 
         val area = Array<AreaBlock>()
+
         var block: AreaBlock? = null
         var i = areaMap.startPositionX
         var j = areaMap.startPositionY
@@ -241,10 +244,11 @@ class GameScreen(
             }
         }
 
-        startPositionX = areaMap.startPositionX * BLOCK_SIZE
-        startPositionY = areaMap.startPositionY * BLOCK_SIZE
-
-        gameArea.init(area)
+        gameArea.init(
+                0f,
+                0f,
+                area
+        )
         addActor(gameArea)
 
         health.init(
@@ -282,11 +286,15 @@ class GameScreen(
                 FontHelper.toFont(DEFAULT_FONT, FontParams(20, Color.WHITE)),
                 level.timeInSeconds
         )
-        timer.scheduleAction{
+        timer.startAction {
             val event = level.getEvent(timer.value)
             if (TimeEventType.GENERATE_ENEMY == event?.type) {
                 val enemyData = (event as GenerateEnemyTimeEvent).data
-                gameArea.addEnemy(startPositionX, startPositionY + GAME_UI_HEIGHT, enemyData)
+                gameArea.addEnemy(
+                        areaMap.startPositionX * BLOCK_SIZE,
+                        areaMap.startPositionY * BLOCK_SIZE + GAME_UI_HEIGHT,
+                        enemyData
+                )
             }
         }
         addActor(timer)

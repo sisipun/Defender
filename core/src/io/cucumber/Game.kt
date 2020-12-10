@@ -23,6 +23,7 @@ class Game : Game() {
         val levelManagerInited = levelManager.init()
         if (!levelManagerInited) {
             Gdx.app.exit()
+            Gdx.app.log("Game", "Can't load levels.")
         }
 
         setScreen(GameScreen(this, levelManager.loadLevel(0)))

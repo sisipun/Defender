@@ -5,20 +5,20 @@ import com.badlogic.gdx.utils.Timer;
 
 import io.cucumber.base.actor.base.TextLabel;
 
-public class SecondsTimer extends TextLabel {
+public class TimerInSeconds extends TextLabel {
 
     private int duration;
     private int value;
     private Timer.Task task;
 
 
-    public SecondsTimer(float x, float y, BitmapFont font, int duration) {
+    public TimerInSeconds(float x, float y, BitmapFont font, int duration) {
         super(x, y, String.valueOf(duration), font);
         this.duration = duration;
         this.value = 0;
     }
 
-    public SecondsTimer init(float x, float y, BitmapFont font, int duration) {
+    public TimerInSeconds init(float x, float y, BitmapFont font, int duration) {
         super.init(x, y, String.valueOf(duration), font);
         cancelAction();
 
@@ -27,7 +27,7 @@ public class SecondsTimer extends TextLabel {
         return this;
     }
 
-    public void scheduleAction(final Runnable action) {
+    public void startAction(final Runnable action) {
         cancelAction();
         this.task = Timer.schedule(new Timer.Task() {
             @Override

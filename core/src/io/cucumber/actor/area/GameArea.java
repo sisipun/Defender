@@ -16,8 +16,8 @@ public class GameArea extends Group {
     private float topY;
     private float bottomY;
 
-    public GameArea() {
-        setPosition(0f, 0f);
+    public GameArea(float x, float y) {
+        setPosition(x, y);
         this.area = new Array<>();
         this.defenders = new Array<>();
         this.enemies = new Array<>();
@@ -25,8 +25,8 @@ public class GameArea extends Group {
         this.bottomY = 0f;
     }
 
-    public GameArea init(Array<AreaBlock> area) {
-        setPosition(0f, 0f);
+    public GameArea init(float x, float y, Array<AreaBlock> area) {
+        setPosition(x, y);
         removeChildren();
 
         for (int i = 0; i < area.size; i++) {

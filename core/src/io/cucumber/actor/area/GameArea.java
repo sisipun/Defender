@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import io.cucumber.actor.Defender;
 import io.cucumber.actor.Enemy;
 import io.cucumber.actor.menu.preview.DefenderPreview;
+import io.cucumber.storage.defender.DefenderData;
 import io.cucumber.storage.enemy.EnemyData;
 
 public class GameArea extends Group {
@@ -60,8 +61,7 @@ public class GameArea extends Group {
                 y,
                 data.getSize(),
                 data.getSize(),
-                data.getVelocity(),
-                data.getVelocity(),
+                data.getSpeed(),
                 data.getPower(),
                 data.getHealth(),
                 data.getCost(),
@@ -74,17 +74,19 @@ public class GameArea extends Group {
         return true;
     }
 
-    public boolean addDefender(float x, float y, DefenderPreview preview) {
+    public boolean addDefender(float x, float y, DefenderData data) {
         Defender defender = new Defender(
                 x,
                 y,
-                preview.getWidth(),
-                preview.getHeight(),
-                preview.getPower(),
-                preview.getCost(),
-                preview.getTexture(),
-                preview.getZoneSize(),
-                preview.getZoneTexture()
+                data.getSize(),
+                data.getCost(),
+                data.getAvailableTexture(),
+                data.getZoneSize(),
+                data.getZoneTexture(),
+                data.getBulletSize(),
+                data.getBulletSpeed(),
+                data.getBulletPower(),
+                data.getBulletTexture()
         );
         addActor(defender);
         this.defenders.add(defender);

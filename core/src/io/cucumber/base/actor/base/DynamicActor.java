@@ -37,6 +37,14 @@ public abstract class DynamicActor<T extends Shape2D> extends Actor<T> {
     }
 
     @Override
+    public void act(float delta) {
+        setX(getX() + velocity.x * delta);
+        setY(getY() + velocity.y * delta);
+
+        super.act(delta);
+    }
+
+    @Override
     public void reset() {
         super.reset();
         velocity.x = 0;

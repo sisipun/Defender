@@ -25,42 +25,56 @@ defender
   orig: 225, 225
   offset: 0, 0
   index: -1
-defender_small
+defender_bullet
   rotate: false
   xy: 743, 771
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: -1
+defender_small_bullet
+  rotate: false
+  xy: 743, 771
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: -1
+menu_background
+  rotate: false
+  xy: 743, 771
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: -1
+defender_small
+  rotate: false
+  xy: 743, 544
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 health
   rotate: false
-  xy: 743, 771
+  xy: 743, 544
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 enemy
   rotate: false
-  xy: 743, 544
+  xy: 516, 317
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 health_background
   rotate: false
-  xy: 743, 544
-  size: 225, 225
-  orig: 225, 225
-  offset: 0, 0
-  index: -1
-enemy_small
-  rotate: false
   xy: 516, 317
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
-menu_background
+enemy_small
   rotate: false
   xy: 743, 317
   size: 225, 225

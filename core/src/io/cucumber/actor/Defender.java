@@ -9,37 +9,58 @@ import io.cucumber.base.actor.bound.RectangleBound;
 
 public class Defender extends StaticActor<Rectangle> {
 
-    private float power;
-    private Zone zone;
     private int cost;
     private boolean highlighted;
 
-    public Defender(float x, float y, float width, float height, float power, int cost,
-                    TextureRegion texture, float zoneSize, TextureRegion zoneTexture) {
-        super(new RectangleBound(x, y, width, height), texture);
-        this.power = power;
+    private Zone zone;
+    private Bullet bullet;
+
+    public Defender(float x, float y, float size, int cost, TextureRegion texture, float zoneSize,
+                    TextureRegion zoneTexture, float bulletSize, float bulletSpeed,
+                    float bulletPower, TextureRegion bulletTexture) {
+        super(new RectangleBound(x, y, size, size), texture);
+
         this.cost = cost;
+        this.highlighted = false;
+
         this.zone = new Zone(
                 getX() + getWidth() / 2f - zoneSize / 2f,
                 getY() + getHeight() / 2f - zoneSize / 2f,
                 zoneSize,
                 zoneTexture
         );
-        this.highlighted = false;
+        this.bullet = new Bullet(
+                getX() + getWidth() / 2f - bulletSize / 2f,
+                getY() + getHeight() / 2f - bulletSize / 2f,
+                bulletSize,
+                bulletSpeed,
+                bulletPower,
+                bulletTexture
+        );
     }
 
-    public Defender init(float x, float y, float width, float height, float power, int cost,
-                         TextureRegion texture, float zoneSize, TextureRegion zoneTexture) {
-        super.init(new RectangleBound(x, y, width, height), texture);
-        this.power = power;
+    public Defender init(float x, float y, float size, int cost, TextureRegion texture,
+                         float zoneSize, TextureRegion zoneTexture, float bulletSize,
+                         float bulletSpeed, float bulletPower, TextureRegion bulletTexture) {
+        super.init(new RectangleBound(x, y, size, size), texture);
+
         this.cost = cost;
-        this.zone = new Zone(
+        this.highlighted = false;
+
+        this.zone.init(
                 getX() + getWidth() / 2f - zoneSize / 2f,
                 getY() + getHeight() / 2f - zoneSize / 2f,
                 zoneSize,
                 zoneTexture
         );
-        this.highlighted = false;
+        this.bullet.init(
+                getX() + getWidth() / 2f - bulletSize / 2f,
+                getY() + getHeight() / 2f - bulletSize / 2f,
+                bulletSize,
+                bulletSpeed,
+                bulletPower,
+                bulletTexture
+        );
         return this;
     }
 
@@ -49,14 +70,34 @@ public class Defender extends StaticActor<Rectangle> {
             zone.draw(batch, parentAlpha);
         }
         super.draw(batch, parentAlpha);
+        if (bullet.isPinned()) {
+            bullet.draw(batch, parentAlpha);
+        }
+    }
+
+    @Override
+    public void act(float delta) {
+        if (bullet.reachedTarget()) {
+            bullet.hitTarget();
+            this.bullet.init(
+                    getX() + getWidth() / 2f - bullet.getWidth() / 2f,
+                    getY() + getHeight() / 2f - bullet.getHeight() / 2f
+            );
+        }
+
+        zone.act(delta);
+        bullet.act(delta);
+        super.act(delta);
+    }
+
+    public void shoot(Enemy enemy) {
+        if (!this.bullet.isPinned()) {
+            this.bullet.pinTarget(enemy);
+        }
     }
 
     public boolean isCollidesZone(Enemy enemy) {
         return zone.isCollides(enemy);
-    }
-
-    public float getPower() {
-        return power;
     }
 
     public int getCost() {

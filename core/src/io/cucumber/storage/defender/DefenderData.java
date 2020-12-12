@@ -5,37 +5,42 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class DefenderData {
 
     private final float size;
-    private final float power;
-    private final float zoneSize;
     private final int cost;
-
     private final TextureRegion availableTexture;
     private final TextureRegion unavailableTexture;
 
-    public DefenderData(float size, float power, int cost, float zoneSize,
-                        TextureRegion availableTexture, TextureRegion unavailableTexture) {
+    private final float zoneSize;
+    private final TextureRegion zoneTexture;
+
+    private final float bulletSize;
+    private final float bulletSpeed;
+    private final float bulletPower;
+    private final TextureRegion bulletTexture;
+
+    public DefenderData(float size, int cost, TextureRegion availableTexture,
+                        TextureRegion unavailableTexture, float zoneSize, TextureRegion zoneTexture,
+                        float bulletSize, float bulletSpeed, float bulletPower,
+                        TextureRegion bulletTexture) {
         this.size = size;
-        this.power = power;
         this.cost = cost;
-        this.zoneSize = zoneSize;
         this.availableTexture = availableTexture;
         this.unavailableTexture = unavailableTexture;
+
+        this.zoneSize = zoneSize;
+        this.zoneTexture = zoneTexture;
+
+        this.bulletSize = bulletSize;
+        this.bulletSpeed = bulletSpeed;
+        this.bulletPower = bulletPower;
+        this.bulletTexture = bulletTexture;
     }
 
     public float getSize() {
         return size;
     }
 
-    public float getPower() {
-        return power;
-    }
-
     public int getCost() {
         return cost;
-    }
-
-    public float getZoneSize() {
-        return zoneSize;
     }
 
     public TextureRegion getAvailableTexture() {
@@ -44,5 +49,29 @@ public class DefenderData {
 
     public TextureRegion getUnavailableTexture() {
         return unavailableTexture;
+    }
+
+    public float getZoneSize() {
+        return zoneSize;
+    }
+
+    public TextureRegion getZoneTexture() {
+        return zoneTexture;
+    }
+
+    public float getBulletSize() {
+        return bulletSize;
+    }
+
+    public float getBulletSpeed() {
+        return bulletSpeed;
+    }
+
+    public float getBulletPower() {
+        return bulletPower;
+    }
+
+    public TextureRegion getBulletTexture() {
+        return bulletTexture;
     }
 }

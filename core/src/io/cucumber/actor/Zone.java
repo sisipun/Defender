@@ -17,6 +17,11 @@ public class Zone extends StaticActor<Circle> {
         super(new CircleBound(x, y, size / 2), texture);
     }
 
+    public Zone init(float x, float y, float size, TextureRegion texture) {
+        super.init(new CircleBound(x, y, size / 2), texture);
+        return this;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Color color = batch.getColor();

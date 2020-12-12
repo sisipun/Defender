@@ -3,7 +3,6 @@ package io.cucumber.actor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 
 import io.cucumber.actor.area.AreaType;
 import io.cucumber.base.actor.base.DynamicActor;
@@ -17,34 +16,34 @@ public class Enemy extends DynamicActor<Rectangle> {
     private int cost;
     private boolean passed;
 
-    private Vector2 initialVelocity;
+    private float speed;
 
     private TextureRegion healthTexture;
     private TextureRegion healthBackTexture;
 
-    public Enemy(float x, float y, float width, float height, float horizontalVelocity,
-                 float verticalVelocity, float power, float health, int cost, TextureRegion texture,
-                 TextureRegion healthTexture, TextureRegion healthBackTexture) {
-        super(new RectangleBound(x, y, width, height), horizontalVelocity, verticalVelocity, texture);
+    public Enemy(float x, float y, float width, float height, float speed, float power,
+                 float health, int cost, TextureRegion texture, TextureRegion healthTexture,
+                 TextureRegion healthBackTexture) {
+        super(new RectangleBound(x, y, width, height), speed, speed, texture);
         this.power = power;
         this.health = health;
         this.totalHealth = health;
         this.cost = cost;
         this.passed = false;
-        this.initialVelocity = new Vector2(horizontalVelocity, verticalVelocity);
+        this.speed = speed;
         this.healthTexture = healthTexture;
         this.healthBackTexture = healthBackTexture;
     }
 
-    public Enemy init(float x, float y, float size, float horizontalVelocity, float verticalVelocity,
-                      float power, float health, int cost, TextureRegion texture,
-                      TextureRegion healthTexture, TextureRegion healthBackTexture) {
-        super.init(new RectangleBound(x, y, size, size), horizontalVelocity, verticalVelocity, texture);
+    public Enemy init(float x, float y, float size, float speed, float power, float health,
+                      int cost, TextureRegion texture, TextureRegion healthTexture,
+                      TextureRegion healthBackTexture) {
+        super.init(new RectangleBound(x, y, size, size), speed, speed, texture);
         this.power = power;
         this.health = health;
         this.cost = cost;
         this.passed = false;
-        this.initialVelocity = new Vector2(horizontalVelocity, verticalVelocity);
+        this.speed = speed;
         this.healthTexture = healthTexture;
         this.healthBackTexture = healthBackTexture;
         return this;
@@ -92,17 +91,6 @@ public class Enemy extends DynamicActor<Rectangle> {
         );
     }
 
-    @Override
-    public void act(float delta) {
-        if (passed) {
-            return;
-        }
-
-        setX(getX() + velocity.x * delta);
-        setY(getY() + velocity.y * delta);
-        super.act(delta);
-    }
-
     public void changeDirection(AreaType areaType) {
         if (passed) {
             return;
@@ -111,18 +99,20 @@ public class Enemy extends DynamicActor<Rectangle> {
         if (AreaType.NONE.equals(areaType)) {
             health = 0;
         } else if (AreaType.UP.equals(areaType)) {
-            velocity.y = initialVelocity.y;
+            velocity.y = speed;
             velocity.x = 0;
         } else if (AreaType.DOWN.equals(areaType)) {
-            velocity.y = -initialVelocity.y;
+            velocity.y = -speed;
             velocity.x = 0;
         } else if (AreaType.LEFT.equals(areaType)) {
             velocity.y = 0;
-            velocity.x = -initialVelocity.x;
+            velocity.x = -speed;
         } else if (AreaType.RIGHT.equals(areaType)) {
             velocity.y = 0;
-            velocity.x = initialVelocity.x;
+            velocity.x = speed;
         } else if (AreaType.END.equals(areaType)) {
+            velocity.y = 0;
+            velocity.x = 0;
             passed = true;
         }
     }

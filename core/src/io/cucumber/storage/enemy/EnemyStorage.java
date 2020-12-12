@@ -15,8 +15,8 @@ import static io.cucumber.utils.constants.Constants.ENEMY_SMALL_COST;
 import static io.cucumber.utils.constants.Constants.ENEMY_SMALL_HEALTH;
 import static io.cucumber.utils.constants.Constants.ENEMY_SMALL_POWER;
 import static io.cucumber.utils.constants.Constants.ENEMY_SMALL_SIZE;
-import static io.cucumber.utils.constants.Constants.ENEMY_SMALL_VELOCITY;
-import static io.cucumber.utils.constants.Constants.ENEMY_VELOCITY;
+import static io.cucumber.utils.constants.Constants.ENEMY_SMALL_SPEED;
+import static io.cucumber.utils.constants.Constants.ENEMY_SPEED;
 
 public class EnemyStorage {
 
@@ -31,7 +31,7 @@ public class EnemyStorage {
                 ENEMY_SIZE,
                 ENEMY_POWER,
                 ENEMY_HEALTH,
-                ENEMY_VELOCITY,
+                ENEMY_SPEED,
                 ENEMY_COST,
                 atlas.findRegion("enemy"),
                 assets.getHealth(),
@@ -41,7 +41,7 @@ public class EnemyStorage {
                 ENEMY_SMALL_SIZE,
                 ENEMY_SMALL_POWER,
                 ENEMY_SMALL_HEALTH,
-                ENEMY_SMALL_VELOCITY,
+                ENEMY_SMALL_SPEED,
                 ENEMY_SMALL_COST,
                 atlas.findRegion("enemy_small"),
                 assets.getHealth(),

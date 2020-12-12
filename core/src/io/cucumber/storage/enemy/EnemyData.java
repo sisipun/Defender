@@ -7,7 +7,7 @@ public class EnemyData {
     private final float size;
     private final float power;
     private final float health;
-    private final float velocity;
+    private final float speed;
     private final int cost;
 
     private final TextureRegion texture;
@@ -20,7 +20,7 @@ public class EnemyData {
         this.size = size;
         this.power = power;
         this.health = health;
-        this.velocity = velocity;
+        this.speed = velocity;
         this.cost = cost;
         this.texture = texture;
         this.healthTexture = healthTexture;
@@ -39,8 +39,8 @@ public class EnemyData {
         return health;
     }
 
-    public float getVelocity() {
-        return velocity;
+    public float getSpeed() {
+        return speed;
     }
 
     public int getCost() {

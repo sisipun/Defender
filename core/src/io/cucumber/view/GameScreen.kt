@@ -131,8 +131,7 @@ class GameScreen(
                 val defender = DefenderPreview(
                         x,
                         y,
-                        itemDefender.value,
-                        level.assets.zone
+                        itemDefender.value
                 )
                 addActor(defender)
 
@@ -165,10 +164,11 @@ class GameScreen(
             override fun drop(source: DragAndDrop.Source?, payload: DragAndDrop.Payload?, x: Float,
                               y: Float, pointer: Int) {
                 val defenderPreview = payload?.dragActor as DefenderPreview? ?: return
-                if (balance.hasBalance(defenderPreview.cost)) {
+                val data = defenderPreview.data
+                if (balance.hasBalance(data.cost)) {
                     gameArea.defenders.forEach { defender -> defender.isHighlighted = false }
-                    gameArea.addDefender(defenderPreview.x, defenderPreview.y, defenderPreview)
-                    balance.minus(defenderPreview.cost)
+                    gameArea.addDefender(defenderPreview.x, defenderPreview.y, data)
+                    balance.minus(data.cost)
                 }
             }
         })
@@ -306,7 +306,7 @@ class GameScreen(
         gameArea.enemies.forEachIndexed { i, enemy ->
             gameArea.defenders.forEach { defender ->
                 if (defender.isCollidesZone(enemy)) {
-                    enemy.hit(defender.power * delta)
+                    defender.shoot(enemy)
                 }
             }
             gameArea.area.forEach { block ->

@@ -1,7 +1,6 @@
 package io.cucumber.actor.menu.preview;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
 import io.cucumber.base.actor.base.StaticActor;
@@ -10,26 +9,20 @@ import io.cucumber.storage.defender.DefenderData;
 
 public class DefenderPreview extends StaticActor<Rectangle> {
 
-    private float power;
-    private int cost;
     private boolean available;
+    private DefenderData data;
 
-    private TextureRegion availableTexture;
-    private TextureRegion unavailableTexture;
-    private io.cucumber.actor.menu.preview.DefenderZonePreview zone;
+    private DefenderZonePreview zone;
 
-    public DefenderPreview(float x, float y, DefenderData data, TextureRegion zoneTexture) {
+    public DefenderPreview(float x, float y, DefenderData data) {
         super(new RectangleBound(x, y, data.getSize(), data.getSize()), data.getAvailableTexture());
-        this.power = data.getPower();
-        this.cost = data.getCost();
         this.available = true;
-        this.availableTexture = data.getAvailableTexture();
-        this.unavailableTexture = data.getUnavailableTexture();
+        this.data = data;
         this.zone = new DefenderZonePreview(
                 getX() + getWidth() / 2f - data.getZoneSize() / 2f,
                 getY() + getHeight() / 2f - data.getZoneSize() / 2f,
                 data.getZoneSize(),
-                zoneTexture
+                data.getZoneTexture()
         );
     }
 
@@ -70,12 +63,8 @@ public class DefenderPreview extends StaticActor<Rectangle> {
         super.setPosition(x, y, alignment);
     }
 
-    public float getPower() {
-        return power;
-    }
-
-    public int getCost() {
-        return cost;
+    public DefenderData getData() {
+        return data;
     }
 
     public boolean isAvailable() {
@@ -85,17 +74,9 @@ public class DefenderPreview extends StaticActor<Rectangle> {
     public void setAvailable(boolean available) {
         this.available = available;
         if (available) {
-            setTexture(availableTexture);
+            setTexture(data.getAvailableTexture());
         } else {
-            setTexture(unavailableTexture);
+            setTexture(data.getUnavailableTexture());
         }
-    }
-
-    public float getZoneSize() {
-        return zone.getSize();
-    }
-
-    public TextureRegion getZoneTexture() {
-        return zone.getTexture();
     }
 }

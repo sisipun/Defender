@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Array
 import io.cucumber.Game
 import io.cucumber.actor.Balance
 import io.cucumber.actor.Health
-import io.cucumber.actor.TimerInSeconds
+import io.cucumber.actor.LevelTimer
 import io.cucumber.actor.area.AreaBlock
 import io.cucumber.actor.area.AreaType
 import io.cucumber.actor.area.GameArea
@@ -65,11 +65,12 @@ class GameScreen(
             FontHelper.toFont(DEFAULT_FONT, FontParams(20, Color.WHITE)),
             level.initialBalance
     )
-    private val timer: TimerInSeconds = TimerInSeconds(
+    private val levelTimer: LevelTimer = LevelTimer(
             SCREEN_WIDTH - SCREEN_WIDTH / 16,
             SCREEN_HEIGHT - SCREEN_HEIGHT / 16,
             FontHelper.toFont(DEFAULT_FONT, FontParams(20, Color.WHITE)),
-            level.timeInSeconds
+            level.timeInSeconds,
+            level.events
     )
 
     init {
@@ -88,7 +89,7 @@ class GameScreen(
                 defenderMenu.moveBy(0f, cameraDeltaY)
                 health.moveBy(0f, cameraDeltaY)
                 balance.moveBy(0f, cameraDeltaY)
-                timer.moveBy(0f, cameraDeltaY)
+                levelTimer.moveBy(0f, cameraDeltaY)
                 super.drag(event, x, y, pointer)
             }
         })
@@ -181,13 +182,14 @@ class GameScreen(
         gameArea.remove()
         health.remove()
         balance.remove()
-        timer.remove()
+        levelTimer.remove()
 
         game.stage.viewport.camera.position.y = initialCameraY
 
         val areaMap = areaMapGenerator.generate(
                 (SCREEN_WIDTH / BLOCK_SIZE).toInt(),
-                level.horizontalBlockCount
+                level.horizontalBlockCount + MAP_BORDER_SIZE,
+                MAP_BORDER_SIZE
         )
 
         val area = Array<AreaBlock>()
@@ -280,25 +282,24 @@ class GameScreen(
         )
         addActor(balance)
 
-        timer.init(
+        levelTimer.init(
                 SCREEN_WIDTH - SCREEN_WIDTH / 16,
                 SCREEN_HEIGHT - SCREEN_HEIGHT / 16,
                 FontHelper.toFont(DEFAULT_FONT, FontParams(20, Color.WHITE)),
-                level.timeInSeconds
+                level.timeInSeconds,
+                level.events
         )
-        timer.startAction {
-            val event = level.getEvent(timer.value)
-            if (TimeEventType.GENERATE_ENEMY == event?.type) {
-                val enemyData = (event as GenerateEnemyTimeEvent).data
-                gameArea.addEnemy(
-                        areaMap.startPositionX * BLOCK_SIZE,
-                        areaMap.startPositionY * BLOCK_SIZE + GAME_UI_HEIGHT,
-                        enemyData
-                )
-            }
+        levelTimer.addListener(TimeEventType.GENERATE_ENEMY) { event ->
+            val enemyData = (event as GenerateEnemyTimeEvent).data
+            gameArea.addEnemy(
+                    areaMap.startPositionX * BLOCK_SIZE,
+                    areaMap.startPositionY * BLOCK_SIZE + GAME_UI_HEIGHT,
+                    enemyData
+            )
         }
-        addActor(timer)
+        addActor(levelTimer)
 
+        levelTimer.start()
         return this
     }
 
@@ -330,7 +331,7 @@ class GameScreen(
             init()
         }
 
-        if (timer.isCompleted && gameArea.enemies.size <= 0) {
+        if (levelTimer.isCompleted && gameArea.enemies.size <= 0) {
             init()
         }
     }

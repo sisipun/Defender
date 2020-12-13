@@ -35,8 +35,8 @@ public class Bullet extends DynamicActor<Rectangle> {
     @Override
     public void act(float delta) {
         if (target != null) {
-            velocity.x = (target.getX() - getX()) * speed;
-            velocity.y = (target.getY() - getY()) * speed;
+            velocity.x = (target.getX() - getX() + target.getWidth() / 2 - getWidth() / 2) * speed;
+            velocity.y = (target.getY() - getY() + target.getHeight() / 2 - getHeight() / 2) * speed;
         }
         super.act(delta);
     }

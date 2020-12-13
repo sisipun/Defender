@@ -54,7 +54,7 @@ public class Level {
         return defenderTypes;
     }
 
-    public TimeEvent getEvent(int time) {
-        return timeEvents.get(time);
+    public Map<Integer, ? extends TimeEvent> getEvents() {
+        return timeEvents;
     }
 }

@@ -7,7 +7,7 @@ import io.cucumber.actor.area.AreaType;
 
 public class AreaMapGenerator {
 
-    public AreaMap generate(int width, int height) {
+    public AreaMap generate(int width, int height, int border) {
         if (width <= 0 || height <= 0) {
             return new AreaMap(new AreaType[0][0], 0, 0);
         }
@@ -21,12 +21,12 @@ public class AreaMapGenerator {
         }
 
         int startPositionX = random.nextInt(width);
-        int startPositionY = height - 1;
+        int startPositionY = height - border - 1;
 
         int currentPositionX = startPositionX;
         int currentPositionY = startPositionY;
 
-        while (currentPositionY - 1 > 0) {
+        while (currentPositionY - border - 1 > 0) {
             int direction = random.nextInt(2);
             if (direction == 0 && currentPositionX > 0) {
                 int size = random.nextInt(currentPositionX);
@@ -48,7 +48,7 @@ public class AreaMapGenerator {
             currentPositionY--;
         }
 
-        while (currentPositionY > 0) {
+        while (currentPositionY - border > 0) {
             map[currentPositionX][currentPositionY] = AreaType.DOWN;
             currentPositionY--;
         }

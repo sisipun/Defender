@@ -2,8 +2,6 @@ package io.cucumber.manager;
 
 import com.badlogic.gdx.utils.Array;
 
-import java.util.Map;
-
 import io.cucumber.manager.event.TimeEvent;
 import io.cucumber.storage.defender.DefenderData;
 
@@ -16,11 +14,11 @@ public class Level {
 
     private final Assets assets;
     private final Array<DefenderData> defenderTypes;
-    private final Map<Integer, ? extends TimeEvent> timeEvents;
+    private final Array<? extends TimeEvent> timeEvents;
 
     public Level(float health, int timeInSeconds, int horizontalBlockCount, int initialBalance,
                  Assets assets, Array<DefenderData> defenderTypes,
-                 Map<Integer, ? extends TimeEvent> timeEvents) {
+                 Array<? extends TimeEvent> timeEvents) {
         this.health = health;
         this.timeInSeconds = timeInSeconds;
         this.horizontalBlockCount = horizontalBlockCount;
@@ -54,7 +52,7 @@ public class Level {
         return defenderTypes;
     }
 
-    public Map<Integer, ? extends TimeEvent> getEvents() {
+    public Array<? extends TimeEvent> getEvents() {
         return timeEvents;
     }
 }

@@ -4,9 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import io.cucumber.manager.event.GenerateEnemyTimeEvent;
 import io.cucumber.storage.defender.DefenderStorage;
 import io.cucumber.storage.defender.DefenderType;
@@ -45,21 +42,20 @@ public class LevelManager {
             return false;
         }
 
-        Map<Integer, GenerateEnemyTimeEvent> timeEvents = new HashMap<>();
-        timeEvents.put(1, new GenerateEnemyTimeEvent(1, enemyStorage.get(EnemyType.BASE)));
-        timeEvents.put(10, new GenerateEnemyTimeEvent(10, enemyStorage.get(EnemyType.SMALL)));
-        timeEvents.put(25, new GenerateEnemyTimeEvent(25, enemyStorage.get(EnemyType.BASE)));
-        timeEvents.put(40, new GenerateEnemyTimeEvent(40, enemyStorage.get(EnemyType.SMALL)));
-
         levels.addAll(
                 new Level(
                         100,
-                        45,
+                        100,
                         40,
                         400,
                         assets,
                         Array.with(defenderStorage.get(DefenderType.BASE), defenderStorage.get(DefenderType.SMALL)),
-                        timeEvents
+                        Array.with(
+                                new GenerateEnemyTimeEvent(1, enemyStorage.get(EnemyType.BASE)),
+                                new GenerateEnemyTimeEvent(10, enemyStorage.get(EnemyType.SMALL)),
+                                new GenerateEnemyTimeEvent(25, enemyStorage.get(EnemyType.BASE)),
+                                new GenerateEnemyTimeEvent(40, enemyStorage.get(EnemyType.SMALL))
+                        )
                 )
         );
         return true;

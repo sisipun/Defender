@@ -1,10 +1,14 @@
 package io.cucumber.actor;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 import io.cucumber.base.actor.base.TextLabel;
 import io.cucumber.manager.event.TimeEvent;
@@ -16,27 +20,37 @@ public class LevelTimer extends TextLabel {
     private int duration;
     private int value;
     private Map<TimeEventType, TimeEventListener> listeners;
-    private Map<Integer, TimeEvent> events;
+    private Queue<TimeEvent> events;
     private Timer.Task task;
 
 
-    public LevelTimer(float x, float y, BitmapFont font, int duration, Map<Integer, TimeEvent> events) {
+    public LevelTimer(float x, float y, BitmapFont font, int duration, Array<? extends TimeEvent> events) {
         super(x, y, String.valueOf(duration), font);
         this.duration = duration;
         this.value = 0;
         this.listeners = new HashMap<>();
-        this.events = new HashMap<>();
-        this.events.putAll(events);
+        this.events = new PriorityQueue<>(events.size, new Comparator<TimeEvent>() {
+            @Override
+            public int compare(TimeEvent o1, TimeEvent o2) {
+                return o1.getTime() - o2.getTime();
+            }
+        });
+        for (int i = 0; i < events.size; i++) {
+            this.events.add(events.get(i));
+        }
     }
 
-    public LevelTimer init(float x, float y, BitmapFont font, int duration, Map<Integer, TimeEvent> events) {
+    public LevelTimer init(float x, float y, BitmapFont font, int duration, Array<? extends TimeEvent> events) {
         super.init(x, y, String.valueOf(duration), font);
         stop();
 
         this.duration = duration;
         this.value = 0;
         this.listeners.clear();
-        this.events.putAll(events);
+        this.events.clear();
+        for (int i = 0; i < events.size; i++) {
+            this.events.add(events.get(i));
+        }
         return this;
     }
 
@@ -55,17 +69,22 @@ public class LevelTimer extends TextLabel {
                     stop();
                     return;
                 }
-                TimeEvent event = events.get(value);
-                if (event == null) {
+                TimeEvent event = events.peek();
+                if (event == null || event.getTime() != value) {
                     return;
                 }
 
-                TimeEventListener listener = listeners.get(event.getType());
-                if (listener == null) {
-                    return;
+                while (event != null && event.getTime() == value) {
+                    TimeEventListener listener = listeners.get(event.getType());
+                    if (listener == null) {
+                        return;
+                    }
+
+                    listener.handle(event);
+                    events.poll();
+                    event = events.peek();
                 }
 
-                listener.handle(event);
             }
         }, 0f, 1f);
     }
@@ -77,6 +96,6 @@ public class LevelTimer extends TextLabel {
     }
 
     public boolean isCompleted() {
-        return value >= duration;
+        return value >= duration || events.isEmpty();
     }
 }

@@ -45,7 +45,7 @@ public class LevelManager {
         levels.addAll(
                 new Level(
                         100,
-                        100,
+                        45,
                         40,
                         400,
                         assets,

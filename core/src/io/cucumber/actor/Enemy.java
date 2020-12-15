@@ -21,18 +21,16 @@ public class Enemy extends DynamicActor<Rectangle> {
     private TextureRegion healthTexture;
     private TextureRegion healthBackTexture;
 
-    public Enemy(float x, float y, float width, float height, float speed, float power,
-                 float health, int cost, TextureRegion texture, TextureRegion healthTexture,
-                 TextureRegion healthBackTexture) {
-        super(new RectangleBound(x, y, width, height), speed, speed, texture);
-        this.power = power;
-        this.health = health;
-        this.totalHealth = health;
-        this.cost = cost;
+    public Enemy() {
+        super(new RectangleBound(0, 0, 0, 0), 0, 0, null);
+        this.power = 0;
+        this.health = 0;
+        this.totalHealth = 0;
+        this.cost = 0;
         this.passed = false;
-        this.speed = speed;
-        this.healthTexture = healthTexture;
-        this.healthBackTexture = healthBackTexture;
+        this.speed = 0;
+        this.healthTexture = null;
+        this.healthBackTexture = null;
     }
 
     public Enemy init(float x, float y, float size, float speed, float power, float health,
@@ -40,6 +38,7 @@ public class Enemy extends DynamicActor<Rectangle> {
                       TextureRegion healthBackTexture) {
         super.init(new RectangleBound(x, y, size, size), speed, speed, texture);
         this.power = power;
+        this.totalHealth = health;
         this.health = health;
         this.cost = cost;
         this.passed = false;

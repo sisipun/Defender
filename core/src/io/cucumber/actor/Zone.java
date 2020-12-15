@@ -13,8 +13,8 @@ import static io.cucumber.utils.constants.Constants.ZONE_ALPHA;
 
 public class Zone extends StaticActor<Circle> {
 
-    public Zone(float x, float y, float size, TextureRegion texture) {
-        super(new CircleBound(x, y, size / 2), texture);
+    public Zone() {
+        super(new CircleBound(0, 0, 0), null);
     }
 
     public Zone init(float x, float y, float size, TextureRegion texture) {

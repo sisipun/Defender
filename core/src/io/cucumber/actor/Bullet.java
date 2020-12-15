@@ -13,14 +13,13 @@ public class Bullet extends DynamicActor<Rectangle> {
 
     private Enemy target;
 
-    public Bullet(float x, float y, float size, float speed, float power, TextureRegion texture) {
-        super(new RectangleBound(x, y, size, size), 0f, 0f, texture);
-        this.power = power;
-        this.speed = speed;
+    public Bullet() {
+        super(new RectangleBound(0, 0, 0, 0), 0f, 0f, null);
+        this.power = 0;
+        this.speed = 0;
     }
 
-    public Bullet init(float x, float y, float size, float speed, float power,
-                       TextureRegion texture) {
+    public Bullet init(float x, float y, float size, float speed, float power, TextureRegion texture) {
         super.init(new RectangleBound(x, y, size, size), 0f, 0f, texture);
         this.power = power;
         this.speed = speed;

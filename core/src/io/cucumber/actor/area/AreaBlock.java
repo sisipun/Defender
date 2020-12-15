@@ -2,6 +2,7 @@ package io.cucumber.actor.area;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Pools;
 
 import io.cucumber.actor.Enemy;
 import io.cucumber.actor.Zone;
@@ -13,9 +14,15 @@ public class AreaBlock extends StaticActor<Rectangle> {
     private AreaType type;
     private Zone zone;
 
-    public AreaBlock(float x, float y, float size, AreaType type, AreaType previousType,
+    public AreaBlock() {
+        super(new RectangleBound(0, 0, 0, 0), null);
+        this.type = AreaType.NONE;
+        this.zone = null;
+    }
+
+    public AreaBlock init(float x, float y, float size, AreaType type, AreaType previousType,
                      TextureRegion texture, float zoneSize, TextureRegion zoneTexture) {
-        super(new RectangleBound(x, y, size, size), texture);
+        super.init(new RectangleBound(x, y, size, size), texture);
         this.type = type;
         float zoneX = getX() + getWidth() / 2f - zoneSize / 2f;
         float zoneY = getY() + getWidth() / 2f - zoneSize / 2f;
@@ -28,12 +35,19 @@ public class AreaBlock extends StaticActor<Rectangle> {
         } else if (AreaType.DOWN.equals(previousType)) {
             zoneY = getY() - zoneSize / 2f;
         }
-        this.zone = new Zone(
+        this.zone = Pools.obtain(Zone.class).init(
                 zoneX,
                 zoneY,
                 zoneSize,
                 zoneTexture
         );
+        return this;
+    }
+
+    @Override
+    public boolean remove() {
+        Pools.free(zone);
+        return super.remove();
     }
 
     public boolean isCollidesZone(Enemy enemy) {

@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener
 import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.Pools
 import io.cucumber.Game
 import io.cucumber.actor.Balance
 import io.cucumber.actor.Health
@@ -200,7 +201,7 @@ class GameScreen(
         while (block?.type != AreaType.END || block.type == AreaType.NONE) {
             val areaType = areaMap.value[i][j]
             val previousType = block?.type ?: AreaType.NONE
-            block = AreaBlock(
+            block = Pools.obtain(AreaBlock::class.java).init(
                     i * BLOCK_SIZE,
                     j * BLOCK_SIZE + GAME_UI_HEIGHT,
                     BLOCK_SIZE,
@@ -231,7 +232,7 @@ class GameScreen(
         areaMap.value.forEachIndexed { rowIndex, row ->
             row.forEachIndexed { typeIndex, type ->
                 if (type == AreaType.NONE) {
-                    block = AreaBlock(
+                    block = Pools.obtain(AreaBlock::class.java).init(
                             rowIndex * BLOCK_SIZE,
                             typeIndex * BLOCK_SIZE + GAME_UI_HEIGHT,
                             BLOCK_SIZE,

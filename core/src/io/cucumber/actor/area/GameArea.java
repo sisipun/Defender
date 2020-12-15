@@ -2,6 +2,7 @@ package io.cucumber.actor.area;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pools;
 
 import io.cucumber.actor.Defender;
 import io.cucumber.actor.Enemy;
@@ -56,10 +57,9 @@ public class GameArea extends Group {
     }
 
     public boolean addEnemy(float x, float y, EnemyData data) {
-        Enemy enemy = new Enemy(
+        Enemy enemy = Pools.obtain(Enemy.class).init(
                 x,
                 y,
-                data.getSize(),
                 data.getSize(),
                 data.getSpeed(),
                 data.getPower(),
@@ -75,7 +75,7 @@ public class GameArea extends Group {
     }
 
     public boolean addDefender(float x, float y, DefenderData data) {
-        Defender defender = new Defender(
+        Defender defender = Pools.obtain(Defender.class).init(
                 x,
                 y,
                 data.getSize(),
@@ -140,15 +140,21 @@ public class GameArea extends Group {
 
     private void removeChildren() {
         for (int i = 0; i < this.area.size; i++) {
-            this.area.get(i).remove();
+            AreaBlock areaBlock = this.area.get(i);
+            areaBlock.remove();
+            Pools.free(areaBlock);
         }
 
         for (int i = 0; i < this.enemies.size; i++) {
-            this.enemies.get(i).remove();
+            Enemy enemy = this.enemies.get(i);
+            enemy.remove();
+            Pools.free(enemy);
         }
 
         for (int i = 0; i < this.defenders.size; i++) {
-            this.defenders.get(i).remove();
+            Defender defender = this.defenders.get(i);
+            defender.remove();
+            Pools.free(defender);
         }
 
         clearChildren();

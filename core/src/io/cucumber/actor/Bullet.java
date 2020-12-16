@@ -23,11 +23,13 @@ public class Bullet extends DynamicActor<Rectangle> {
         super.init(new RectangleBound(x, y, size, size), 0f, 0f, texture);
         this.power = power;
         this.speed = speed;
+        this.target = null;
         return this;
     }
 
     public Bullet init(float x, float y) {
         super.init(new RectangleBound(x, y, getWidth(), getHeight()), 0f, 0f, texture);
+        this.target = null;
         return this;
     }
 

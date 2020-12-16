@@ -195,57 +195,22 @@ class GameScreen(
 
         val area = Array<AreaBlock>()
 
-        var block: AreaBlock? = null
-        var i = areaMap.startPositionX
-        var j = areaMap.startPositionY
-        while (block?.type != AreaType.END || block.type == AreaType.NONE) {
-            val areaType = areaMap.value[i][j]
-            val previousType = block?.type ?: AreaType.NONE
-            block = Pools.obtain(AreaBlock::class.java).init(
-                    i * BLOCK_SIZE,
-                    j * BLOCK_SIZE + GAME_UI_HEIGHT,
-                    BLOCK_SIZE,
-                    areaType,
-                    previousType,
-                    level.assets.block,
-                    BLOCK_ZONE_SIZE,
-                    level.assets.zone
-            )
-            area.add(block)
-
-            when (areaType) {
-                AreaType.LEFT -> {
-                    i--
-                }
-                AreaType.RIGHT -> {
-                    i++
-                }
-                AreaType.DOWN -> {
-                    j--
-                }
-                AreaType.UP -> {
-                    j++
-                }
+        areaMap.blocks.forEachIndexed { rowIndex, row ->
+            row.forEachIndexed { typeIndex, block ->
+                area.add(Pools.obtain(AreaBlock::class.java).init(
+                        rowIndex * BLOCK_SIZE,
+                        typeIndex * BLOCK_SIZE + GAME_UI_HEIGHT,
+                        BLOCK_SIZE,
+                        block.type,
+                        block.previousType,
+                        if (block.type == AreaType.NONE) level.assets.background else level.assets.block,
+                        BLOCK_ZONE_SIZE,
+                        level.assets.zone
+                ))
             }
         }
 
-        areaMap.value.forEachIndexed { rowIndex, row ->
-            row.forEachIndexed { typeIndex, type ->
-                if (type == AreaType.NONE) {
-                    block = Pools.obtain(AreaBlock::class.java).init(
-                            rowIndex * BLOCK_SIZE,
-                            typeIndex * BLOCK_SIZE + GAME_UI_HEIGHT,
-                            BLOCK_SIZE,
-                            type,
-                            AreaType.NONE,
-                            level.assets.background,
-                            BLOCK_ZONE_SIZE,
-                            level.assets.zone
-                    )
-                    area.add(block)
-                }
-            }
-        }
+        areaMap.remove()
 
         gameArea.init(
                 0f,

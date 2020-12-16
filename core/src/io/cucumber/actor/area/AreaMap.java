@@ -1,20 +1,22 @@
 package io.cucumber.actor.area;
 
+import com.badlogic.gdx.utils.Pools;
+
 public class AreaMap {
 
     private final int startPositionX;
     private final int startPositionY;
 
-    private final AreaType[][] value;
+    private final Block[][] blocks;
 
-    public AreaMap(AreaType[][] value, int startPositionX, int startPositionY) {
+    public AreaMap(Block[][] blocks, int startPositionX, int startPositionY) {
         this.startPositionX = startPositionX;
         this.startPositionY = startPositionY;
-        this.value = value;
+        this.blocks = blocks;
     }
 
-    public AreaType[][] getValue() {
-        return value;
+    public Block[][] getBlocks() {
+        return blocks;
     }
 
     public int getStartPositionX() {
@@ -23,6 +25,39 @@ public class AreaMap {
 
     public int getStartPositionY() {
         return startPositionY;
+    }
+
+    public void remove() {
+        for (int i = 0; i < blocks.length; i++) {
+            for (int j = 0; j < blocks[i].length; j++) {
+                Pools.free(blocks[i][j]);
+            }
+        }
+    }
+
+    public static class Block {
+
+        private AreaType type;
+        private AreaType previousType;
+
+        public Block() {
+            this.type = AreaType.NONE;
+            this.previousType = AreaType.NONE;
+        }
+
+        public Block init(AreaType type, AreaType previousType) {
+            this.type = type;
+            this.previousType = previousType;
+            return this;
+        }
+
+        public AreaType getType() {
+            return type;
+        }
+
+        public AreaType getPreviousType() {
+            return previousType;
+        }
     }
 
 }

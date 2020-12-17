@@ -13,7 +13,6 @@ import io.cucumber.actor.Balance
 import io.cucumber.actor.Health
 import io.cucumber.actor.LevelTimer
 import io.cucumber.actor.area.AreaBlock
-import io.cucumber.actor.area.AreaType
 import io.cucumber.actor.area.GameArea
 import io.cucumber.actor.menu.DefenderMenu
 import io.cucumber.actor.menu.DefenderMenuItem
@@ -203,7 +202,7 @@ class GameScreen(
                         BLOCK_SIZE,
                         block.type,
                         block.previousType,
-                        if (block.type == AreaType.NONE) level.assets.background else level.assets.block,
+                        level.assets.getAreaTexture(block.type),
                         BLOCK_ZONE_SIZE,
                         level.assets.zone
                 ))

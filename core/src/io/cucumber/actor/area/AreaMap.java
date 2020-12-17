@@ -41,8 +41,8 @@ public class AreaMap {
         private AreaType previousType;
 
         public Block() {
-            this.type = AreaType.NONE;
-            this.previousType = AreaType.NONE;
+            this.type = null;
+            this.previousType = null;
         }
 
         public Block init(AreaType type, AreaType previousType) {

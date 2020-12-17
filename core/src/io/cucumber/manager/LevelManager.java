@@ -29,8 +29,8 @@ public class LevelManager {
         }
 
         atlas = new TextureAtlas(Gdx.files.internal("atlas/game.atlas"));
-        Assets assets = new Assets(atlas, "block", "zone", "background", "menu_background",
-                "health", "health_background");
+        Assets assets = new Assets(atlas, "road", "road", "road", "road", "road", "land", "water",
+                "building", "zone", "menu_background", "health", "health_background");
 
         boolean defenderStorageInited = defenderStorage.init(atlas, assets);
         if (!defenderStorageInited) {

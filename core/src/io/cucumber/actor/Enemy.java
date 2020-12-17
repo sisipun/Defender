@@ -95,21 +95,19 @@ public class Enemy extends DynamicActor<Rectangle> {
             return;
         }
 
-        if (AreaType.NONE.equals(areaType)) {
-            health = 0;
-        } else if (AreaType.UP.equals(areaType)) {
+        if (AreaType.ROAD_UP.equals(areaType)) {
             velocity.y = speed;
             velocity.x = 0;
-        } else if (AreaType.DOWN.equals(areaType)) {
+        } else if (AreaType.ROAD_DOWN.equals(areaType)) {
             velocity.y = -speed;
             velocity.x = 0;
-        } else if (AreaType.LEFT.equals(areaType)) {
+        } else if (AreaType.ROAD_LEFT.equals(areaType)) {
             velocity.y = 0;
             velocity.x = -speed;
-        } else if (AreaType.RIGHT.equals(areaType)) {
+        } else if (AreaType.ROAD_RIGHT.equals(areaType)) {
             velocity.y = 0;
             velocity.x = speed;
-        } else if (AreaType.END.equals(areaType)) {
+        } else if (AreaType.ROAD_END.equals(areaType)) {
             velocity.y = 0;
             velocity.x = 0;
             passed = true;

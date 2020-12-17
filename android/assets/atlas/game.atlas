@@ -4,14 +4,7 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-background
-  rotate: false
-  xy: 2, 484
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-block
+building
   rotate: false
   xy: 516, 771
   size: 225, 225
@@ -77,6 +70,27 @@ health_background
 enemy_small
   rotate: false
   xy: 743, 317
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: -1
+land
+  rotate: false
+  xy: 2, 484
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+road
+  rotate: false
+  xy: 483, 90
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: -1
+water
+  rotate: false
+  xy: 710, 90
   size: 225, 225
   orig: 225, 225
   offset: 0, 0

@@ -1,10 +1,12 @@
 package io.cucumber.actor.area;
 
 public enum AreaType {
-    NONE,
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT,
-    END
+    LAND,
+    WATER,
+    BUILDING,
+    ROAD_UP,
+    ROAD_DOWN,
+    ROAD_LEFT,
+    ROAD_RIGHT,
+    ROAD_END
 }

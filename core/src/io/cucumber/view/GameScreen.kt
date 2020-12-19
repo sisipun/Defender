@@ -37,41 +37,12 @@ class GameScreen(
 
     private val areaMapGenerator: AreaMapGenerator = AreaMapGenerator()
 
-    private val gameArea: GameArea = GameArea(
-            0f,
-            0f
-    )
-    private val defenderMenu: DefenderMenu = DefenderMenu(
-            0f,
-            0f,
-            SCREEN_WIDTH,
-            MENU_HEIGHT,
-            level.assets.menuBackground,
-            level.defenderTypes
-    )
+    private val gameArea: GameArea = GameArea()
+    private val defenderMenu: DefenderMenu = DefenderMenu()
 
-    private val health: Health = Health(
-            0f,
-            MENU_HEIGHT,
-            SCREEN_WIDTH,
-            HEALTH_BAR_HEIGHT,
-            level.assets.health,
-            level.assets.healthBackground,
-            level.health
-    )
-    private val balance: Balance = Balance(
-            SCREEN_WIDTH / 64,
-            SCREEN_HEIGHT - SCREEN_HEIGHT / 16,
-            FontHelper.toFont(DEFAULT_FONT, FontParams(20, Color.WHITE)),
-            level.initialBalance
-    )
-    private val levelTimer: LevelTimer = LevelTimer(
-            SCREEN_WIDTH - SCREEN_WIDTH / 16,
-            SCREEN_HEIGHT - SCREEN_HEIGHT / 16,
-            FontHelper.toFont(DEFAULT_FONT, FontParams(20, Color.WHITE)),
-            level.timeInSeconds,
-            level.events
-    )
+    private val health: Health = Health()
+    private val balance: Balance = Balance()
+    private val levelTimer: LevelTimer = LevelTimer()
 
     init {
         gameArea.listeners.add(object : DragListener() {
@@ -202,7 +173,7 @@ class GameScreen(
                         BLOCK_SIZE,
                         block.type,
                         block.previousType,
-                        level.assets.getAreaTexture(block.type),
+                        level.assets.areaTextures[block.type],
                         BLOCK_ZONE_SIZE,
                         level.assets.zone
                 ))
@@ -222,7 +193,7 @@ class GameScreen(
                 0f,
                 MENU_HEIGHT,
                 SCREEN_WIDTH,
-                HEALTH_BAR_HEIGHT,
+                HEALTH_HEIGHT,
                 level.assets.health,
                 level.assets.healthBackground,
                 level.health
@@ -248,11 +219,16 @@ class GameScreen(
         addActor(balance)
 
         levelTimer.init(
-                SCREEN_WIDTH - SCREEN_WIDTH / 16,
-                SCREEN_HEIGHT - SCREEN_HEIGHT / 16,
-                FontHelper.toFont(DEFAULT_FONT, FontParams(20, Color.WHITE)),
+                SCREEN_WIDTH / 8,
+                SCREEN_HEIGHT - SCREEN_HEIGHT / 16 + SCREEN_HEIGHT / 64,
+                SCREEN_WIDTH - SCREEN_WIDTH / 4,
+                TIMER_HEIGHT,
+                level.assets.timer,
+                level.assets.timerBackground,
                 level.timeInSeconds,
-                level.events
+                level.events,
+                TIMER_EVENT_SIZE,
+                level.assets.timeEventTextures
         )
         levelTimer.addListener(TimeEventType.GENERATE_ENEMY) { event ->
             val enemyData = (event as GenerateEnemyTimeEvent).data

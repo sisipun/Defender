@@ -17,13 +17,17 @@ public class Bullet extends DynamicActor<Rectangle> {
         super(new RectangleBound(0, 0, 0, 0), 0f, 0f, null);
         this.power = 0;
         this.speed = 0;
+
+        this.target = null;
     }
 
     public Bullet init(float x, float y, float size, float speed, float power, TextureRegion texture) {
         super.init(new RectangleBound(x, y, size, size), 0f, 0f, texture);
         this.power = power;
         this.speed = speed;
+
         this.target = null;
+
         return this;
     }
 

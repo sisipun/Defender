@@ -39,6 +39,13 @@ menu_background
   orig: 225, 225
   offset: 0, 0
   index: -1
+timer
+  rotate: false
+  xy: 743, 771
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: -1
 defender_small
   rotate: false
   xy: 743, 544
@@ -54,6 +61,13 @@ health
   offset: 0, 0
   index: -1
 enemy
+  rotate: false
+  xy: 516, 317
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: -1
+generate_enemy
   rotate: false
   xy: 516, 317
   size: 225, 225
@@ -82,6 +96,13 @@ land
   offset: 0, 0
   index: -1
 road
+  rotate: false
+  xy: 483, 90
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: -1
+timer_background
   rotate: false
   xy: 483, 90
   size: 225, 225

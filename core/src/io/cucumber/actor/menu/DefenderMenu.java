@@ -3,6 +3,7 @@ package io.cucumber.actor.menu;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pools;
 
 import io.cucumber.actor.menu.preview.DefenderPreview;
 import io.cucumber.base.actor.simple.SimpleRectangle;
@@ -10,26 +11,12 @@ import io.cucumber.storage.defender.DefenderData;
 
 public class DefenderMenu extends Group {
 
-    public SimpleRectangle background;
+    private SimpleRectangle background;
     private Array<DefenderMenuItem> items;
 
-    public DefenderMenu(float x, float y, float width, float height, TextureRegion texture,
-                        Array<DefenderData> items) {
-        setPosition(x, y);
-        this.background = new SimpleRectangle(x, y, width, height, texture);
-        addActor(this.background);
+    public DefenderMenu() {
+        this.background = new SimpleRectangle(0f, 0f, 0f, 0f, null);
         this.items = new Array<>();
-        for (int i = 0; i < items.size; i++) {
-            DefenderMenuItem item = new DefenderMenuItem(
-                    background.getX() + i * 3 * background.getHeight() / 2,
-                    background.getY(),
-                    background.getHeight(),
-                    background.getHeight(),
-                    items.get(i)
-            );
-            this.items.add(item);
-            addActor(item);
-        }
     }
 
     public DefenderMenu init(float x, float y, float width, float height, TextureRegion texture,
@@ -40,7 +27,7 @@ public class DefenderMenu extends Group {
         this.background.init(x, y, width, height, texture);
         addActor(this.background);
         for (int i = 0; i < items.size; i++) {
-            DefenderMenuItem item = new DefenderMenuItem(
+            DefenderMenuItem item = Pools.obtain(DefenderMenuItem.class).init(
                     background.getX() + i * 3 * background.getHeight() / 2,
                     background.getY(),
                     background.getHeight(),
@@ -85,7 +72,9 @@ public class DefenderMenu extends Group {
     private void removeChildren() {
         this.background.remove();
         for (int i = 0; i < this.items.size; i++) {
-            this.items.get(i).remove();
+            DefenderMenuItem defenderMenuItem = this.items.get(i);
+            defenderMenuItem.remove();
+            Pools.free(defenderMenuItem);
         }
 
         clearChildren();

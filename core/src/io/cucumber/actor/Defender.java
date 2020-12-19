@@ -20,6 +20,7 @@ public class Defender extends StaticActor<Rectangle> {
         super(new RectangleBound(0, 0, 0, 0), null);
         this.cost = 0;
         this.highlighted = false;
+
         this.zone = null;
         this.bullet = null;
     }

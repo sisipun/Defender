@@ -15,9 +15,7 @@ public class Enemy extends DynamicActor<Rectangle> {
     private float health;
     private int cost;
     private boolean passed;
-
     private float speed;
-
     private TextureRegion healthTexture;
     private TextureRegion healthBackTexture;
 
@@ -45,6 +43,7 @@ public class Enemy extends DynamicActor<Rectangle> {
         this.speed = speed;
         this.healthTexture = healthTexture;
         this.healthBackTexture = healthBackTexture;
+
         return this;
     }
 

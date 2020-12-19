@@ -18,7 +18,7 @@ public class AreaMapGenerator {
         AreaMap.Block[][] map = new AreaMap.Block[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                int type = random.nextInt(100);
+                int type = random.nextInt(1000);
                 AreaType areaType;
                 if (type == 0) {
                     areaType = AreaType.WATER;

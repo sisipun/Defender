@@ -11,22 +11,21 @@ public class Health extends StaticActor<Rectangle> {
 
     private float maxValue;
     private float currentValue;
-    private TextureRegion healthTexture;
+    private TextureRegion texture;
 
-    public Health(float x, float y, float width, float height, TextureRegion healthTexture,
-                  TextureRegion healthBackTexture, float value) {
-        super(new RectangleBound(x, y, width, height), healthBackTexture);
-        this.healthTexture = healthTexture;
-        this.maxValue = value;
-        this.currentValue = value;
+    public Health() {
+        super(new RectangleBound(0f, 0f, 0f, 0f), null);
+        this.maxValue = 0f;
+        this.currentValue = 0f;
+        this.texture = null;
     }
 
-    public Health init(float x, float y, float width, float height, TextureRegion healthTexture,
-                       TextureRegion healthBackTexture, float value) {
-        super.init(new RectangleBound(x, y, width, height), healthBackTexture);
-        this.healthTexture = healthTexture;
+    public Health init(float x, float y, float width, float height, TextureRegion texture,
+                       TextureRegion backgroundTexture, float value) {
+        super.init(new RectangleBound(x, y, width, height), backgroundTexture);
         this.maxValue = value;
         this.currentValue = value;
+        this.texture = texture;
         return this;
     }
 
@@ -34,7 +33,7 @@ public class Health extends StaticActor<Rectangle> {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.draw(
-                healthTexture.getTexture(),
+                texture.getTexture(),
                 getX(),
                 getY(),
                 getOriginX(),
@@ -44,10 +43,10 @@ public class Health extends StaticActor<Rectangle> {
                 getScaleX(),
                 getScaleY(),
                 getRotation(),
-                healthTexture.getRegionX(),
-                healthTexture.getRegionY(),
-                healthTexture.getRegionWidth(),
-                healthTexture.getRegionHeight(),
+                texture.getRegionX(),
+                texture.getRegionY(),
+                texture.getRegionWidth(),
+                texture.getRegionHeight(),
                 false,
                 false
         );

@@ -1,5 +1,6 @@
 package io.cucumber.base.actor.base;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
@@ -10,7 +11,7 @@ public class TextLabel extends Label {
     private RectangleBound bound;
 
     public TextLabel(float x, float y, CharSequence text, BitmapFont font) {
-        super(text, new Label.LabelStyle(font, font.getColor()));
+        super(text, new Label.LabelStyle(new BitmapFont(), font == null ? new Color() : font.getColor()));
         this.bound = new RectangleBound(x, y, getPrefWidth(), getPrefHeight());
         setBounds(
                 bound.getX(),

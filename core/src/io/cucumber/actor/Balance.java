@@ -8,9 +8,9 @@ public class Balance extends TextLabel {
 
     private int value;
 
-    public Balance(float x, float y, BitmapFont font, int value) {
-        super(x, y, String.valueOf(value), font);
-        this.value = value;
+    public Balance() {
+        super(0f, 0f, "", null);
+        this.value = 0;
     }
 
     public Balance init(float x, float y, BitmapFont font, int value) {

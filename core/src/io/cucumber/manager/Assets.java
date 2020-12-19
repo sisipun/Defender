@@ -1,27 +1,35 @@
 package io.cucumber.manager;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import io.cucumber.actor.area.AreaType;
+import io.cucumber.manager.event.TimeEventType;
 
 public class Assets {
 
-    private final TextureAtlas.AtlasRegion zone;
-    private final TextureAtlas.AtlasRegion menuBackground;
-    private final TextureAtlas.AtlasRegion health;
-    private final TextureAtlas.AtlasRegion healthBackground;
-    private final Map<AreaType, TextureAtlas.AtlasRegion> areaTextures;
+    private final TextureRegion zone;
+    private final TextureRegion menuBackground;
+    private final TextureRegion health;
+    private final TextureRegion healthBackground;
+    private final TextureRegion timer;
+    private final TextureRegion timerBackground;
+    private final Map<AreaType, TextureRegion> areaTextures;
+    private final Map<TimeEventType, TextureRegion> timeEventTextures;
 
     public Assets(TextureAtlas atlas, String roadUp, String roadDown, String roadLeft,
                   String roadRight, String roadEnd, String land, String water, String building,
-                  String zone, String menuBackground, String health, String healthBackground) {
+                  String zone, String menuBackground, String health, String healthBackground,
+                  String timer, String timerBackground, String generateEnemy) {
         this.zone = atlas.findRegion(zone);
         this.menuBackground = atlas.findRegion(menuBackground);
         this.health = atlas.findRegion(health);
         this.healthBackground = atlas.findRegion(healthBackground);
+        this.timer = atlas.findRegion(timer);
+        this.timerBackground = atlas.findRegion(timerBackground);
         this.areaTextures = new HashMap<>();
         this.areaTextures.put(AreaType.ROAD_UP, atlas.findRegion(roadUp));
         this.areaTextures.put(AreaType.ROAD_DOWN, atlas.findRegion(roadDown));
@@ -31,25 +39,39 @@ public class Assets {
         this.areaTextures.put(AreaType.LAND, atlas.findRegion(land));
         this.areaTextures.put(AreaType.WATER, atlas.findRegion(water));
         this.areaTextures.put(AreaType.BUILDING, atlas.findRegion(building));
+        this.timeEventTextures = new HashMap<>();
+        this.timeEventTextures.put(TimeEventType.GENERATE_ENEMY, atlas.findRegion(generateEnemy));
     }
 
-    public TextureAtlas.AtlasRegion getZone() {
+    public TextureRegion getZone() {
         return zone;
     }
 
-    public TextureAtlas.AtlasRegion getMenuBackground() {
+    public TextureRegion getMenuBackground() {
         return menuBackground;
     }
 
-    public TextureAtlas.AtlasRegion getHealth() {
+    public TextureRegion getHealth() {
         return health;
     }
 
-    public TextureAtlas.AtlasRegion getHealthBackground() {
+    public TextureRegion getHealthBackground() {
         return healthBackground;
     }
 
-    public TextureAtlas.AtlasRegion getAreaTexture(AreaType type) {
-        return areaTextures.get(type);
+    public TextureRegion getTimer() {
+        return timer;
+    }
+
+    public TextureRegion getTimerBackground() {
+        return timerBackground;
+    }
+
+    public Map<AreaType, TextureRegion> getAreaTextures() {
+        return areaTextures;
+    }
+
+    public Map<TimeEventType, TextureRegion> getTimeEventTextures() {
+        return timeEventTextures;
     }
 }

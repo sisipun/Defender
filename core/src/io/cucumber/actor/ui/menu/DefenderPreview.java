@@ -1,8 +1,10 @@
-package io.cucumber.actor.menu.preview;
+package io.cucumber.actor.ui.menu;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Pools;
 
+import io.cucumber.actor.Zone;
 import io.cucumber.base.actor.base.StaticActor;
 import io.cucumber.base.actor.bound.RectangleBound;
 import io.cucumber.storage.defender.DefenderData;
@@ -12,18 +14,28 @@ public class DefenderPreview extends StaticActor<Rectangle> {
     private boolean available;
     private DefenderData data;
 
-    private DefenderZonePreview zone;
+    private Zone zone;
 
-    public DefenderPreview(float x, float y, DefenderData data) {
-        super(new RectangleBound(x, y, data.getSize(), data.getSize()), data.getAvailableTexture());
+    public DefenderPreview() {
+        super(new RectangleBound(0f, 0f, 0f, 0f), null);
+        this.available = false;
+        this.zone = null;
+        this.data = null;
+    }
+
+    public DefenderPreview init(float x, float y, DefenderData data) {
+        super.init(new RectangleBound(x, y, data.getSize(), data.getSize()), data.getAvailableTexture());
         this.available = true;
         this.data = data;
-        this.zone = new DefenderZonePreview(
+
+        this.zone = Pools.obtain(Zone.class).init(
                 getX() + getWidth() / 2f - data.getZoneSize() / 2f,
                 getY() + getHeight() / 2f - data.getZoneSize() / 2f,
                 data.getZoneSize(),
                 data.getZoneTexture()
         );
+
+        return this;
     }
 
     @Override
@@ -61,6 +73,12 @@ public class DefenderPreview extends StaticActor<Rectangle> {
                 alignment
         );
         super.setPosition(x, y, alignment);
+    }
+
+    @Override
+    public boolean remove() {
+        Pools.free(zone);
+        return super.remove();
     }
 
     public DefenderData getData() {

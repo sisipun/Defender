@@ -9,14 +9,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragListener
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Pools
 import io.cucumber.Game
-import io.cucumber.actor.Balance
-import io.cucumber.actor.Health
-import io.cucumber.actor.LevelTimer
 import io.cucumber.actor.area.AreaBlock
 import io.cucumber.actor.area.GameArea
-import io.cucumber.actor.menu.DefenderMenu
-import io.cucumber.actor.menu.DefenderMenuItem
-import io.cucumber.actor.menu.preview.DefenderPreview
+import io.cucumber.actor.ui.Balance
+import io.cucumber.actor.ui.Health
+import io.cucumber.actor.ui.LevelTimer
+import io.cucumber.actor.ui.menu.DefenderMenu
+import io.cucumber.actor.ui.menu.DefenderMenuItem
+import io.cucumber.actor.ui.menu.DefenderPreview
 import io.cucumber.base.helper.FontHelper
 import io.cucumber.base.helper.FontParams
 import io.cucumber.base.view.BaseScreen
@@ -69,7 +69,6 @@ class GameScreen(
                 if (Input.Keys.BACKSPACE == keycode) {
                     gameArea.defenders.forEachIndexed { i, defender ->
                         if (defender.isHighlighted) {
-                            balance.plus(defender.cost)
                             gameArea.defenders.removeIndex(i)
                             defender.remove()
                         }
@@ -100,7 +99,7 @@ class GameScreen(
                     return null
                 }
 
-                val defender = DefenderPreview(
+                val defender = Pools.obtain(DefenderPreview::class.java).init(
                         x,
                         y,
                         itemDefender.value
@@ -116,6 +115,7 @@ class GameScreen(
                                   payload: DragAndDrop.Payload?, target: DragAndDrop.Target?) {
                 val defender = payload?.dragActor as DefenderPreview? ?: return
                 defender.remove()
+                Pools.free(defender)
             }
         })
         defenderMenuDragAndDrop.addTarget(object : DragAndDrop.Target(gameArea) {
@@ -171,9 +171,8 @@ class GameScreen(
                         rowIndex * BLOCK_SIZE,
                         typeIndex * BLOCK_SIZE + GAME_UI_HEIGHT,
                         BLOCK_SIZE,
-                        block.type,
-                        block.previousType,
-                        level.assets.areaTextures[block.type],
+                        block,
+                        level.assets.areaTextures[block],
                         BLOCK_ZONE_SIZE,
                         level.assets.zone
                 ))
@@ -257,7 +256,6 @@ class GameScreen(
                 }
             }
             if (enemy.isDead) {
-                balance.plus(enemy.cost)
                 gameArea.enemies.removeIndex(i)
                 enemy.remove()
             }

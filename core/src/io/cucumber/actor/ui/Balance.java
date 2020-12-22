@@ -1,4 +1,4 @@
-package io.cucumber.actor;
+package io.cucumber.actor.ui;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 

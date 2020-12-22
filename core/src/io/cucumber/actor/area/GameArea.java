@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Pools;
 
 import io.cucumber.actor.Defender;
 import io.cucumber.actor.Enemy;
-import io.cucumber.actor.menu.preview.DefenderPreview;
+import io.cucumber.actor.ui.menu.DefenderPreview;
 import io.cucumber.storage.defender.DefenderData;
 import io.cucumber.storage.enemy.EnemyData;
 

@@ -20,24 +20,13 @@ public class AreaBlock extends StaticActor<Rectangle> {
         this.zone = null;
     }
 
-    public AreaBlock init(float x, float y, float size, AreaType type, AreaType previousType,
-                     TextureRegion texture, float zoneSize, TextureRegion zoneTexture) {
+    public AreaBlock init(float x, float y, float size, AreaType type, TextureRegion texture,
+                          float zoneSize, TextureRegion zoneTexture) {
         super.init(new RectangleBound(x, y, size, size), texture);
         this.type = type;
-        float zoneX = getX() + getWidth() / 2f - zoneSize / 2f;
-        float zoneY = getY() + getWidth() / 2f - zoneSize / 2f;
-        if (AreaType.ROAD_LEFT.equals(previousType)) {
-            zoneX = getX() - zoneSize / 2f;
-        } else if (AreaType.ROAD_RIGHT.equals(previousType)) {
-            zoneX = getX() + getWidth() - zoneSize / 2f;
-        } else if (AreaType.ROAD_UP.equals(previousType)) {
-            zoneY = getY() + getHeight() - zoneSize / 2f;
-        } else if (AreaType.ROAD_DOWN.equals(previousType)) {
-            zoneY = getY() - zoneSize / 2f;
-        }
         this.zone = Pools.obtain(Zone.class).init(
-                zoneX,
-                zoneY,
+                getX() + getWidth() / 2f - zoneSize / 2f,
+                getY() + getWidth() / 2f - zoneSize / 2f,
                 zoneSize,
                 zoneTexture
         );

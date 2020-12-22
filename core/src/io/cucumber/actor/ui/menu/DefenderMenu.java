@@ -1,11 +1,10 @@
-package io.cucumber.actor.menu;
+package io.cucumber.actor.ui.menu;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
 
-import io.cucumber.actor.menu.preview.DefenderPreview;
 import io.cucumber.base.actor.simple.SimpleRectangle;
 import io.cucumber.storage.defender.DefenderData;
 

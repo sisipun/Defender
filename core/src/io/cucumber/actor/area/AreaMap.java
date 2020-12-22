@@ -7,15 +7,15 @@ public class AreaMap {
     private final int startPositionX;
     private final int startPositionY;
 
-    private final Block[][] blocks;
+    private final AreaType [][] blocks;
 
-    public AreaMap(Block[][] blocks, int startPositionX, int startPositionY) {
+    public AreaMap(AreaType [][] blocks, int startPositionX, int startPositionY) {
         this.startPositionX = startPositionX;
         this.startPositionY = startPositionY;
         this.blocks = blocks;
     }
 
-    public Block[][] getBlocks() {
+    public AreaType[][] getBlocks() {
         return blocks;
     }
 
@@ -28,36 +28,10 @@ public class AreaMap {
     }
 
     public void remove() {
-        for (int i = 0; i < blocks.length; i++) {
-            for (int j = 0; j < blocks[i].length; j++) {
-                Pools.free(blocks[i][j]);
+        for (AreaType[] block : blocks) {
+            for (AreaType value : block) {
+                Pools.free(value);
             }
         }
     }
-
-    public static class Block {
-
-        private AreaType type;
-        private AreaType previousType;
-
-        public Block() {
-            this.type = null;
-            this.previousType = null;
-        }
-
-        public Block init(AreaType type, AreaType previousType) {
-            this.type = type;
-            this.previousType = previousType;
-            return this;
-        }
-
-        public AreaType getType() {
-            return type;
-        }
-
-        public AreaType getPreviousType() {
-            return previousType;
-        }
-    }
-
 }

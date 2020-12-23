@@ -22,6 +22,7 @@ import io.cucumber.base.helper.FontParams
 import io.cucumber.base.view.BaseScreen
 import io.cucumber.manager.Level
 import io.cucumber.manager.event.GenerateEnemyTimeEvent
+import io.cucumber.manager.event.IncreaseBalanceTimeEvent
 import io.cucumber.manager.event.TimeEventType
 import io.cucumber.utils.constants.Constants.*
 import io.cucumber.utils.generator.AreaMapGenerator
@@ -236,6 +237,10 @@ class GameScreen(
                     areaMap.startPositionY * BLOCK_SIZE + GAME_UI_HEIGHT,
                     enemyData
             )
+        }
+        levelTimer.addListener(TimeEventType.INCREASE_BALANCE) { event ->
+            val value = (event as IncreaseBalanceTimeEvent).value
+            balance.plus(value)
         }
         addActor(levelTimer)
 

@@ -1,6 +1,6 @@
 
 game.png
-size: 1024,1024
+size: 2048,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -62,28 +62,35 @@ health
   index: -1
 enemy
   rotate: false
-  xy: 516, 317
+  xy: 970, 771
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 generate_enemy
   rotate: false
-  xy: 516, 317
+  xy: 970, 771
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 health_background
   rotate: false
-  xy: 516, 317
+  xy: 970, 771
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 enemy_small
   rotate: false
-  xy: 743, 317
+  xy: 970, 544
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: -1
+increase_balance
+  rotate: false
+  xy: 1197, 771
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
@@ -97,21 +104,21 @@ land
   index: -1
 road
   rotate: false
-  xy: 483, 90
+  xy: 1197, 544
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 timer_background
   rotate: false
-  xy: 483, 90
+  xy: 1197, 544
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 water
   rotate: false
-  xy: 710, 90
+  xy: 1424, 771
   size: 225, 225
   orig: 225, 225
   offset: 0, 0

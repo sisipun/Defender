@@ -23,7 +23,7 @@ public class Assets {
     public Assets(TextureAtlas atlas, String roadUp, String roadDown, String roadLeft,
                   String roadRight, String roadEnd, String land, String water, String building,
                   String zone, String menuBackground, String health, String healthBackground,
-                  String timer, String timerBackground, String generateEnemy) {
+                  String timer, String timerBackground, String generateEnemy, String increaseBalance) {
         this.zone = atlas.findRegion(zone);
         this.menuBackground = atlas.findRegion(menuBackground);
         this.health = atlas.findRegion(health);
@@ -41,6 +41,7 @@ public class Assets {
         this.areaTextures.put(AreaType.BUILDING, atlas.findRegion(building));
         this.timeEventTextures = new HashMap<>();
         this.timeEventTextures.put(TimeEventType.GENERATE_ENEMY, atlas.findRegion(generateEnemy));
+        this.timeEventTextures.put(TimeEventType.INCREASE_BALANCE, atlas.findRegion(increaseBalance));
     }
 
     public TextureRegion getZone() {

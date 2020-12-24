@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
+import java.util.Random;
+
 import io.cucumber.actor.area.AreaType;
 import io.cucumber.base.actor.base.DynamicActor;
 import io.cucumber.base.actor.bound.RectangleBound;
@@ -19,6 +21,8 @@ public class Enemy extends DynamicActor<Rectangle> {
     private TextureRegion healthTexture;
     private TextureRegion healthBackTexture;
 
+    private Random random;
+
     public Enemy() {
         super(new RectangleBound(0, 0, 0, 0), 0, 0, null);
         this.power = 0;
@@ -29,6 +33,7 @@ public class Enemy extends DynamicActor<Rectangle> {
         this.speed = 0;
         this.healthTexture = null;
         this.healthBackTexture = null;
+        this.random = null;
     }
 
     public Enemy init(float x, float y, float size, float speed, float power, float health,
@@ -43,6 +48,7 @@ public class Enemy extends DynamicActor<Rectangle> {
         this.speed = speed;
         this.healthTexture = healthTexture;
         this.healthBackTexture = healthBackTexture;
+        this.random = new Random();
 
         return this;
     }
@@ -106,6 +112,14 @@ public class Enemy extends DynamicActor<Rectangle> {
         } else if (AreaType.ROAD_RIGHT.equals(areaType)) {
             velocity.y = 0;
             velocity.x = speed;
+        } else if (AreaType.ROAD_HORIZONTAL_RAND.equals(areaType)) {
+            velocity.y = 0;
+            int direction = random.nextInt(2);
+            if (direction == 0) {
+                velocity.x = -speed;
+            } else {
+                velocity.x = speed;
+            }
         } else if (AreaType.ROAD_END.equals(areaType)) {
             velocity.y = 0;
             velocity.x = 0;

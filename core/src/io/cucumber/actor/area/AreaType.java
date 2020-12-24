@@ -8,5 +8,6 @@ public enum AreaType {
     ROAD_DOWN,
     ROAD_LEFT,
     ROAD_RIGHT,
+    ROAD_HORIZONTAL_RAND,
     ROAD_END
 }

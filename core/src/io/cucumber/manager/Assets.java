@@ -21,9 +21,10 @@ public class Assets {
     private final Map<TimeEventType, TextureRegion> timeEventTextures;
 
     public Assets(TextureAtlas atlas, String roadUp, String roadDown, String roadLeft,
-                  String roadRight, String roadEnd, String land, String water, String building,
-                  String zone, String menuBackground, String health, String healthBackground,
-                  String timer, String timerBackground, String generateEnemy, String increaseBalance) {
+                  String roadRight, String roadHorizontalRandom, String roadEnd, String land,
+                  String water, String building, String zone, String menuBackground, String health,
+                  String healthBackground, String timer, String timerBackground,
+                  String generateEnemy, String increaseBalance) {
         this.zone = atlas.findRegion(zone);
         this.menuBackground = atlas.findRegion(menuBackground);
         this.health = atlas.findRegion(health);
@@ -35,6 +36,7 @@ public class Assets {
         this.areaTextures.put(AreaType.ROAD_DOWN, atlas.findRegion(roadDown));
         this.areaTextures.put(AreaType.ROAD_LEFT, atlas.findRegion(roadLeft));
         this.areaTextures.put(AreaType.ROAD_RIGHT, atlas.findRegion(roadRight));
+        this.areaTextures.put(AreaType.ROAD_HORIZONTAL_RAND, atlas.findRegion(roadHorizontalRandom));
         this.areaTextures.put(AreaType.ROAD_END, atlas.findRegion(roadEnd));
         this.areaTextures.put(AreaType.LAND, atlas.findRegion(land));
         this.areaTextures.put(AreaType.WATER, atlas.findRegion(water));

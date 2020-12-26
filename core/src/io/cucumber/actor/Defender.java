@@ -10,7 +10,6 @@ import io.cucumber.base.actor.bound.RectangleBound;
 
 public class Defender extends StaticActor<Rectangle> {
 
-    private int cost;
     private boolean highlighted;
 
     private Zone zone;
@@ -18,19 +17,17 @@ public class Defender extends StaticActor<Rectangle> {
 
     public Defender() {
         super(new RectangleBound(0, 0, 0, 0), null);
-        this.cost = 0;
         this.highlighted = false;
 
         this.zone = null;
         this.bullet = null;
     }
 
-    public Defender init(float x, float y, float size, int cost, TextureRegion texture,
+    public Defender init(float x, float y, float size, TextureRegion texture,
                          float zoneSize, TextureRegion zoneTexture, float bulletSize,
                          float bulletSpeed, float bulletPower, TextureRegion bulletTexture) {
         super.init(new RectangleBound(x, y, size, size), texture);
 
-        this.cost = cost;
         this.highlighted = false;
 
         this.zone = Pools.obtain(Zone.class).init(
@@ -91,10 +88,6 @@ public class Defender extends StaticActor<Rectangle> {
 
     public boolean isCollidesZone(Enemy enemy) {
         return zone.isCollides(enemy);
-    }
-
-    public int getCost() {
-        return cost;
     }
 
     public void setHighlighted(boolean highlighted) {

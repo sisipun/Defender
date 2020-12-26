@@ -1,5 +1,6 @@
 package io.cucumber.actor.area;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pools;
@@ -31,6 +32,14 @@ public class AreaBlock extends StaticActor<Rectangle> {
                 zoneTexture
         );
         return this;
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        if (zone != null) {
+            zone.draw(batch, parentAlpha);
+        }
     }
 
     @Override

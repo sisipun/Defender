@@ -78,7 +78,6 @@ public class GameArea extends Group {
                 x,
                 y,
                 data.getSize(),
-                data.getCost(),
                 data.getAvailableTexture(),
                 data.getZoneSize(),
                 data.getZoneTexture(),

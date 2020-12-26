@@ -39,7 +39,7 @@ public class Enemy extends DynamicActor<Rectangle> {
     public Enemy init(float x, float y, float size, float speed, float power, float health,
                       int cost, TextureRegion texture, TextureRegion healthTexture,
                       TextureRegion healthBackTexture) {
-        super.init(new RectangleBound(x, y, size, size), speed, speed, texture);
+        super.init(new RectangleBound(x, y, size, size), 0f, 0f, texture);
         this.power = power;
         this.totalHealth = health;
         this.health = health;
@@ -100,19 +100,19 @@ public class Enemy extends DynamicActor<Rectangle> {
             return;
         }
 
-        if (AreaType.ROAD_UP.equals(areaType)) {
+        if (AreaType.ROAD_UP.equals(areaType) && velocity.y == 0) {
             velocity.y = speed;
             velocity.x = 0;
-        } else if (AreaType.ROAD_DOWN.equals(areaType)) {
+        } else if (AreaType.ROAD_DOWN.equals(areaType) && velocity.y == 0) {
             velocity.y = -speed;
             velocity.x = 0;
-        } else if (AreaType.ROAD_LEFT.equals(areaType)) {
+        } else if (AreaType.ROAD_LEFT.equals(areaType) && velocity.x == 0) {
             velocity.y = 0;
             velocity.x = -speed;
-        } else if (AreaType.ROAD_RIGHT.equals(areaType)) {
+        } else if (AreaType.ROAD_RIGHT.equals(areaType) && velocity.x == 0) {
             velocity.y = 0;
             velocity.x = speed;
-        } else if (AreaType.ROAD_HORIZONTAL_RAND.equals(areaType)) {
+        } else if (AreaType.ROAD_HORIZONTAL_RAND.equals(areaType) && velocity.x == 0) {
             velocity.y = 0;
             int direction = random.nextInt(2);
             if (direction == 0) {

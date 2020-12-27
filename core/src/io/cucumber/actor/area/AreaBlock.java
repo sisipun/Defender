@@ -12,7 +12,7 @@ import io.cucumber.base.actor.bound.RectangleBound;
 
 public class AreaBlock extends StaticActor<Rectangle> {
 
-    private AreaType type;
+    private AreaBlockType type;
     private Zone zone;
 
     public AreaBlock() {
@@ -21,7 +21,7 @@ public class AreaBlock extends StaticActor<Rectangle> {
         this.zone = null;
     }
 
-    public AreaBlock init(float x, float y, float size, AreaType type, TextureRegion texture,
+    public AreaBlock init(float x, float y, float size, AreaBlockType type, TextureRegion texture,
                           float zoneSize, TextureRegion zoneTexture) {
         super.init(new RectangleBound(x, y, size, size), texture);
         this.type = type;
@@ -52,7 +52,7 @@ public class AreaBlock extends StaticActor<Rectangle> {
         return zone.isCollides(enemy);
     }
 
-    public AreaType getType() {
+    public AreaBlockType getType() {
         return type;
     }
 }

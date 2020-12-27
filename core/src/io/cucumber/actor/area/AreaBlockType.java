@@ -1,6 +1,6 @@
 package io.cucumber.actor.area;
 
-public enum AreaType {
+public enum AreaBlockType {
     LAND,
     WATER,
     BUILDING,

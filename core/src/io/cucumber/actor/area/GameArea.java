@@ -94,7 +94,7 @@ public class GameArea extends Group {
     public boolean isCollides(DefenderPreview preview) {
         for (int i = 0; i < area.size; i++) {
             AreaBlock block = area.get(i);
-            if (block.getType() != AreaType.LAND && block.isCollides(preview)) {
+            if (block.getType() != AreaBlockType.LAND && block.isCollides(preview)) {
                 return true;
             }
         }

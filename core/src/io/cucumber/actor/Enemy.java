@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.util.Random;
 
-import io.cucumber.actor.area.AreaType;
+import io.cucumber.actor.area.AreaBlockType;
 import io.cucumber.base.actor.base.DynamicActor;
 import io.cucumber.base.actor.bound.RectangleBound;
 
@@ -95,24 +95,24 @@ public class Enemy extends DynamicActor<Rectangle> {
         );
     }
 
-    public void changeDirection(AreaType areaType) {
+    public void changeDirection(AreaBlockType areaBlockType) {
         if (passed) {
             return;
         }
 
-        if (AreaType.ROAD_UP.equals(areaType) && velocity.y == 0) {
+        if (AreaBlockType.ROAD_UP.equals(areaBlockType) && velocity.y == 0) {
             velocity.y = speed;
             velocity.x = 0;
-        } else if (AreaType.ROAD_DOWN.equals(areaType) && velocity.y == 0) {
+        } else if (AreaBlockType.ROAD_DOWN.equals(areaBlockType) && velocity.y == 0) {
             velocity.y = -speed;
             velocity.x = 0;
-        } else if (AreaType.ROAD_LEFT.equals(areaType) && velocity.x == 0) {
+        } else if (AreaBlockType.ROAD_LEFT.equals(areaBlockType) && velocity.x == 0) {
             velocity.y = 0;
             velocity.x = -speed;
-        } else if (AreaType.ROAD_RIGHT.equals(areaType) && velocity.x == 0) {
+        } else if (AreaBlockType.ROAD_RIGHT.equals(areaBlockType) && velocity.x == 0) {
             velocity.y = 0;
             velocity.x = speed;
-        } else if (AreaType.ROAD_HORIZONTAL_RAND.equals(areaType) && velocity.x == 0) {
+        } else if (AreaBlockType.ROAD_HORIZONTAL_RAND.equals(areaBlockType) && velocity.x == 0) {
             velocity.y = 0;
             int direction = random.nextInt(2);
             if (direction == 0) {
@@ -120,7 +120,7 @@ public class Enemy extends DynamicActor<Rectangle> {
             } else {
                 velocity.x = speed;
             }
-        } else if (AreaType.ROAD_END.equals(areaType)) {
+        } else if (AreaBlockType.ROAD_END.equals(areaBlockType)) {
             velocity.y = 0;
             velocity.x = 0;
             passed = true;

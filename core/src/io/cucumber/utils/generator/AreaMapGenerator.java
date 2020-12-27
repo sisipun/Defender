@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import io.cucumber.actor.area.AreaMap;
-import io.cucumber.actor.area.AreaType;
+import io.cucumber.actor.area.AreaBlockType;
 
 public class AreaMapGenerator {
 
@@ -18,10 +18,10 @@ public class AreaMapGenerator {
 
     public AreaMap generate(int width, int height, int border) {
         if (width <= 0 || height <= 0) {
-            return new AreaMap(new AreaType[0][0], 0, 0);
+            return new AreaMap(new AreaBlockType[0][0], 0, 0);
         }
 
-        AreaType[][] map = new AreaType[width][height];
+        AreaBlockType[][] map = new AreaBlockType[width][height];
         Array<Fork> forks = new Array<>();
         int startPositionX = random.nextInt(width);
         int startPositionY = height - border - 1;
@@ -33,47 +33,47 @@ public class AreaMapGenerator {
             for (int j = 0; j < height; j++) {
                 int type = random.nextInt(1000);
                 if (type == 0) {
-                    map[i][j] = AreaType.WATER;
+                    map[i][j] = AreaBlockType.WATER;
                 } else if (type == 1) {
-                    map[i][j] = AreaType.BUILDING;
+                    map[i][j] = AreaBlockType.BUILDING;
                 } else {
-                    map[i][j] = AreaType.LAND;
+                    map[i][j] = AreaBlockType.LAND;
                 }
             }
         }
 
         // Create main road
         while (currentPositionY - border - 1 > 0) {
-            AreaType direction = random.nextInt(2) == 0 ? AreaType.ROAD_LEFT : AreaType.ROAD_RIGHT;
-            int size = random.nextInt(AreaType.ROAD_LEFT.equals(direction) ? currentPositionX : width - currentPositionX);
+            AreaBlockType direction = random.nextInt(2) == 0 ? AreaBlockType.ROAD_LEFT : AreaBlockType.ROAD_RIGHT;
+            int size = random.nextInt(AreaBlockType.ROAD_LEFT.equals(direction) ? currentPositionX : width - currentPositionX);
             if (random.nextInt(height / 4) == 0 && size > 0) {
                 forks.add(new Fork(
                         currentPositionX,
                         currentPositionY,
-                        direction.equals(AreaType.ROAD_LEFT) ? AreaType.ROAD_RIGHT : AreaType.ROAD_LEFT)
+                        direction.equals(AreaBlockType.ROAD_LEFT) ? AreaBlockType.ROAD_RIGHT : AreaBlockType.ROAD_LEFT)
                 );
             }
             for (int i = 0; i < size; i++) {
                 map[currentPositionX][currentPositionY] = direction;
-                if (AreaType.ROAD_LEFT.equals(direction)) {
+                if (AreaBlockType.ROAD_LEFT.equals(direction)) {
                     currentPositionX--;
                 } else {
                     currentPositionX++;
                 }
             }
 
-            map[currentPositionX][currentPositionY] = AreaType.ROAD_DOWN;
+            map[currentPositionX][currentPositionY] = AreaBlockType.ROAD_DOWN;
             currentPositionY--;
-            map[currentPositionX][currentPositionY] = AreaType.ROAD_DOWN;
+            map[currentPositionX][currentPositionY] = AreaBlockType.ROAD_DOWN;
             currentPositionY--;
         }
 
         while (currentPositionY - border > 0) {
-            map[currentPositionX][currentPositionY] = AreaType.ROAD_DOWN;
+            map[currentPositionX][currentPositionY] = AreaBlockType.ROAD_DOWN;
             currentPositionY--;
         }
 
-        map[currentPositionX][currentPositionY] = AreaType.ROAD_END;
+        map[currentPositionX][currentPositionY] = AreaBlockType.ROAD_END;
 
         // Create forks
         for (int i = 0; i < forks.size; i++) {
@@ -86,13 +86,13 @@ public class AreaMapGenerator {
     }
 
     private void createHorizontalFork(int currentX, int currentY, int endX, int endY,
-                                      AreaType direction, AreaType[][] map, int width) {
+                                      AreaBlockType direction, AreaBlockType[][] map, int width) {
         // Check horizontal fork conditions
-        if (!Arrays.asList(AreaType.ROAD_LEFT, AreaType.ROAD_RIGHT).contains(direction)) {
+        if (!Arrays.asList(AreaBlockType.ROAD_LEFT, AreaBlockType.ROAD_RIGHT).contains(direction)) {
             return;
         }
-        if ((AreaType.ROAD_LEFT.equals(direction) && currentX <= 0) ||
-                (AreaType.ROAD_RIGHT.equals(direction) && currentX >= width)) {
+        if ((AreaBlockType.ROAD_LEFT.equals(direction) && currentX <= 0) ||
+                (AreaBlockType.ROAD_RIGHT.equals(direction) && currentX >= width)) {
             return;
         }
         if (currentY - 1 <= endY) {
@@ -100,34 +100,34 @@ public class AreaMapGenerator {
         }
 
         // Initialize fork
-        map[currentX][currentY] = AreaType.ROAD_HORIZONTAL_RAND;
-        if (AreaType.ROAD_LEFT.equals(direction)) {
+        map[currentX][currentY] = AreaBlockType.ROAD_HORIZONTAL_RAND;
+        if (AreaBlockType.ROAD_LEFT.equals(direction)) {
             currentX--;
-        } else if (AreaType.ROAD_RIGHT.equals(direction)) {
+        } else if (AreaBlockType.ROAD_RIGHT.equals(direction)) {
             currentX++;
         }
 
         while (currentY - 1 > endY) {
-            int size = random.nextInt(AreaType.ROAD_LEFT.equals(direction) ? currentX : width - currentX);
+            int size = random.nextInt(AreaBlockType.ROAD_LEFT.equals(direction) ? currentX : width - currentX);
             for (int i = 0; i < size; i++) {
                 if (isRoad(map[currentX][currentY])) {
                     return;
                 }
                 map[currentX][currentY] = direction;
-                if (AreaType.ROAD_LEFT.equals(direction)) {
+                if (AreaBlockType.ROAD_LEFT.equals(direction)) {
                     currentX--;
                 } else {
                     currentX++;
                 }
             }
-            direction = random.nextInt(2) == 0 ? AreaType.ROAD_LEFT : AreaType.ROAD_RIGHT;
+            direction = random.nextInt(2) == 0 ? AreaBlockType.ROAD_LEFT : AreaBlockType.ROAD_RIGHT;
 
-            map[currentX][currentY] = AreaType.ROAD_DOWN;
+            map[currentX][currentY] = AreaBlockType.ROAD_DOWN;
             currentY--;
             if (isRoad(map[currentX][currentY])) {
                 return;
             }
-            map[currentX][currentY] = AreaType.ROAD_DOWN;
+            map[currentX][currentY] = AreaBlockType.ROAD_DOWN;
             currentY--;
             if (isRoad(map[currentX][currentY])) {
                 return;
@@ -135,7 +135,7 @@ public class AreaMapGenerator {
         }
 
         while (currentY > endY) {
-            map[currentX][currentY] = AreaType.ROAD_DOWN;
+            map[currentX][currentY] = AreaBlockType.ROAD_DOWN;
             currentY--;
             if (isRoad(map[currentX][currentY])) {
                 return;
@@ -143,32 +143,32 @@ public class AreaMapGenerator {
         }
 
         while (currentX > endX) {
-            map[currentX][currentY] = AreaType.ROAD_LEFT;
+            map[currentX][currentY] = AreaBlockType.ROAD_LEFT;
             currentX--;
         }
 
         while (currentX < endX) {
-            map[currentX][currentY] = AreaType.ROAD_RIGHT;
+            map[currentX][currentY] = AreaBlockType.ROAD_RIGHT;
             currentX++;
         }
     }
 
-    private boolean isRoad(AreaType areaType) {
+    private boolean isRoad(AreaBlockType areaBlockType) {
         return Arrays.asList(
-                AreaType.ROAD_UP,
-                AreaType.ROAD_DOWN,
-                AreaType.ROAD_LEFT,
-                AreaType.ROAD_RIGHT,
-                AreaType.ROAD_HORIZONTAL_RAND,
-                AreaType.ROAD_END).contains(areaType);
+                AreaBlockType.ROAD_UP,
+                AreaBlockType.ROAD_DOWN,
+                AreaBlockType.ROAD_LEFT,
+                AreaBlockType.ROAD_RIGHT,
+                AreaBlockType.ROAD_HORIZONTAL_RAND,
+                AreaBlockType.ROAD_END).contains(areaBlockType);
     }
 
     static class Fork {
         private int x;
         private int y;
-        private AreaType direction;
+        private AreaBlockType direction;
 
-        public Fork(int x, int y, AreaType direction) {
+        public Fork(int x, int y, AreaBlockType direction) {
             this.x = x;
             this.y = y;
             this.direction = direction;

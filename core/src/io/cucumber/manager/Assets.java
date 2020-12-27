@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.cucumber.actor.area.AreaType;
+import io.cucumber.actor.area.AreaBlockType;
 import io.cucumber.manager.event.TimeEventType;
 
 public class Assets {
@@ -17,7 +17,7 @@ public class Assets {
     private final TextureRegion healthBackground;
     private final TextureRegion timer;
     private final TextureRegion timerBackground;
-    private final Map<AreaType, TextureRegion> areaTextures;
+    private final Map<AreaBlockType, TextureRegion> areaTextures;
     private final Map<TimeEventType, TextureRegion> timeEventTextures;
 
     public Assets(TextureAtlas atlas, String roadUp, String roadDown, String roadLeft,
@@ -32,15 +32,15 @@ public class Assets {
         this.timer = atlas.findRegion(timer);
         this.timerBackground = atlas.findRegion(timerBackground);
         this.areaTextures = new HashMap<>();
-        this.areaTextures.put(AreaType.ROAD_UP, atlas.findRegion(roadUp));
-        this.areaTextures.put(AreaType.ROAD_DOWN, atlas.findRegion(roadDown));
-        this.areaTextures.put(AreaType.ROAD_LEFT, atlas.findRegion(roadLeft));
-        this.areaTextures.put(AreaType.ROAD_RIGHT, atlas.findRegion(roadRight));
-        this.areaTextures.put(AreaType.ROAD_HORIZONTAL_RAND, atlas.findRegion(roadHorizontalRandom));
-        this.areaTextures.put(AreaType.ROAD_END, atlas.findRegion(roadEnd));
-        this.areaTextures.put(AreaType.LAND, atlas.findRegion(land));
-        this.areaTextures.put(AreaType.WATER, atlas.findRegion(water));
-        this.areaTextures.put(AreaType.BUILDING, atlas.findRegion(building));
+        this.areaTextures.put(AreaBlockType.ROAD_UP, atlas.findRegion(roadUp));
+        this.areaTextures.put(AreaBlockType.ROAD_DOWN, atlas.findRegion(roadDown));
+        this.areaTextures.put(AreaBlockType.ROAD_LEFT, atlas.findRegion(roadLeft));
+        this.areaTextures.put(AreaBlockType.ROAD_RIGHT, atlas.findRegion(roadRight));
+        this.areaTextures.put(AreaBlockType.ROAD_HORIZONTAL_RAND, atlas.findRegion(roadHorizontalRandom));
+        this.areaTextures.put(AreaBlockType.ROAD_END, atlas.findRegion(roadEnd));
+        this.areaTextures.put(AreaBlockType.LAND, atlas.findRegion(land));
+        this.areaTextures.put(AreaBlockType.WATER, atlas.findRegion(water));
+        this.areaTextures.put(AreaBlockType.BUILDING, atlas.findRegion(building));
         this.timeEventTextures = new HashMap<>();
         this.timeEventTextures.put(TimeEventType.GENERATE_ENEMY, atlas.findRegion(generateEnemy));
         this.timeEventTextures.put(TimeEventType.INCREASE_BALANCE, atlas.findRegion(increaseBalance));
@@ -70,7 +70,7 @@ public class Assets {
         return timerBackground;
     }
 
-    public Map<AreaType, TextureRegion> getAreaTextures() {
+    public Map<AreaBlockType, TextureRegion> getAreaTextures() {
         return areaTextures;
     }
 

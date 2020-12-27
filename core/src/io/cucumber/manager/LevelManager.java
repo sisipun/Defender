@@ -34,13 +34,7 @@ public class LevelManager {
                 "water", "building", "zone", "menu_background", "health", "health_background",
                 "timer", "timer_background", "generate_enemy", "increase_balance");
 
-        boolean defenderStorageInited = defenderStorage.init(atlas, assets);
-        if (!defenderStorageInited) {
-            return false;
-        }
-
-        boolean enemyStorageInited = enemyStorage.init(atlas, assets);
-        if (!enemyStorageInited) {
+        if (!defenderStorage.init(atlas, assets) || !enemyStorage.init(atlas, assets)) {
             return false;
         }
 
@@ -64,6 +58,7 @@ public class LevelManager {
                         )
                 )
         );
+
         return true;
     }
 

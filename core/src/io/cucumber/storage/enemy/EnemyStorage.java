@@ -7,11 +7,9 @@ import java.util.Map;
 
 import io.cucumber.manager.Assets;
 
-import static io.cucumber.utils.constants.Constants.ENEMY_COST;
 import static io.cucumber.utils.constants.Constants.ENEMY_HEALTH;
 import static io.cucumber.utils.constants.Constants.ENEMY_POWER;
 import static io.cucumber.utils.constants.Constants.ENEMY_SIZE;
-import static io.cucumber.utils.constants.Constants.ENEMY_SMALL_COST;
 import static io.cucumber.utils.constants.Constants.ENEMY_SMALL_HEALTH;
 import static io.cucumber.utils.constants.Constants.ENEMY_SMALL_POWER;
 import static io.cucumber.utils.constants.Constants.ENEMY_SMALL_SIZE;
@@ -32,7 +30,6 @@ public class EnemyStorage {
                 ENEMY_POWER,
                 ENEMY_HEALTH,
                 ENEMY_SPEED,
-                ENEMY_COST,
                 atlas.findRegion("enemy"),
                 assets.getHealth(),
                 assets.getHealthBackground()
@@ -42,7 +39,6 @@ public class EnemyStorage {
                 ENEMY_SMALL_POWER,
                 ENEMY_SMALL_HEALTH,
                 ENEMY_SMALL_SPEED,
-                ENEMY_SMALL_COST,
                 atlas.findRegion("enemy_small"),
                 assets.getHealth(),
                 assets.getHealthBackground()

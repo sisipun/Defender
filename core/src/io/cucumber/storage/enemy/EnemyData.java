@@ -8,20 +8,18 @@ public class EnemyData {
     private final float power;
     private final float health;
     private final float speed;
-    private final int cost;
 
     private final TextureRegion texture;
     private TextureRegion healthTexture;
     private TextureRegion healthBackTexture;
 
     public EnemyData(float size, float power, float health, float velocity,
-                     int cost, TextureRegion texture, TextureRegion healthTexture,
+                     TextureRegion texture, TextureRegion healthTexture,
                      TextureRegion healthBackTexture) {
         this.size = size;
         this.power = power;
         this.health = health;
         this.speed = velocity;
-        this.cost = cost;
         this.texture = texture;
         this.healthTexture = healthTexture;
         this.healthBackTexture = healthBackTexture;
@@ -41,10 +39,6 @@ public class EnemyData {
 
     public float getSpeed() {
         return speed;
-    }
-
-    public int getCost() {
-        return cost;
     }
 
     public TextureRegion getTexture() {

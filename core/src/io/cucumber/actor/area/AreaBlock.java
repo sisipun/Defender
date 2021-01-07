@@ -9,6 +9,7 @@ import io.cucumber.actor.Enemy;
 import io.cucumber.actor.Zone;
 import io.cucumber.base.actor.base.StaticActor;
 import io.cucumber.base.actor.bound.RectangleBound;
+import io.cucumber.utils.generator.AreaBlockType;
 
 public class AreaBlock extends StaticActor<Rectangle> {
 

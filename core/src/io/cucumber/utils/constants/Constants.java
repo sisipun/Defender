@@ -31,7 +31,6 @@ public class Constants {
     public static final float ENEMY_SPEED = 100;
     public static final float ENEMY_HEALTH = 20;
     public static final float ENEMY_POWER = 10;
-    public static final int ENEMY_COST = 50;
 
     public static final float ENEMY_SMALL_SIZE = 25;
     public static final float ENEMY_SMALL_SPEED = 150;

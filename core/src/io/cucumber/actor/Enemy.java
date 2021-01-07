@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.util.Random;
 
-import io.cucumber.actor.area.AreaBlockType;
+import io.cucumber.utils.generator.AreaBlockType;
 import io.cucumber.base.actor.base.DynamicActor;
 import io.cucumber.base.actor.bound.RectangleBound;
 
@@ -15,7 +15,6 @@ public class Enemy extends DynamicActor<Rectangle> {
     private float power;
     private float totalHealth;
     private float health;
-    private int cost;
     private boolean passed;
     private float speed;
     private TextureRegion healthTexture;
@@ -28,7 +27,6 @@ public class Enemy extends DynamicActor<Rectangle> {
         this.power = 0;
         this.health = 0;
         this.totalHealth = 0;
-        this.cost = 0;
         this.passed = false;
         this.speed = 0;
         this.healthTexture = null;
@@ -37,13 +35,12 @@ public class Enemy extends DynamicActor<Rectangle> {
     }
 
     public Enemy init(float x, float y, float size, float speed, float power, float health,
-                      int cost, TextureRegion texture, TextureRegion healthTexture,
+                      TextureRegion texture, TextureRegion healthTexture,
                       TextureRegion healthBackTexture) {
         super.init(new RectangleBound(x, y, size, size), 0f, 0f, texture);
         this.power = power;
         this.totalHealth = health;
         this.health = health;
-        this.cost = cost;
         this.passed = false;
         this.speed = speed;
         this.healthTexture = healthTexture;
@@ -141,10 +138,6 @@ public class Enemy extends DynamicActor<Rectangle> {
 
     public boolean isDead() {
         return health <= 0;
-    }
-
-    public int getCost() {
-        return cost;
     }
 
     public boolean isPassed() {

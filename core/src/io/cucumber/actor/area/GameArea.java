@@ -9,6 +9,7 @@ import io.cucumber.actor.Enemy;
 import io.cucumber.actor.ui.menu.DefenderPreview;
 import io.cucumber.storage.defender.DefenderData;
 import io.cucumber.storage.enemy.EnemyData;
+import io.cucumber.utils.generator.AreaBlockType;
 
 public class GameArea extends Group {
 
@@ -63,7 +64,6 @@ public class GameArea extends Group {
                 data.getSpeed(),
                 data.getPower(),
                 data.getHealth(),
-                data.getCost(),
                 data.getTexture(),
                 data.getHealthTexture(),
                 data.getHealthBackTexture()

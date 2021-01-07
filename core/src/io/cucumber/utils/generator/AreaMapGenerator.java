@@ -5,9 +5,6 @@ import com.badlogic.gdx.utils.Array;
 import java.util.Arrays;
 import java.util.Random;
 
-import io.cucumber.actor.area.AreaMap;
-import io.cucumber.actor.area.AreaBlockType;
-
 public class AreaMapGenerator {
 
     private final Random random;

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.cucumber.actor.area.AreaBlockType;
+import io.cucumber.utils.generator.AreaBlockType;
 import io.cucumber.manager.event.TimeEventType;
 
 public class Assets {

@@ -1,4 +1,4 @@
-package io.cucumber.actor.area;
+package io.cucumber.utils.generator;
 
 import com.badlogic.gdx.utils.Pools;
 

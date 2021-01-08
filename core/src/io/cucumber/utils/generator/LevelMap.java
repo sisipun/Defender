@@ -2,20 +2,20 @@ package io.cucumber.utils.generator;
 
 import com.badlogic.gdx.utils.Pools;
 
-public class AreaMap {
+public class LevelMap {
 
     private final int startPositionX;
     private final int startPositionY;
 
-    private final AreaBlockType[][] blocks;
+    private final LevelBlockType[][] blocks;
 
-    public AreaMap(AreaBlockType[][] blocks, int startPositionX, int startPositionY) {
+    public LevelMap(LevelBlockType[][] blocks, int startPositionX, int startPositionY) {
         this.startPositionX = startPositionX;
         this.startPositionY = startPositionY;
         this.blocks = blocks;
     }
 
-    public AreaBlockType[][] getBlocks() {
+    public LevelBlockType[][] getBlocks() {
         return blocks;
     }
 
@@ -28,8 +28,8 @@ public class AreaMap {
     }
 
     public void remove() {
-        for (AreaBlockType[] block : blocks) {
-            for (AreaBlockType value : block) {
+        for (LevelBlockType[] block : blocks) {
+            for (LevelBlockType value : block) {
                 Pools.free(value);
             }
         }

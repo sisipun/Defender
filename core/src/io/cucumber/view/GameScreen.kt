@@ -20,23 +20,25 @@ import io.cucumber.actor.ui.menu.DefenderPreview
 import io.cucumber.base.helper.FontHelper
 import io.cucumber.base.helper.FontParams
 import io.cucumber.base.view.BaseScreen
-import io.cucumber.manager.Level
-import io.cucumber.manager.event.GenerateEnemyTimeEvent
-import io.cucumber.manager.event.IncreaseBalanceTimeEvent
-import io.cucumber.manager.event.TimeEventType
 import io.cucumber.utils.constants.Constants.*
-import io.cucumber.utils.generator.AreaMapGenerator
+import io.cucumber.utils.event.GenerateEnemyTimeEvent
+import io.cucumber.utils.event.IncreaseBalanceTimeEvent
+import io.cucumber.utils.event.TimeEventType
+import io.cucumber.utils.generator.Level
+import io.cucumber.utils.generator.LevelGenerator
+import io.cucumber.utils.storage.GameStorage
 import kotlin.math.max
 import kotlin.math.min
 
 class GameScreen(
         game: Game,
-        private val level: Level
+        private val storage: GameStorage
 ) : BaseScreen(game) {
 
     private var initialCameraY: Float = game.stage.camera.position.y
 
-    private val areaMapGenerator: AreaMapGenerator = AreaMapGenerator()
+    private val levelGenerator: LevelGenerator = LevelGenerator()
+    private lateinit var level: Level
 
     private val gameArea: GameArea = GameArea()
     private val defenderMenu: DefenderMenu = DefenderMenu()
@@ -158,29 +160,28 @@ class GameScreen(
 
         game.stage.viewport.camera.position.y = initialCameraY
 
-        val areaMap = areaMapGenerator.generate(
+        level = levelGenerator.generate(
                 (SCREEN_WIDTH / BLOCK_SIZE).toInt(),
-                level.horizontalBlockCount + MAP_BORDER_SIZE,
-                MAP_BORDER_SIZE
+                storage
         )
 
         val area = Array<AreaBlock>()
 
-        areaMap.blocks.forEachIndexed { rowIndex, row ->
+        level.map.blocks.forEachIndexed { rowIndex, row ->
             row.forEachIndexed { typeIndex, block ->
                 area.add(Pools.obtain(AreaBlock::class.java).init(
                         rowIndex * BLOCK_SIZE,
                         typeIndex * BLOCK_SIZE + GAME_UI_HEIGHT,
                         BLOCK_SIZE,
                         block,
-                        level.assets.areaTextures[block],
+                        storage.assets.areaTextures[block],
                         BLOCK_ZONE_SIZE,
-                        level.assets.zone
+                        storage.assets.zone
                 ))
             }
         }
 
-        areaMap.remove()
+        level.remove()
 
         gameArea.init(
                 0f,
@@ -194,8 +195,8 @@ class GameScreen(
                 MENU_HEIGHT,
                 SCREEN_WIDTH,
                 HEALTH_HEIGHT,
-                level.assets.health,
-                level.assets.healthBackground,
+                storage.assets.health,
+                storage.assets.healthBackground,
                 level.health
         )
         addActor(health)
@@ -205,7 +206,7 @@ class GameScreen(
                 0f,
                 SCREEN_WIDTH,
                 MENU_HEIGHT,
-                level.assets.menuBackground,
+                storage.assets.menuBackground,
                 level.defenderTypes
         )
         addActor(defenderMenu)
@@ -223,18 +224,18 @@ class GameScreen(
                 SCREEN_HEIGHT - SCREEN_HEIGHT / 16 + SCREEN_HEIGHT / 64,
                 SCREEN_WIDTH - SCREEN_WIDTH / 4,
                 TIMER_HEIGHT,
-                level.assets.timer,
-                level.assets.timerBackground,
+                storage.assets.timer,
+                storage.assets.timerBackground,
                 level.timeInSeconds,
                 level.events,
                 TIMER_EVENT_SIZE,
-                level.assets.timeEventTextures
+                storage.assets.timeEventTextures
         )
         levelTimer.addListener(TimeEventType.GENERATE_ENEMY) { event ->
             val enemyData = (event as GenerateEnemyTimeEvent).data
             gameArea.addEnemy(
-                    areaMap.startPositionX * BLOCK_SIZE,
-                    areaMap.startPositionY * BLOCK_SIZE + GAME_UI_HEIGHT,
+                    level.map.startPositionX * BLOCK_SIZE,
+                    level.map.startPositionY * BLOCK_SIZE + GAME_UI_HEIGHT,
                     enemyData
             )
         }

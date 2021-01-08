@@ -18,9 +18,9 @@ import java.util.Queue;
 import io.cucumber.base.actor.base.StaticActor;
 import io.cucumber.base.actor.bound.RectangleBound;
 import io.cucumber.base.actor.simple.SimpleRectangle;
-import io.cucumber.manager.event.TimeEvent;
-import io.cucumber.manager.event.TimeEventListener;
-import io.cucumber.manager.event.TimeEventType;
+import io.cucumber.utils.event.TimeEvent;
+import io.cucumber.utils.event.TimeEventListener;
+import io.cucumber.utils.event.TimeEventType;
 
 import static io.cucumber.utils.constants.Constants.TIMER_ALPHA;
 

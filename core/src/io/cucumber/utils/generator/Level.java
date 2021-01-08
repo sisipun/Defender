@@ -1,31 +1,32 @@
-package io.cucumber.manager;
+package io.cucumber.utils.generator;
 
 import com.badlogic.gdx.utils.Array;
 
-import io.cucumber.manager.event.TimeEvent;
-import io.cucumber.storage.defender.DefenderData;
+import io.cucumber.utils.event.TimeEvent;
+import io.cucumber.utils.storage.defender.DefenderData;
 
 public class Level {
 
     private final float health;
     private final int timeInSeconds;
-    private final int horizontalBlockCount;
     private final int initialBalance;
 
-    private final Assets assets;
     private final Array<DefenderData> defenderTypes;
     private final Array<TimeEvent> timeEvents;
+    private final LevelMap map;
 
-    public Level(float health, int timeInSeconds, int horizontalBlockCount, int initialBalance,
-                 Assets assets, Array<DefenderData> defenderTypes,
-                 Array<TimeEvent> timeEvents) {
+    public Level(float health, int timeInSeconds, int initialBalance,
+                 Array<DefenderData> defenderTypes, Array<TimeEvent> timeEvents, LevelMap map) {
         this.health = health;
         this.timeInSeconds = timeInSeconds;
-        this.horizontalBlockCount = horizontalBlockCount;
         this.initialBalance = initialBalance;
-        this.assets = assets;
         this.defenderTypes = defenderTypes;
         this.timeEvents = timeEvents;
+        this.map = map;
+    }
+
+    public void remove() {
+        map.remove();
     }
 
     public float getHealth() {
@@ -36,16 +37,8 @@ public class Level {
         return timeInSeconds;
     }
 
-    public int getHorizontalBlockCount() {
-        return horizontalBlockCount;
-    }
-
     public int getInitialBalance() {
         return initialBalance;
-    }
-
-    public Assets getAssets() {
-        return assets;
     }
 
     public Array<DefenderData> getDefenderTypes() {
@@ -54,5 +47,9 @@ public class Level {
 
     public Array<TimeEvent> getEvents() {
         return timeEvents;
+    }
+
+    public LevelMap getMap() {
+        return map;
     }
 }

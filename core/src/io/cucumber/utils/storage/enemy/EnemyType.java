@@ -1,4 +1,4 @@
-package io.cucumber.storage.enemy;
+package io.cucumber.utils.storage.enemy;
 
 public enum EnemyType {
     BASE,

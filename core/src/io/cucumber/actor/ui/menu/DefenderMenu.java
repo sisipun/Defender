@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
 
 import io.cucumber.base.actor.simple.SimpleRectangle;
-import io.cucumber.storage.defender.DefenderData;
+import io.cucumber.utils.storage.defender.DefenderData;
 
 public class DefenderMenu extends Group {
 

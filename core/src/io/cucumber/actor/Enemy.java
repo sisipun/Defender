@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.util.Random;
 
-import io.cucumber.utils.generator.AreaBlockType;
+import io.cucumber.utils.generator.LevelBlockType;
 import io.cucumber.base.actor.base.DynamicActor;
 import io.cucumber.base.actor.bound.RectangleBound;
 
@@ -92,24 +92,24 @@ public class Enemy extends DynamicActor<Rectangle> {
         );
     }
 
-    public void changeDirection(AreaBlockType areaBlockType) {
+    public void changeDirection(LevelBlockType levelBlockType) {
         if (passed) {
             return;
         }
 
-        if (AreaBlockType.ROAD_UP.equals(areaBlockType) && velocity.y == 0) {
+        if (LevelBlockType.ROAD_UP.equals(levelBlockType) && velocity.y == 0) {
             velocity.y = speed;
             velocity.x = 0;
-        } else if (AreaBlockType.ROAD_DOWN.equals(areaBlockType) && velocity.y == 0) {
+        } else if (LevelBlockType.ROAD_DOWN.equals(levelBlockType) && velocity.y == 0) {
             velocity.y = -speed;
             velocity.x = 0;
-        } else if (AreaBlockType.ROAD_LEFT.equals(areaBlockType) && velocity.x == 0) {
+        } else if (LevelBlockType.ROAD_LEFT.equals(levelBlockType) && velocity.x == 0) {
             velocity.y = 0;
             velocity.x = -speed;
-        } else if (AreaBlockType.ROAD_RIGHT.equals(areaBlockType) && velocity.x == 0) {
+        } else if (LevelBlockType.ROAD_RIGHT.equals(levelBlockType) && velocity.x == 0) {
             velocity.y = 0;
             velocity.x = speed;
-        } else if (AreaBlockType.ROAD_HORIZONTAL_RAND.equals(areaBlockType) && velocity.x == 0) {
+        } else if (LevelBlockType.ROAD_HORIZONTAL_RAND.equals(levelBlockType) && velocity.x == 0) {
             velocity.y = 0;
             int direction = random.nextInt(2);
             if (direction == 0) {
@@ -117,7 +117,7 @@ public class Enemy extends DynamicActor<Rectangle> {
             } else {
                 velocity.x = speed;
             }
-        } else if (AreaBlockType.ROAD_END.equals(areaBlockType)) {
+        } else if (LevelBlockType.ROAD_END.equals(levelBlockType)) {
             velocity.y = 0;
             velocity.x = 0;
             passed = true;

@@ -7,9 +7,9 @@ import com.badlogic.gdx.utils.Pools;
 import io.cucumber.actor.Defender;
 import io.cucumber.actor.Enemy;
 import io.cucumber.actor.ui.menu.DefenderPreview;
-import io.cucumber.storage.defender.DefenderData;
-import io.cucumber.storage.enemy.EnemyData;
-import io.cucumber.utils.generator.AreaBlockType;
+import io.cucumber.utils.storage.defender.DefenderData;
+import io.cucumber.utils.storage.enemy.EnemyData;
+import io.cucumber.utils.generator.LevelBlockType;
 
 public class GameArea extends Group {
 
@@ -94,7 +94,7 @@ public class GameArea extends Group {
     public boolean isCollides(DefenderPreview preview) {
         for (int i = 0; i < area.size; i++) {
             AreaBlock block = area.get(i);
-            if (block.getType() != AreaBlockType.LAND && block.isCollides(preview)) {
+            if (block.getType() != LevelBlockType.LAND && block.isCollides(preview)) {
                 return true;
             }
         }

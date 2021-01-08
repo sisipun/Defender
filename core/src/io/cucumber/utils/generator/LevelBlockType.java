@@ -1,6 +1,6 @@
 package io.cucumber.utils.generator;
 
-public enum AreaBlockType {
+public enum LevelBlockType {
     LAND,
     WATER,
     BUILDING,

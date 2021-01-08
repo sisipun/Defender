@@ -1,4 +1,4 @@
-package io.cucumber.manager.event;
+package io.cucumber.utils.event;
 
 public class IncreaseBalanceTimeEvent extends TimeEvent {
 

@@ -7,7 +7,6 @@ public class Constants {
     public static final float SCREEN_HEIGHT = 1000f;
 
     // Map
-    public static final int MAP_BORDER_SIZE = 2;
     public static final float BLOCK_SIZE = 50;
     public static final float BLOCK_ZONE_SIZE = 3;
 

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.cucumber.utils.generator.LevelBlockType;
-import io.cucumber.utils.event.TimeEventType;
+import io.cucumber.utils.generator.event.TimeEventType;
 
 public class CommonAssets {
 

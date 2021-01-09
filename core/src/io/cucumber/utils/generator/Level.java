@@ -2,7 +2,7 @@ package io.cucumber.utils.generator;
 
 import com.badlogic.gdx.utils.Array;
 
-import io.cucumber.utils.event.TimeEvent;
+import io.cucumber.utils.generator.event.TimeEvent;
 import io.cucumber.utils.storage.defender.DefenderData;
 
 public class Level {

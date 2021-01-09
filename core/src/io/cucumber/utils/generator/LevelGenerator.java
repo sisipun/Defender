@@ -2,12 +2,12 @@ package io.cucumber.utils.generator;
 
 import com.badlogic.gdx.utils.Array;
 
+import io.cucumber.utils.generator.event.GenerateEnemyTimeEvent;
+import io.cucumber.utils.generator.event.IncreaseBalanceTimeEvent;
+import io.cucumber.utils.generator.event.TimeEvent;
 import io.cucumber.utils.random.Random;
-import io.cucumber.utils.event.GenerateEnemyTimeEvent;
-import io.cucumber.utils.event.IncreaseBalanceTimeEvent;
-import io.cucumber.utils.event.TimeEvent;
 import io.cucumber.utils.storage.GameStorage;
-import io.cucumber.utils.storage.defender.DefenderType;
+import io.cucumber.utils.storage.defender.DefenderData;
 import io.cucumber.utils.storage.enemy.EnemyType;
 
 public class LevelGenerator {
@@ -20,18 +20,33 @@ public class LevelGenerator {
         this.levelMapGenerator = new LevelMapGenerator(random);
     }
 
-    public Level generate(int width, GameStorage storage) {
-        int timeInSeconds = random.nextInt(1, 5) * 50;
-        int height = timeInSeconds / 2 + random.nextInt(-10, 10);
+    public Level generate(int width, Array<DefenderData> levelDefenders, GameStorage storage) {
+        int length = random.nextInt(1, 5);
         int border = random.nextInt(1, 3);
-        int balance = height * (5 + random.nextInt(-1, 1));
+        int timeInSeconds = length * 60 + random.nextInt(-30, 30, 5);
+        int height = length * 30 + random.nextInt(-10, 10);
+        int balance = length * 100 + random.nextInt(-50, 50, 50);
+        int health = length * 75 + random.nextInt(-25, 25, 5);
+        int starterEventCoolDown = random.nextInt(10, 20);
+        int eventCoolDown = random.nextInt(4, 8);
+
+        return new Level(
+                health,
+                timeInSeconds,
+                balance,
+                levelDefenders,
+                generateTimeEvents(timeInSeconds, starterEventCoolDown, eventCoolDown, storage),
+                levelMapGenerator.generate(width, height, border)
+        );
+    }
+
+    private Array<TimeEvent> generateTimeEvents(int timeInSeconds, int starterEventCoolDown,
+                                                int eventCoolDown, GameStorage storage) {
         Array<TimeEvent> timeEvents = new Array<>();
 
-        int startEventGapInSeconds = 10;
-        int eventsGapInSeconds = 5;
         int lastEvenTime = 0;
-        for (int i = startEventGapInSeconds; i < timeInSeconds - eventsGapInSeconds; i++) {
-            if (lastEvenTime + eventsGapInSeconds > i) {
+        for (int i = starterEventCoolDown; i < timeInSeconds - eventCoolDown; i++) {
+            if (lastEvenTime + eventCoolDown > i) {
                 continue;
             }
 
@@ -51,17 +66,10 @@ public class LevelGenerator {
         }
 
         timeEvents.add(new GenerateEnemyTimeEvent(
-                lastEvenTime + eventsGapInSeconds,
+                lastEvenTime + eventCoolDown,
                 storage.getEnemy(EnemyType.values()[random.nextInt(EnemyType.values().length)]))
         );
 
-        return new Level(
-                100,
-                timeInSeconds,
-                balance,
-                Array.with(storage.getDefender(DefenderType.BASE), storage.getDefender(DefenderType.SMALL)),
-                timeEvents,
-                levelMapGenerator.generate(width, height, border)
-        );
+        return timeEvents;
     }
 }

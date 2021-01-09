@@ -1,4 +1,4 @@
-package io.cucumber.utils.event;
+package io.cucumber.utils.generator.event;
 
 public enum TimeEventType {
     GENERATE_ENEMY,

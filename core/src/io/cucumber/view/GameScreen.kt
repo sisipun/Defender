@@ -21,12 +21,13 @@ import io.cucumber.base.helper.FontHelper
 import io.cucumber.base.helper.FontParams
 import io.cucumber.base.view.BaseScreen
 import io.cucumber.utils.constants.Constants.*
-import io.cucumber.utils.event.GenerateEnemyTimeEvent
-import io.cucumber.utils.event.IncreaseBalanceTimeEvent
-import io.cucumber.utils.event.TimeEventType
 import io.cucumber.utils.generator.Level
 import io.cucumber.utils.generator.LevelGenerator
+import io.cucumber.utils.generator.event.GenerateEnemyTimeEvent
+import io.cucumber.utils.generator.event.IncreaseBalanceTimeEvent
+import io.cucumber.utils.generator.event.TimeEventType
 import io.cucumber.utils.storage.GameStorage
+import io.cucumber.utils.storage.defender.DefenderType
 import kotlin.math.max
 import kotlin.math.min
 
@@ -162,6 +163,7 @@ class GameScreen(
 
         level = levelGenerator.generate(
                 (SCREEN_WIDTH / BLOCK_SIZE).toInt(),
+                Array.with(storage.getDefender(DefenderType.BASE), storage.getDefender(DefenderType.SMALL)),
                 storage
         )
 

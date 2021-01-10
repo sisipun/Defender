@@ -29,13 +29,45 @@ public class LevelMapGenerator {
         // Initialize area
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                int type = random.nextInt(1000);
-                if (type == 0) {
-                    map[i][j] = LevelBlockType.WATER;
-                } else if (type == 1) {
-                    map[i][j] = LevelBlockType.BUILDING;
-                } else {
-                    map[i][j] = LevelBlockType.LAND;
+                map[i][j] = LevelBlockType.LAND;
+            }
+        }
+
+        int mapSize = width * height;
+
+        // Generate buildings
+        int buildingCount = random.nextInt(mapSize / 64, mapSize / 32);
+        for (int i = 0; i < buildingCount; i++) {
+            int buildingLength = random.nextInt(1, 5);
+            int direction = random.nextInt(4);
+            int x = random.nextInt(border, width - border);
+            int y = random.nextInt(border, height - border);
+            for (int j = 0; j < buildingLength && x >= border && x <= width - border && y >= border && y <= height - border; j++) {
+                map[x][y] = LevelBlockType.BUILDING;
+                if (direction == 0) {
+                    x++;
+                } else if (direction == 1) {
+                    x--;
+                } else if (direction == 2) {
+                    y++;
+                } else if (direction == 3) {
+                    y--;
+                }
+            }
+        }
+
+        // Generate water
+        int watersCount = random.nextInt(mapSize / 256, mapSize / 128);
+        for (int i = 0; i < watersCount; i++) {
+            int waterHeight = random.nextInt(2, 6);
+            int waterWidth = random.nextInt(2, 6);
+            int x = random.nextInt(border, width - border);
+            int y = random.nextInt(border, height - border);
+            for (int j = x - waterWidth / 2; j < x + waterWidth / 2; j++) {
+                for (int k = y - waterHeight / 2; k < y + waterHeight / 2; k++) {
+                    if (j >= border && j <= width - border && k >= border && k <= height - border) {
+                        map[j][k] = LevelBlockType.WATER;
+                    }
                 }
             }
         }

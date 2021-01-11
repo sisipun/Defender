@@ -21,7 +21,10 @@ public class LevelGenerator {
     }
 
     public Level generate(int width, Array<DefenderData> levelDefenders, GameStorage storage) {
+        // Generate length of level. Main param, a lot of others depends on it (Should be chosen by user in future)
         int length = random.nextInt(1, 5);
+
+        // Level params generation
         int border = random.nextInt(1, 3);
         int timeInSeconds = length * 60 + random.nextInt(-30, 30, 5);
         int height = length * 30 + random.nextInt(-10, 10);
@@ -43,7 +46,6 @@ public class LevelGenerator {
     private Array<TimeEvent> generateTimeEvents(int timeInSeconds, int starterEventCoolDown,
                                                 int eventCoolDown, GameStorage storage) {
         Array<TimeEvent> timeEvents = new Array<>();
-
         int lastEvenTime = 0;
         for (int i = starterEventCoolDown; i < timeInSeconds - eventCoolDown; i++) {
             if (lastEvenTime + eventCoolDown > i) {

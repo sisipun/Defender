@@ -19,6 +19,7 @@ public class LevelMapGenerator {
             return new LevelMap(new LevelBlockType[0][0], 0, 0);
         }
 
+        // Initialize main params
         LevelBlockType[][] map = new LevelBlockType[width][height];
         Array<Fork> forks = new Array<>();
         int startPositionX = random.nextInt(width);

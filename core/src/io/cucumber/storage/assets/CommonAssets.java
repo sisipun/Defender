@@ -1,4 +1,4 @@
-package io.cucumber.utils.storage.assets;
+package io.cucumber.storage.assets;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.cucumber.utils.generator.LevelBlockType;
-import io.cucumber.utils.generator.event.TimeEventType;
+import io.cucumber.generator.LevelBlockType;
+import io.cucumber.generator.event.TimeEventType;
 
 public class CommonAssets {
 

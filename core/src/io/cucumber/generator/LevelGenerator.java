@@ -1,14 +1,14 @@
-package io.cucumber.utils.generator;
+package io.cucumber.generator;
 
 import com.badlogic.gdx.utils.Array;
 
-import io.cucumber.utils.generator.event.GenerateEnemyTimeEvent;
-import io.cucumber.utils.generator.event.IncreaseBalanceTimeEvent;
-import io.cucumber.utils.generator.event.TimeEvent;
+import io.cucumber.generator.event.GenerateEnemyTimeEvent;
+import io.cucumber.generator.event.IncreaseBalanceTimeEvent;
+import io.cucumber.generator.event.TimeEvent;
 import io.cucumber.utils.random.Random;
-import io.cucumber.utils.storage.GameStorage;
-import io.cucumber.utils.storage.defender.DefenderData;
-import io.cucumber.utils.storage.enemy.EnemyType;
+import io.cucumber.storage.GameStorage;
+import io.cucumber.storage.defender.DefenderData;
+import io.cucumber.storage.enemy.EnemyType;
 
 public class LevelGenerator {
 
@@ -20,9 +20,9 @@ public class LevelGenerator {
         this.levelMapGenerator = new LevelMapGenerator(random);
     }
 
-    public Level generate(int width, Array<DefenderData> levelDefenders, GameStorage storage) {
+    public Level generate(int width, Length levelLength,  Array<DefenderData> levelDefenders, GameStorage storage) {
         // Generate length of level. Main param, a lot of others depends on it (Should be chosen by user in future)
-        int length = random.nextInt(1, 5);
+        int length = levelLength.getValue();
 
         // Level params generation
         int border = random.nextInt(1, 3);
@@ -73,5 +73,33 @@ public class LevelGenerator {
         );
 
         return timeEvents;
+    }
+
+    public enum Length {
+        XL(5),
+        L(4),
+        M(3),
+        S(2),
+        XS(1);
+
+        private int value;
+
+        Length(int value) {
+            this.value = value;
+        }
+
+        public Length getNext() {
+            for (int i = 0; i < values().length; i++) {
+                if (values()[i].value == (value + 1)) {
+                    return values()[i];
+                }
+            }
+
+            return XL;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
 }

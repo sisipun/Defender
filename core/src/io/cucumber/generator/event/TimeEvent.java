@@ -1,11 +1,11 @@
-package io.cucumber.utils.generator.event;
+package io.cucumber.generator.event;
 
 public abstract class TimeEvent {
 
     private final int time;
-    private final io.cucumber.utils.generator.event.TimeEventType type;
+    private final io.cucumber.generator.event.TimeEventType type;
 
-    public TimeEvent(int time, io.cucumber.utils.generator.event.TimeEventType type) {
+    public TimeEvent(int time, io.cucumber.generator.event.TimeEventType type) {
         this.time = time;
         this.type = type;
     }

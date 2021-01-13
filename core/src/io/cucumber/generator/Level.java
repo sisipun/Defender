@@ -1,9 +1,9 @@
-package io.cucumber.utils.generator;
+package io.cucumber.generator;
 
 import com.badlogic.gdx.utils.Array;
 
-import io.cucumber.utils.generator.event.TimeEvent;
-import io.cucumber.utils.storage.defender.DefenderData;
+import io.cucumber.generator.event.TimeEvent;
+import io.cucumber.storage.defender.DefenderData;
 
 public class Level {
 

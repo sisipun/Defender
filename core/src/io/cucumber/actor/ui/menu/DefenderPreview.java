@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Pools;
 import io.cucumber.actor.Zone;
 import io.cucumber.base.actor.base.StaticActor;
 import io.cucumber.base.actor.bound.RectangleBound;
-import io.cucumber.utils.storage.defender.DefenderData;
+import io.cucumber.storage.defender.DefenderData;
 
 public class DefenderPreview extends StaticActor<Rectangle> {
 

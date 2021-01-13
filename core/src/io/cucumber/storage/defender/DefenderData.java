@@ -1,4 +1,4 @@
-package io.cucumber.utils.storage.defender;
+package io.cucumber.storage.defender;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 

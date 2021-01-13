@@ -1,4 +1,4 @@
-package io.cucumber.utils.storage.defender;
+package io.cucumber.storage.defender;
 
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -21,7 +21,7 @@ import static io.cucumber.utils.constants.Constants.DEFENDER_ZONE_SIZE;
 
 public class DefenderStorage {
 
-    private final Map<io.cucumber.utils.storage.defender.DefenderType, io.cucumber.utils.storage.defender.DefenderData> data;
+    private final Map<DefenderType, DefenderData> data;
 
     public DefenderStorage() {
         this.data = new HashMap<>();
@@ -32,7 +32,7 @@ public class DefenderStorage {
             return true;
         }
 
-        data.put(io.cucumber.utils.storage.defender.DefenderType.BASE, new io.cucumber.utils.storage.defender.DefenderData(
+        data.put(DefenderType.BASE, new DefenderData(
                 DEFENDER_SIZE,
                 DEFENDER_COST,
                 atlas.findRegion("defender"),
@@ -44,7 +44,7 @@ public class DefenderStorage {
                 DEFENDER_BULLET_POWER,
                 atlas.findRegion("defender_bullet")
         ));
-        data.put(io.cucumber.utils.storage.defender.DefenderType.SMALL, new io.cucumber.utils.storage.defender.DefenderData(
+        data.put(DefenderType.SMALL, new DefenderData(
                 DEFENDER_SMALL_SIZE,
                 DEFENDER_SMALL_COST,
                 atlas.findRegion("defender_small"),

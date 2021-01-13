@@ -1,5 +1,4 @@
-package io.cucumber.utils.storage.assets;
-
+package io.cucumber.storage.assets;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 

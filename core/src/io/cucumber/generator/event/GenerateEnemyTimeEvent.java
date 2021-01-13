@@ -1,6 +1,6 @@
-package io.cucumber.utils.generator.event;
+package io.cucumber.generator.event;
 
-import io.cucumber.utils.storage.enemy.EnemyData;
+import io.cucumber.storage.enemy.EnemyData;
 
 public class GenerateEnemyTimeEvent extends TimeEvent {
 

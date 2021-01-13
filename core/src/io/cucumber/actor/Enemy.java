@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.util.Random;
 
-import io.cucumber.utils.generator.LevelBlockType;
+import io.cucumber.generator.LevelBlockType;
 import io.cucumber.base.actor.base.DynamicActor;
 import io.cucumber.base.actor.bound.RectangleBound;
 

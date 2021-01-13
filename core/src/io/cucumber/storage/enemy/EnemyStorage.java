@@ -1,4 +1,4 @@
-package io.cucumber.utils.storage.enemy;
+package io.cucumber.storage.enemy;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 

@@ -1,4 +1,4 @@
-package io.cucumber.utils.storage.defender;
+package io.cucumber.storage.defender;
 
 public enum  DefenderType {
     BASE,

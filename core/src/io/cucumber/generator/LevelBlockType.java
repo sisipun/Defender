@@ -1,4 +1,4 @@
-package io.cucumber.utils.generator;
+package io.cucumber.generator;
 
 public enum LevelBlockType {
     LAND,

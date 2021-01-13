@@ -1,4 +1,4 @@
-package io.cucumber.utils.generator;
+package io.cucumber.generator;
 
 import com.badlogic.gdx.utils.Array;
 
@@ -77,7 +77,7 @@ public class LevelMapGenerator {
         while (currentPositionY - border - 1 > 0) {
             LevelBlockType direction = random.nextInt(2) == 0 ? LevelBlockType.ROAD_LEFT : LevelBlockType.ROAD_RIGHT;
             int size = random.nextInt(LevelBlockType.ROAD_LEFT.equals(direction) ? currentPositionX : width - currentPositionX);
-            if (random.nextInt(height / 4) == 0 && size > 0) {
+            if (random.nextInt(height / 4) == 0 && size > 0 && currentPositionX > 0 && currentPositionX < width - 1) {
                 forks.add(new Fork(
                         currentPositionX,
                         currentPositionY,

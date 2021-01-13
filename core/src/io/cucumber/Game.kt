@@ -4,9 +4,9 @@ import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.StretchViewport
+import io.cucumber.storage.GameStorage
 import io.cucumber.utils.constants.Constants.SCREEN_HEIGHT
 import io.cucumber.utils.constants.Constants.SCREEN_WIDTH
-import io.cucumber.utils.storage.GameStorage
 import io.cucumber.view.GameScreen
 
 class Game : Game() {

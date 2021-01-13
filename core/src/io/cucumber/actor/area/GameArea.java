@@ -7,9 +7,9 @@ import com.badlogic.gdx.utils.Pools;
 import io.cucumber.actor.Defender;
 import io.cucumber.actor.Enemy;
 import io.cucumber.actor.ui.menu.DefenderPreview;
-import io.cucumber.utils.storage.defender.DefenderData;
-import io.cucumber.utils.storage.enemy.EnemyData;
-import io.cucumber.utils.generator.LevelBlockType;
+import io.cucumber.storage.defender.DefenderData;
+import io.cucumber.storage.enemy.EnemyData;
+import io.cucumber.generator.LevelBlockType;
 
 public class GameArea extends Group {
 

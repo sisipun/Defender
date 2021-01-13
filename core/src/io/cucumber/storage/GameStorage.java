@@ -1,16 +1,16 @@
-package io.cucumber.utils.storage;
+package io.cucumber.storage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
-import io.cucumber.utils.storage.assets.CommonAssets;
-import io.cucumber.utils.storage.assets.CommonAssetsStorage;
-import io.cucumber.utils.storage.defender.DefenderData;
-import io.cucumber.utils.storage.defender.DefenderStorage;
-import io.cucumber.utils.storage.defender.DefenderType;
-import io.cucumber.utils.storage.enemy.EnemyStorage;
-import io.cucumber.utils.storage.enemy.EnemyData;
-import io.cucumber.utils.storage.enemy.EnemyType;
+import io.cucumber.storage.enemy.EnemyData;
+import io.cucumber.storage.enemy.EnemyType;
+import io.cucumber.storage.assets.CommonAssets;
+import io.cucumber.storage.assets.CommonAssetsStorage;
+import io.cucumber.storage.defender.DefenderData;
+import io.cucumber.storage.defender.DefenderStorage;
+import io.cucumber.storage.defender.DefenderType;
+import io.cucumber.storage.enemy.EnemyStorage;
 
 public class GameStorage {
 

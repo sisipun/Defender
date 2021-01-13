@@ -20,14 +20,14 @@ import io.cucumber.actor.ui.menu.DefenderPreview
 import io.cucumber.base.helper.FontHelper
 import io.cucumber.base.helper.FontParams
 import io.cucumber.base.view.BaseScreen
+import io.cucumber.generator.Level
+import io.cucumber.generator.LevelGenerator
+import io.cucumber.generator.event.GenerateEnemyTimeEvent
+import io.cucumber.generator.event.IncreaseBalanceTimeEvent
+import io.cucumber.generator.event.TimeEventType
+import io.cucumber.storage.GameStorage
+import io.cucumber.storage.defender.DefenderType
 import io.cucumber.utils.constants.Constants.*
-import io.cucumber.utils.generator.Level
-import io.cucumber.utils.generator.LevelGenerator
-import io.cucumber.utils.generator.event.GenerateEnemyTimeEvent
-import io.cucumber.utils.generator.event.IncreaseBalanceTimeEvent
-import io.cucumber.utils.generator.event.TimeEventType
-import io.cucumber.utils.storage.GameStorage
-import io.cucumber.utils.storage.defender.DefenderType
 import kotlin.math.max
 import kotlin.math.min
 
@@ -39,6 +39,7 @@ class GameScreen(
     private var initialCameraY: Float = game.stage.camera.position.y
 
     private val levelGenerator: LevelGenerator = LevelGenerator()
+    private var levelLength: LevelGenerator.Length = LevelGenerator.Length.XS
     private lateinit var level: Level
 
     private val gameArea: GameArea = GameArea()
@@ -163,6 +164,7 @@ class GameScreen(
 
         level = levelGenerator.generate(
                 (SCREEN_WIDTH / BLOCK_SIZE).toInt(),
+                levelLength,
                 Array.with(storage.getDefender(DefenderType.BASE), storage.getDefender(DefenderType.SMALL)),
                 storage
         )
@@ -276,10 +278,12 @@ class GameScreen(
 
         if (!health.hasHealth()) {
             init()
+            levelLength = LevelGenerator.Length.XS
         }
 
         if (levelTimer.isCompleted && gameArea.enemies.size <= 0) {
             init()
+            levelLength = levelLength.next
         }
     }
 }

@@ -2,6 +2,14 @@ package io.cucumber.generator;
 
 public enum LevelBlockType {
     LAND,
+    LAND_WATER_TOP,
+    LAND_WATER_BOTTOM,
+    LAND_WATER_LEFT,
+    LAND_WATER_RIGHT,
+    LAND_WATER_TOP_LEFT,
+    LAND_WATER_TOP_RIGHT,
+    LAND_WATER_BOTTOM_LEFT,
+    LAND_WATER_BOTTOM_RIGHT,
     WATER,
     BUILDING,
     ROAD_UP,

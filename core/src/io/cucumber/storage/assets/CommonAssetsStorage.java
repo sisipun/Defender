@@ -12,7 +12,9 @@ public class CommonAssetsStorage {
         }
 
         commonAssets = new CommonAssets(atlas, "road", "road", "road", "road", "road", "road",
-                "land", "water", "building", "zone", "menu_background", "health",
+                "grass_part", "water_top_part", "water_bottom_part", "water_left_part", "water_right_part",
+                "water_left_top", "water_right_top", "water_left_bottom", "water_right_bottom",
+                "water_part", "house_part", "zone", "menu_background", "health",
                 "health_background", "timer", "timer_background", "generate_enemy",
                 "increase_balance");
         return true;

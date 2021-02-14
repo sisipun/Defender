@@ -113,6 +113,45 @@ public class LevelMapGenerator {
                     map, width);
         }
 
+        // Decorate land with water
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (LevelBlockType.LAND.equals(map[i][j])) {
+                    if (i + 1 < width && LevelBlockType.WATER.equals(map[i + 1][j])) {
+                        map[i][j] = LevelBlockType.LAND_WATER_LEFT;
+                    }
+                    if (i - 1 > 0 && LevelBlockType.WATER.equals(map[i - 1][j])) {
+                        map[i][j] = LevelBlockType.LAND_WATER_RIGHT;
+                    }
+                    if (j + 1 < height && LevelBlockType.WATER.equals(map[i][j + 1])) {
+                        map[i][j] = LevelBlockType.LAND_WATER_BOTTOM;
+                    }
+                    if (j - 1 > 0 && LevelBlockType.WATER.equals(map[i][j - 1])) {
+                        map[i][j] = LevelBlockType.LAND_WATER_TOP;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (LevelBlockType.LAND.equals(map[i][j])) {
+                    if (i + 1 < width && j + 1 < height && LevelBlockType.WATER.equals(map[i + 1][j + 1])) {
+                        map[i][j] = LevelBlockType.LAND_WATER_BOTTOM_LEFT;
+                    }
+                    if (i - 1 > 0 && j + 1 < height && LevelBlockType.WATER.equals(map[i - 1][j + 1])) {
+                        map[i][j] = LevelBlockType.LAND_WATER_BOTTOM_RIGHT;
+                    }
+                    if (i + 1 < width && j - 1 > 0 && LevelBlockType.WATER.equals(map[i + 1][j - 1])) {
+                        map[i][j] = LevelBlockType.LAND_WATER_TOP_LEFT;
+                    }
+                    if (i - 1 > 0 && j - 1 > 0 && LevelBlockType.WATER.equals(map[i - 1][j - 1])) {
+                        map[i][j] = LevelBlockType.LAND_WATER_TOP_RIGHT;
+                    }
+                }
+            }
+        }
+
         return new LevelMap(map, startPositionX, startPositionY);
     }
 

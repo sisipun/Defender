@@ -178,7 +178,7 @@ class GameScreen(
                         typeIndex * BLOCK_SIZE + GAME_UI_HEIGHT,
                         BLOCK_SIZE,
                         block,
-                        storage.assets.areaTextures[block],
+                        storage.assets.areaTextures[block]?.random(),
                         BLOCK_ZONE_SIZE,
                         storage.assets.zone
                 ))

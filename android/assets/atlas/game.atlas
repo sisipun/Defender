@@ -305,44 +305,58 @@ road_right_down
   orig: 128, 128
   offset: 0, 0
   index: -1
-road_top_left
+road_top_horizontal_part
   rotate: false
   xy: 1814, 229
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+road_top_horizontal_part
+  rotate: false
+  xy: 1814, 99
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 2
+road_top_left
+  rotate: false
+  xy: 1944, 229
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 road_top_right
   rotate: false
-  xy: 1814, 99
+  xy: 1944, 99
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 road_vertical_part
   rotate: false
-  xy: 1944, 229
+  xy: 2074, 229
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 road_vertical_part
   rotate: false
-  xy: 1944, 99
+  xy: 2074, 99
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 road_vertical_part
   rotate: false
-  xy: 2074, 229
+  xy: 2204, 229
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 road_vertical_part
   rotate: false
-  xy: 2074, 99
+  xy: 2204, 99
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -356,112 +370,112 @@ timer_background
   index: -1
 water
   rotate: false
-  xy: 2204, 229
+  xy: 2334, 229
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 water_bottom_part
   rotate: false
-  xy: 2204, 99
+  xy: 2334, 99
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 water_bottom_part
   rotate: false
-  xy: 2334, 229
+  xy: 2464, 229
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 water_left_bottom
   rotate: false
-  xy: 2334, 99
+  xy: 2464, 99
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 water_left_part
-  rotate: false
-  xy: 2464, 229
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 1
-water_left_part
-  rotate: false
-  xy: 2464, 99
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 2
-water_left_top
   rotate: false
   xy: 2594, 229
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: -1
-water_part
+  index: 1
+water_left_part
   rotate: false
   xy: 2594, 99
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
-water_part
+water_left_top
   rotate: false
   xy: 2724, 229
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 3
+  index: -1
 water_part
   rotate: false
   xy: 2724, 99
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
+  index: 2
+water_part
+  rotate: false
+  xy: 2854, 229
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 3
+water_part
+  rotate: false
+  xy: 2854, 99
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
   index: 4
 water_right_bottom
   rotate: false
-  xy: 2854, 229
+  xy: 2984, 229
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 water_right_part
   rotate: false
-  xy: 2854, 99
+  xy: 2984, 99
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 water_right_part
   rotate: false
-  xy: 2984, 229
+  xy: 3114, 229
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 water_right_top
   rotate: false
-  xy: 2984, 99
+  xy: 3114, 99
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 water_top_part
   rotate: false
-  xy: 3114, 229
+  xy: 3244, 229
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 water_top_part
   rotate: false
-  xy: 3114, 99
+  xy: 3244, 99
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

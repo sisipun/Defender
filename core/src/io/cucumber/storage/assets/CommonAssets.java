@@ -23,9 +23,9 @@ public class CommonAssets {
 
     public CommonAssets(TextureAtlas atlas, String roadVertical, String roadHorizontal,
                         String roadTopLeft, String roadTopRight, String roadLeftDown,
-                        String roadRightDown, String land, String landWaterTop,
-                        String landWaterBottom, String landWaterLeft, String landWaterRight,
-                        String landWaterTopLeft, String landWaterTopRight,
+                        String roadRightDown, String roadTopHorizontal, String land,
+                        String landWaterTop, String landWaterBottom, String landWaterLeft,
+                        String landWaterRight, String landWaterTopLeft, String landWaterTopRight,
                         String landWaterBottomLeft, String landWaterBottomRight, String water,
                         String building, String zone, String menuBackground, String health,
                         String healthBackground, String timer, String timerBackground,
@@ -44,7 +44,7 @@ public class CommonAssets {
         this.areaTextures.put(LevelBlockType.ROAD_TOP_RIGHT, atlas.findRegions(roadTopRight));
         this.areaTextures.put(LevelBlockType.ROAD_LEFT_DOWN, atlas.findRegions(roadLeftDown));
         this.areaTextures.put(LevelBlockType.ROAD_RIGHT_DOWN, atlas.findRegions(roadRightDown));
-        this.areaTextures.put(LevelBlockType.ROAD_HORIZONTAL_RAND, atlas.findRegions(roadVertical));
+        this.areaTextures.put(LevelBlockType.ROAD_HORIZONTAL_RAND, atlas.findRegions(roadTopHorizontal));
         this.areaTextures.put(LevelBlockType.ROAD_END, atlas.findRegions(roadVertical));
         this.areaTextures.put(LevelBlockType.LAND, atlas.findRegions(land));
         this.areaTextures.put(LevelBlockType.LAND_WATER_TOP, atlas.findRegions(landWaterTop));

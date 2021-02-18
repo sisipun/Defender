@@ -101,10 +101,12 @@ public class LevelMapGenerator {
                 }
             }
 
-            if (LevelBlockType.ROAD_LEFT.equals(direction)) {
+            if (size > 0 && LevelBlockType.ROAD_LEFT.equals(direction)) {
                 map[currentPositionX][currentPositionY] = LevelBlockType.ROAD_RIGHT_DOWN;
-            } else {
+            } else if (size > 0 && LevelBlockType.ROAD_RIGHT.equals(direction)) {
                 map[currentPositionX][currentPositionY] = LevelBlockType.ROAD_LEFT_DOWN;
+            } else {
+                map[currentPositionX][currentPositionY] = LevelBlockType.ROAD_DOWN;
             }
             currentPositionY--;
             map[currentPositionX][currentPositionY] = LevelBlockType.ROAD_DOWN;
@@ -211,10 +213,12 @@ public class LevelMapGenerator {
                 }
             }
 
-            if (LevelBlockType.ROAD_LEFT.equals(direction)) {
+            if (size > 0 &&  LevelBlockType.ROAD_LEFT.equals(direction)) {
                 map[currentX][currentY] = LevelBlockType.ROAD_RIGHT_DOWN;
-            } else {
+            } else if (size > 0 && LevelBlockType.ROAD_RIGHT.equals(direction)) {
                 map[currentX][currentY] = LevelBlockType.ROAD_LEFT_DOWN;
+            } else  {
+                map[currentX][currentY] = LevelBlockType.ROAD_DOWN;
             }
             currentY--;
             if (isRoad(map[currentX][currentY])) {

@@ -263,48 +263,48 @@ increase_balance
   orig: 225, 225
   offset: 0, 0
   index: -1
-road_bottom_left
-  rotate: false
-  xy: 1424, 229
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-road_bottom_right
-  rotate: false
-  xy: 1424, 99
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
 road_horizontal_part
   rotate: false
-  xy: 1554, 229
+  xy: 1424, 229
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 road_horizontal_part
   rotate: false
-  xy: 1554, 99
+  xy: 1424, 99
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 road_horizontal_part
   rotate: false
-  xy: 1684, 229
+  xy: 1554, 229
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 road_horizontal_part
   rotate: false
-  xy: 1684, 99
+  xy: 1554, 99
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
+road_left_down
+  rotate: false
+  xy: 1684, 229
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+road_right_down
+  rotate: false
+  xy: 1684, 99
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
 road_top_left
   rotate: false
   xy: 1814, 229

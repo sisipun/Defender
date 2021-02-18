@@ -84,7 +84,15 @@ public class LevelMapGenerator {
                         direction.equals(LevelBlockType.ROAD_LEFT) ? LevelBlockType.ROAD_RIGHT : LevelBlockType.ROAD_LEFT)
                 );
             }
-            for (int i = 0; i < size; i++) {
+
+            if (size > 0 && LevelBlockType.ROAD_LEFT.equals(direction)) {
+                map[currentPositionX][currentPositionY] = LevelBlockType.ROAD_TOP_LEFT;
+                currentPositionX--;
+            } else if (size > 0) {
+                map[currentPositionX][currentPositionY] = LevelBlockType.ROAD_TOP_RIGHT;
+                currentPositionX++;
+            }
+            for (int i = 1; i < size; i++) {
                 map[currentPositionX][currentPositionY] = direction;
                 if (LevelBlockType.ROAD_LEFT.equals(direction)) {
                     currentPositionX--;
@@ -93,7 +101,11 @@ public class LevelMapGenerator {
                 }
             }
 
-            map[currentPositionX][currentPositionY] = LevelBlockType.ROAD_DOWN;
+            if (LevelBlockType.ROAD_LEFT.equals(direction)) {
+                map[currentPositionX][currentPositionY] = LevelBlockType.ROAD_RIGHT_DOWN;
+            } else {
+                map[currentPositionX][currentPositionY] = LevelBlockType.ROAD_LEFT_DOWN;
+            }
             currentPositionY--;
             map[currentPositionX][currentPositionY] = LevelBlockType.ROAD_DOWN;
             currentPositionY--;
@@ -179,7 +191,15 @@ public class LevelMapGenerator {
 
         while (currentY - 1 > endY) {
             int size = random.nextInt(LevelBlockType.ROAD_LEFT.equals(direction) ? currentX : width - currentX);
-            for (int i = 0; i < size; i++) {
+            if (size > 0 && LevelBlockType.ROAD_LEFT.equals(direction)) {
+                map[currentX][currentY] = LevelBlockType.ROAD_TOP_LEFT;
+                currentX--;
+            } else if (size > 0) {
+                map[currentX][currentY] = LevelBlockType.ROAD_TOP_RIGHT;
+                currentX++;
+            }
+
+            for (int i = 1; i < size; i++) {
                 if (isRoad(map[currentX][currentY])) {
                     return;
                 }
@@ -190,9 +210,12 @@ public class LevelMapGenerator {
                     currentX++;
                 }
             }
-            direction = random.nextInt(2) == 0 ? LevelBlockType.ROAD_LEFT : LevelBlockType.ROAD_RIGHT;
 
-            map[currentX][currentY] = LevelBlockType.ROAD_DOWN;
+            if (LevelBlockType.ROAD_LEFT.equals(direction)) {
+                map[currentX][currentY] = LevelBlockType.ROAD_RIGHT_DOWN;
+            } else {
+                map[currentX][currentY] = LevelBlockType.ROAD_LEFT_DOWN;
+            }
             currentY--;
             if (isRoad(map[currentX][currentY])) {
                 return;
@@ -202,6 +225,8 @@ public class LevelMapGenerator {
             if (isRoad(map[currentX][currentY])) {
                 return;
             }
+
+            direction = random.nextInt(2) == 0 ? LevelBlockType.ROAD_LEFT : LevelBlockType.ROAD_RIGHT;
         }
 
         while (currentY > endY) {
@@ -224,13 +249,7 @@ public class LevelMapGenerator {
     }
 
     private boolean isRoad(LevelBlockType levelBlockType) {
-        return Arrays.asList(
-                LevelBlockType.ROAD_UP,
-                LevelBlockType.ROAD_DOWN,
-                LevelBlockType.ROAD_LEFT,
-                LevelBlockType.ROAD_RIGHT,
-                LevelBlockType.ROAD_HORIZONTAL_RAND,
-                LevelBlockType.ROAD_END).contains(levelBlockType);
+        return LevelBlockType.ROADS.contains(levelBlockType);
     }
 
     static class Fork {

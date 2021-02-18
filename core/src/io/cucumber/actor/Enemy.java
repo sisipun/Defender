@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.util.Random;
 
-import io.cucumber.generator.LevelBlockType;
 import io.cucumber.base.actor.base.DynamicActor;
 import io.cucumber.base.actor.bound.RectangleBound;
+import io.cucumber.generator.LevelBlockType;
 
 public class Enemy extends DynamicActor<Rectangle> {
 
@@ -97,16 +97,13 @@ public class Enemy extends DynamicActor<Rectangle> {
             return;
         }
 
-        if (LevelBlockType.ROAD_UP.equals(levelBlockType) && velocity.y == 0) {
-            velocity.y = speed;
-            velocity.x = 0;
-        } else if (LevelBlockType.ROAD_DOWN.equals(levelBlockType) && velocity.y == 0) {
+         if (LevelBlockType.ROADS_DOWN.contains(levelBlockType) && velocity.y == 0) {
             velocity.y = -speed;
             velocity.x = 0;
-        } else if (LevelBlockType.ROAD_LEFT.equals(levelBlockType) && velocity.x == 0) {
+        } else if (LevelBlockType.ROADS_LEFT.contains(levelBlockType) && velocity.x == 0) {
             velocity.y = 0;
             velocity.x = -speed;
-        } else if (LevelBlockType.ROAD_RIGHT.equals(levelBlockType) && velocity.x == 0) {
+        } else if (LevelBlockType.ROADS_RIGHT.contains(levelBlockType) && velocity.x == 0) {
             velocity.y = 0;
             velocity.x = speed;
         } else if (LevelBlockType.ROAD_HORIZONTAL_RAND.equals(levelBlockType) && velocity.x == 0) {

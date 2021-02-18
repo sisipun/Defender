@@ -21,9 +21,11 @@ public class CommonAssets {
     private final Map<LevelBlockType, Array<? extends TextureRegion>> areaTextures;
     private final Map<TimeEventType, TextureRegion> timeEventTextures;
 
-    public CommonAssets(TextureAtlas atlas, String verticalRoad, String horizontalRoad, String land,
-                        String landWaterTop, String landWaterBottom, String landWaterLeft,
-                        String landWaterRight, String landWaterTopLeft, String landWaterTopRight,
+    public CommonAssets(TextureAtlas atlas, String roadVertical, String roadHorizontal,
+                        String roadTopLeft, String roadTopRight, String roadLeftDown,
+                        String roadRightDown, String land, String landWaterTop,
+                        String landWaterBottom, String landWaterLeft, String landWaterRight,
+                        String landWaterTopLeft, String landWaterTopRight,
                         String landWaterBottomLeft, String landWaterBottomRight, String water,
                         String building, String zone, String menuBackground, String health,
                         String healthBackground, String timer, String timerBackground,
@@ -35,21 +37,24 @@ public class CommonAssets {
         this.timer = atlas.findRegion(timer);
         this.timerBackground = atlas.findRegion(timerBackground);
         this.areaTextures = new HashMap<>();
-        this.areaTextures.put(LevelBlockType.ROAD_UP, atlas.findRegions(verticalRoad));
-        this.areaTextures.put(LevelBlockType.ROAD_DOWN, atlas.findRegions(verticalRoad));
-        this.areaTextures.put(LevelBlockType.ROAD_LEFT, atlas.findRegions(horizontalRoad));
-        this.areaTextures.put(LevelBlockType.ROAD_RIGHT, atlas.findRegions(horizontalRoad));
-        this.areaTextures.put(LevelBlockType.ROAD_HORIZONTAL_RAND, atlas.findRegions(verticalRoad));
-        this.areaTextures.put(LevelBlockType.ROAD_END, atlas.findRegions(verticalRoad));
+        this.areaTextures.put(LevelBlockType.ROAD_DOWN, atlas.findRegions(roadVertical));
+        this.areaTextures.put(LevelBlockType.ROAD_LEFT, atlas.findRegions(roadHorizontal));
+        this.areaTextures.put(LevelBlockType.ROAD_RIGHT, atlas.findRegions(roadHorizontal));
+        this.areaTextures.put(LevelBlockType.ROAD_TOP_LEFT, atlas.findRegions(roadTopLeft));
+        this.areaTextures.put(LevelBlockType.ROAD_TOP_RIGHT, atlas.findRegions(roadTopRight));
+        this.areaTextures.put(LevelBlockType.ROAD_LEFT_DOWN, atlas.findRegions(roadLeftDown));
+        this.areaTextures.put(LevelBlockType.ROAD_RIGHT_DOWN, atlas.findRegions(roadRightDown));
+        this.areaTextures.put(LevelBlockType.ROAD_HORIZONTAL_RAND, atlas.findRegions(roadVertical));
+        this.areaTextures.put(LevelBlockType.ROAD_END, atlas.findRegions(roadVertical));
         this.areaTextures.put(LevelBlockType.LAND, atlas.findRegions(land));
         this.areaTextures.put(LevelBlockType.LAND_WATER_TOP, atlas.findRegions(landWaterTop));
         this.areaTextures.put(LevelBlockType.LAND_WATER_BOTTOM, atlas.findRegions(landWaterBottom));
         this.areaTextures.put(LevelBlockType.LAND_WATER_LEFT, atlas.findRegions(landWaterLeft));
         this.areaTextures.put(LevelBlockType.LAND_WATER_RIGHT, atlas.findRegions(landWaterRight));
-        this.areaTextures.put(LevelBlockType.LAND_WATER_TOP_LEFT, Array.with(atlas.findRegion(landWaterTopLeft)));
-        this.areaTextures.put(LevelBlockType.LAND_WATER_TOP_RIGHT, Array.with(atlas.findRegion(landWaterTopRight)));
-        this.areaTextures.put(LevelBlockType.LAND_WATER_BOTTOM_LEFT, Array.with(atlas.findRegion(landWaterBottomLeft)));
-        this.areaTextures.put(LevelBlockType.LAND_WATER_BOTTOM_RIGHT, Array.with(atlas.findRegion(landWaterBottomRight)));
+        this.areaTextures.put(LevelBlockType.LAND_WATER_TOP_LEFT, atlas.findRegions(landWaterTopLeft));
+        this.areaTextures.put(LevelBlockType.LAND_WATER_TOP_RIGHT, atlas.findRegions(landWaterTopRight));
+        this.areaTextures.put(LevelBlockType.LAND_WATER_BOTTOM_LEFT, atlas.findRegions(landWaterBottomLeft));
+        this.areaTextures.put(LevelBlockType.LAND_WATER_BOTTOM_RIGHT, atlas.findRegions(landWaterBottomRight));
         this.areaTextures.put(LevelBlockType.WATER, atlas.findRegions(water));
         this.areaTextures.put(LevelBlockType.BUILDING, atlas.findRegions(building));
         this.timeEventTextures = new HashMap<>();

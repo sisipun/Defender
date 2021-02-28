@@ -1,488 +1,488 @@
 
 game.png
-size: 4096,512
+size: 4096,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 defender
   rotate: false
-  xy: 2, 229
+  xy: 2, 359
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 defender_bullet
   rotate: false
-  xy: 683, 326
+  xy: 2564, 716
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 defender_small_bullet
   rotate: false
-  xy: 683, 326
+  xy: 2564, 716
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 defender_small
   rotate: false
-  xy: 2, 2
-  size: 225, 225
-  orig: 225, 225
-  offset: 0, 0
-  index: -1
-health
-  rotate: false
-  xy: 2, 2
+  xy: 2, 132
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 enemy
   rotate: false
-  xy: 229, 229
-  size: 225, 225
-  orig: 225, 225
-  offset: 0, 0
-  index: -1
-health_background
-  rotate: false
-  xy: 229, 229
+  xy: 229, 359
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 enemy_small
   rotate: false
-  xy: 229, 2
+  xy: 229, 132
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 generate_enemy
   rotate: false
-  xy: 683, 196
+  xy: 3846, 846
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 grass_part
   rotate: false
-  xy: 813, 326
+  xy: 1284, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 grass_part
   rotate: false
-  xy: 683, 66
+  xy: 2, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 land
   rotate: false
-  xy: 683, 66
+  xy: 2, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 grass_part
   rotate: false
-  xy: 813, 196
+  xy: 456, 229
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 grass_part
   rotate: false
-  xy: 943, 326
+  xy: 683, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
 grass_part
   rotate: false
-  xy: 813, 66
+  xy: 2694, 716
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 5
 grass_part
   rotate: false
-  xy: 943, 196
+  xy: 1414, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 6
 grass_part
   rotate: false
-  xy: 1073, 326
+  xy: 132, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 7
 grass_part
   rotate: false
-  xy: 943, 66
+  xy: 813, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 8
 grass_part
   rotate: false
-  xy: 1073, 196
+  xy: 2824, 716
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 9
 grass_part
   rotate: false
-  xy: 1203, 326
+  xy: 1544, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 10
 grass_part
   rotate: false
-  xy: 1073, 66
+  xy: 262, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 11
 grass_part
   rotate: false
-  xy: 1203, 196
+  xy: 943, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 12
 grass_part
   rotate: false
-  xy: 1333, 326
+  xy: 2954, 716
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 13
 grass_part
   rotate: false
-  xy: 1203, 66
+  xy: 1674, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 14
 grass_part
   rotate: false
-  xy: 1333, 196
+  xy: 1073, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 15
 grass_part
   rotate: false
-  xy: 1463, 326
+  xy: 3084, 716
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 16
+health
+  rotate: false
+  xy: 2564, 846
+  size: 1280, 128
+  orig: 1280, 128
+  offset: 0, 0
+  index: -1
+health_background
+  rotate: false
+  xy: 2, 586
+  size: 1280, 128
+  orig: 1280, 128
+  offset: 0, 0
+  index: -1
 house_part
   rotate: false
-  xy: 1333, 66
+  xy: 1804, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 house_part
   rotate: false
-  xy: 1463, 196
+  xy: 1203, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 house_part
   rotate: false
-  xy: 1593, 326
+  xy: 3214, 716
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
 house_part
   rotate: false
-  xy: 1463, 66
+  xy: 1934, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 5
 house_part
   rotate: false
-  xy: 1593, 196
+  xy: 1333, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 6
 house_part
   rotate: false
-  xy: 1723, 326
+  xy: 3344, 716
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 7
 house_part
   rotate: false
-  xy: 1593, 66
+  xy: 2064, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 8
 house_part_002 — копия
   rotate: false
-  xy: 1723, 196
+  xy: 1463, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 increase_balance
   rotate: false
-  xy: 1853, 326
+  xy: 3474, 716
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 menu_background
   rotate: false
-  xy: 456, 229
-  size: 225, 225
-  orig: 225, 225
-  offset: 0, 0
-  index: -1
-timer
-  rotate: false
-  xy: 456, 229
+  xy: 456, 359
   size: 225, 225
   orig: 225, 225
   offset: 0, 0
   index: -1
 road_horizontal_part
   rotate: false
-  xy: 1723, 66
+  xy: 2194, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 road_horizontal_part
   rotate: false
-  xy: 1853, 196
+  xy: 1593, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 road_horizontal_part
   rotate: false
-  xy: 1983, 326
+  xy: 3604, 716
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 road_horizontal_part
   rotate: false
-  xy: 1853, 66
+  xy: 2324, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
 road_left_down
   rotate: false
-  xy: 1983, 196
+  xy: 1723, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 road_right_down
   rotate: false
-  xy: 2113, 326
+  xy: 3734, 716
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 road_top_horizontal_part
   rotate: false
-  xy: 1983, 66
+  xy: 2454, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 road_top_horizontal_part
   rotate: false
-  xy: 2113, 196
+  xy: 1853, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 road_top_left
   rotate: false
-  xy: 2243, 326
+  xy: 2584, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 road_top_right
   rotate: false
-  xy: 2113, 66
+  xy: 1983, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 road_vertical_part
   rotate: false
-  xy: 2243, 196
+  xy: 2714, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 road_vertical_part
   rotate: false
-  xy: 2373, 326
+  xy: 2113, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 road_vertical_part
   rotate: false
-  xy: 2243, 66
+  xy: 2844, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 road_vertical_part
   rotate: false
-  xy: 2373, 196
+  xy: 2243, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
+timer
+  rotate: false
+  xy: 2, 846
+  size: 2560, 128
+  orig: 2560, 128
+  offset: 0, 0
+  index: -1
 timer_background
   rotate: false
-  xy: 456, 2
-  size: 225, 225
-  orig: 225, 225
+  xy: 2, 716
+  size: 2560, 128
+  orig: 2560, 128
   offset: 0, 0
   index: -1
 water
   rotate: false
-  xy: 2503, 326
+  xy: 2974, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 water_bottom_part
   rotate: false
-  xy: 2373, 66
+  xy: 2373, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 water_bottom_part
   rotate: false
-  xy: 2503, 196
+  xy: 3104, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 water_left_bottom
   rotate: false
-  xy: 2633, 326
+  xy: 2503, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 water_left_part
   rotate: false
-  xy: 2503, 66
+  xy: 3234, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 water_left_part
   rotate: false
-  xy: 2633, 196
+  xy: 2633, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 water_left_top
   rotate: false
-  xy: 2763, 326
+  xy: 3364, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 water_part
   rotate: false
-  xy: 2633, 66
+  xy: 2763, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 water_part
   rotate: false
-  xy: 2763, 196
+  xy: 3494, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
 water_part
   rotate: false
-  xy: 2893, 326
+  xy: 2893, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
 water_right_bottom
   rotate: false
-  xy: 2763, 66
+  xy: 3624, 586
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 water_right_part
   rotate: false
-  xy: 2893, 196
+  xy: 3023, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 water_right_part
   rotate: false
-  xy: 3023, 326
+  xy: 3153, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 water_right_top
   rotate: false
-  xy: 2893, 66
+  xy: 3283, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 water_top_part
   rotate: false
-  xy: 3023, 196
+  xy: 3413, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
 water_top_part
   rotate: false
-  xy: 3153, 326
+  xy: 3543, 456
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
 zone
   rotate: false
-  xy: 3023, 66
+  xy: 3864, 716
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

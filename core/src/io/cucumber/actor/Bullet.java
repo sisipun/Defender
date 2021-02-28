@@ -2,6 +2,7 @@ package io.cucumber.actor;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 import io.cucumber.base.actor.base.DynamicActor;
 import io.cucumber.base.actor.bound.RectangleBound;
@@ -42,6 +43,7 @@ public class Bullet extends DynamicActor<Rectangle> {
         if (target != null) {
             velocity.x = (target.getX() - getX() + target.getWidth() / 2 - getWidth() / 2) * speed;
             velocity.y = (target.getY() - getY() + target.getHeight() / 2 - getHeight() / 2) * speed;
+            setRotation(new Vector2(target.getX(), target.getY()).sub(new Vector2(getX(), getY())).angle());
         }
         super.act(delta);
     }

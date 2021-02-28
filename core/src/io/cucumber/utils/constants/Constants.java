@@ -40,12 +40,13 @@ public class Constants {
     public static final float ZONE_ALPHA = 0.5f;
 
     // UI
-    public static final float HEALTH_HEIGHT = SCREEN_HEIGHT / 64;
-    public static final float TIMER_HEIGHT = SCREEN_HEIGHT / 64;
-    public static final float TIMER_EVENT_SIZE = SCREEN_HEIGHT / 64;
+    public static final float HEALTH_HEIGHT = SCREEN_HEIGHT / 32 + SCREEN_HEIGHT / 64;
+    public static final float TIMER_HEIGHT = SCREEN_HEIGHT / 32;
+    public static final float TIMER_BACKGROUND_GUP = SCREEN_HEIGHT / 128;
+    public static final float TIMER_EVENT_SIZE = SCREEN_HEIGHT / 32 - 2 * TIMER_BACKGROUND_GUP;
     public static final float TIMER_ALPHA = 0.5f;
-    public static final float MENU_HEIGHT = SCREEN_HEIGHT / 8 - HEALTH_HEIGHT;
-    public static final float GAME_UI_HEIGHT = MENU_HEIGHT + HEALTH_HEIGHT;
+    public static final float MENU_HEIGHT = SCREEN_HEIGHT / 8;
+    public static final float GAME_UI_HEIGHT = MENU_HEIGHT;
 
     // Fonts
     public static final String DEFAULT_FONT = "fonts/font.ttf";

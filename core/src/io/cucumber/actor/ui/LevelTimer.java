@@ -29,6 +29,7 @@ public class LevelTimer extends StaticActor<Rectangle> {
     private int duration;
     private int currentValue;
     private TextureRegion texture;
+    private float backgroundGup;
 
     private Queue<TimeEvent> events;
     private Queue<SimpleRectangle> eventHistory;
@@ -55,21 +56,23 @@ public class LevelTimer extends StaticActor<Rectangle> {
 
     public LevelTimer init(float x, float y, float width, float height, TextureRegion texture,
                            TextureRegion backgroundTexture, int duration, Array<TimeEvent> events,
-                           float eventHistoryItemSize, Map<TimeEventType, TextureRegion> eventHistoryTextures) {
+                           float eventHistoryItemSize, float backgroundGup,
+                           Map<TimeEventType, TextureRegion> eventHistoryTextures) {
         super.init(new RectangleBound(x, y, width, height), backgroundTexture);
         stop();
 
         this.duration = duration;
         this.currentValue = 0;
         this.texture = texture;
+        this.backgroundGup = backgroundGup;
 
         this.events.clear();
         this.events.addAll(Arrays.asList(events.toArray()));
         this.eventHistory.clear();
         for (TimeEvent event : this.events) {
             this.eventHistory.add(new SimpleRectangle(
-                    getX() + (1f * event.getTime() / duration) * getWidth(),
-                    getY(),
+                    getX() + ((1f * event.getTime() - 1) / duration) * getWidth(),
+                    getY() + backgroundGup,
                     eventHistoryItemSize,
                     eventHistoryItemSize,
                     eventHistoryTextures.get(event.getType())

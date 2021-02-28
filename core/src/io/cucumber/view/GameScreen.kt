@@ -195,9 +195,9 @@ class GameScreen(
         addActor(gameArea)
 
         health.init(
-                0f,
-                MENU_HEIGHT,
-                SCREEN_WIDTH,
+                SCREEN_WIDTH / 4,
+                MENU_HEIGHT + SCREEN_HEIGHT / 64,
+                SCREEN_WIDTH - SCREEN_WIDTH / 2,
                 HEALTH_HEIGHT,
                 storage.assets.health,
                 storage.assets.healthBackground,
@@ -224,15 +224,16 @@ class GameScreen(
         addActor(balance)
 
         levelTimer.init(
-                SCREEN_WIDTH / 8,
+                SCREEN_WIDTH / 4,
                 SCREEN_HEIGHT - SCREEN_HEIGHT / 16 + SCREEN_HEIGHT / 64,
-                SCREEN_WIDTH - SCREEN_WIDTH / 4,
+                SCREEN_WIDTH - SCREEN_WIDTH / 2,
                 TIMER_HEIGHT,
                 storage.assets.timer,
                 storage.assets.timerBackground,
                 level.timeInSeconds,
                 level.events,
                 TIMER_EVENT_SIZE,
+                TIMER_BACKGROUND_GUP,
                 storage.assets.timeEventTextures
         )
         levelTimer.addListener(TimeEventType.GENERATE_ENEMY) { event ->
